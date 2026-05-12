@@ -28,7 +28,7 @@ export default function Navbar() {
           <img
             src="/logo/3.png"
             alt="Picaro Game Studio"
-            className="h-10 w-auto object-contain transition-opacity group-hover:opacity-80"
+            className="h-14 w-auto object-contain transition-opacity group-hover:opacity-80"
             style={{ filter: "invert(1) contrast(20)", mixBlendMode: "screen" }}
           />
         </Link>
