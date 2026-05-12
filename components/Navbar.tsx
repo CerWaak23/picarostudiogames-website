@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -25,17 +24,13 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
-          <div style={{ mixBlendMode: "screen" }}>
-            <Image
-              src="/logo/3.png"
-              alt="Picaro Game Studio"
-              width={160}
-              height={50}
-              className="h-10 w-auto object-contain transition-opacity group-hover:opacity-80"
-              style={{ filter: "invert(1) contrast(8)" }}
-              priority
-            />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo/3.png"
+            alt="Picaro Game Studio"
+            className="h-10 w-auto object-contain transition-opacity group-hover:opacity-80"
+            style={{ filter: "invert(1) contrast(20)", mixBlendMode: "screen" }}
+          />
         </Link>
 
         {/* Desktop links */}

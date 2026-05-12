@@ -53,15 +53,13 @@ export default function Home() {
           </div>
 
           {/* Studio logo */}
-          <div className="flex justify-center mb-6" style={{ mixBlendMode: "screen" }}>
-            <Image
+          <div className="flex justify-center mb-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/logo/1.1.png"
               alt="Picaro Game Studio"
-              width={260}
-              height={260}
               className="w-44 md:w-56 h-auto"
-              style={{ filter: "invert(1) contrast(8)" }}
-              priority
+              style={{ filter: "invert(1) contrast(20)", mixBlendMode: "screen" }}
             />
           </div>
 

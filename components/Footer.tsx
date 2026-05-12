@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 
 const socials = [
   {
@@ -46,16 +45,13 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Logo */}
-          <div className="opacity-60 hover:opacity-90 transition-opacity" style={{ mixBlendMode: "screen" }}>
-            <Image
-              src="/logo/3.png"
-              alt="Picaro Game Studio"
-              width={130}
-              height={40}
-              className="h-8 w-auto object-contain"
-              style={{ filter: "invert(1) contrast(8)" }}
-            />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo/3.png"
+            alt="Picaro Game Studio"
+            className="h-8 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
+            style={{ filter: "invert(1) contrast(20)", mixBlendMode: "screen" }}
+          />
 
           {/* Social links */}
           <div className="flex items-center gap-4">
