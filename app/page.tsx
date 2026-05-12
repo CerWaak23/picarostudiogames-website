@@ -323,14 +323,14 @@ export default function Home() {
             from you.
           </p>
           <a
-            href="mailto:hello@picarogamestudio.com"
+            href="mailto:picarogamestudio@gmail.com"
             className="inline-flex items-center gap-3 border border-gold/30 bg-gold/5 text-gold text-sm tracking-widest uppercase px-8 py-4 hover:bg-gold/10 hover:border-gold/60 transition-colors font-mono"
           >
             <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth={2}>
               <path d="M3 8l9-5 9 5v10H3V8z" />
               <path d="M3 8l9 5 9-5" />
             </svg>
-            hello@picarogamestudio.com
+            picarogamestudio@gmail.com
           </a>
         </div>
       </section>
