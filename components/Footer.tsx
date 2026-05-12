@@ -70,7 +70,7 @@ export default function Footer() {
         <div className="mt-8 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted">
           <p>© {new Date().getFullYear()} Picaro Game Studio. All rights reserved.</p>
           <p>
-            Made with passion in Argentina{" "}
+            Made with passion in Chile{" "}
             <span className="text-gold">♦</span>
           </p>
         </div>

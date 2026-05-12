@@ -281,7 +281,7 @@ export default function Home() {
                   </p>
                   <p className="text-text-secondary text-sm mt-3 leading-relaxed">
                     Designer, developer, and creative director behind Picaro
-                    Game Studio. Building tactical games from Argentina.
+                    Game Studio. Building tactical games from Chile.
                   </p>
                   <a
                     href="https://www.instagram.com/picarogamestudio"
