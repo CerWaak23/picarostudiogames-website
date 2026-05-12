@@ -34,14 +34,14 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
-          <NavLink href="/#games">Games</NavLink>
-          <NavLink href="/#about">About</NavLink>
-          <NavLink href="/#contact">Contact</NavLink>
+          <NavLink href="/#games" dark={!scrolled}>Games</NavLink>
+          <NavLink href="/#about" dark={!scrolled}>About</NavLink>
+          <NavLink href="/#contact" dark={!scrolled}>Contact</NavLink>
         </div>
 
         {/* Mobile burger */}
         <button
-          className="md:hidden text-text-secondary hover:text-gold transition-colors"
+          className={`md:hidden transition-colors ${!scrolled ? "text-gray-700 hover:text-gray-900" : "text-text-secondary hover:text-gold"}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
@@ -73,16 +73,22 @@ function NavLink({
   href,
   children,
   onClick,
+  dark,
 }: {
   href: string;
   children: React.ReactNode;
   onClick?: () => void;
+  dark?: boolean;
 }) {
   return (
     <Link
       href={href}
       onClick={onClick}
-      className="text-sm text-text-secondary hover:text-gold transition-colors tracking-wide uppercase font-medium"
+      className={`text-sm transition-colors tracking-wide uppercase font-medium ${
+        dark
+          ? "text-gray-700 hover:text-gray-900"
+          : "text-text-secondary hover:text-gold"
+      }`}
     >
       {children}
     </Link>

@@ -23,32 +23,28 @@ export default function Home() {
       <Navbar />
 
       {/* ─── HERO ─── */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden">
-        {/* Grid background */}
+      <section
+        className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, #a8a8a8 0%, #c8c8c8 25%, #dedede 55%, #efefef 80%, #f8f8f8 100%)",
+        }}
+      >
+        {/* Subtle dark grid */}
         <div
-          className="absolute inset-0 opacity-100"
+          className="absolute inset-0"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)",
+              "linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px)",
             backgroundSize: "40px 40px",
-          }}
-        />
-
-        {/* Radial gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-bg pointer-events-none" />
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%)",
           }}
         />
 
         {/* Content */}
         <div className="relative text-center max-w-4xl">
           {/* Studio label */}
-          <div className="inline-flex items-center gap-2 border border-gold/20 bg-gold/5 text-gold text-xs tracking-widest uppercase px-4 py-2 mb-8 font-mono">
-            <span className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse" />
+          <div className="inline-flex items-center gap-2 border border-[#c9a84c]/40 bg-[#c9a84c]/10 text-[#7a5e1a] text-xs tracking-widest uppercase px-4 py-2 mb-8 font-mono">
+            <span className="w-1.5 h-1.5 bg-[#c9a84c] rounded-full animate-pulse" />
             Indie Game Studio
           </div>
 
@@ -62,7 +58,7 @@ export default function Home() {
             />
           </div>
 
-          <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed">
             We build games that make you think. Tactical experiences crafted
             with care — where every decision matters.
           </p>
@@ -70,7 +66,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="#games"
-              className="inline-flex items-center gap-2 bg-gold text-bg font-bold text-sm tracking-widest uppercase px-8 py-4 hover:bg-gold-light transition-colors"
+              className="inline-flex items-center gap-2 bg-[#c9a84c] text-white font-bold text-sm tracking-widest uppercase px-8 py-4 hover:bg-[#b8932e] transition-colors"
             >
               See Our Games
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth={2.5}>
@@ -79,7 +75,7 @@ export default function Home() {
             </Link>
             <Link
               href="#about"
-              className="inline-flex items-center gap-2 border border-white/10 text-text-secondary font-medium text-sm tracking-widest uppercase px-8 py-4 hover:border-gold/40 hover:text-text-primary transition-colors"
+              className="inline-flex items-center gap-2 border border-gray-500/40 text-gray-700 font-medium text-sm tracking-widest uppercase px-8 py-4 hover:border-gray-700 hover:text-gray-900 transition-colors"
             >
               About Us
             </Link>
@@ -87,7 +83,7 @@ export default function Home() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted text-xs tracking-widest uppercase animate-bounce">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 text-xs tracking-widest uppercase animate-bounce">
           <span>Scroll</span>
           <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth={2}>
             <path d="M8 3v10M3 8l5 5 5-5" />
