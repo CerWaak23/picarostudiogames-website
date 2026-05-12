@@ -31,7 +31,7 @@ export default function Home() {
 
       {/* ─── HERO ─── */}
       <section
-        className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden"
+        className="relative min-h-screen flex flex-col justify-center overflow-hidden"
         style={{
           background:
             "linear-gradient(135deg, #a8a8a8 0%, #c8c8c8 25%, #dedede 55%, #efefef 80%, #f8f8f8 100%)",
@@ -47,55 +47,53 @@ export default function Home() {
           }}
         />
 
-        {/* Large Tiki silhouette in background */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo/2.1-removebg-preview.png"
-          alt=""
-          aria-hidden="true"
-          className="absolute select-none pointer-events-none"
-          style={{
-            height: "90vh",
-            width: "auto",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            opacity: 0.08,
-            filter: "grayscale(1) contrast(1.2)",
-          }}
-        />
-
-        <div className="relative text-center max-w-4xl pb-24">
-          <div className="inline-flex items-center gap-2 border border-[#c9a84c]/40 bg-[#c9a84c]/10 text-[#7a5e1a] text-xs tracking-widest uppercase px-4 py-2 mb-8 font-mono">
-            <span className="w-1.5 h-1.5 bg-[#c9a84c] rounded-full animate-pulse" />
-            {tr.hero.badge}
-          </div>
-
-          <div className="flex justify-center mb-6">
+        <div className="relative max-w-6xl mx-auto w-full flex flex-col md:flex-row items-center px-6 gap-0">
+          {/* Left: Big Tiki figure */}
+          <div className="flex-1 flex items-end justify-center md:justify-end">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo/1.1-removebg-preview.png" alt="Picaro Game Studio" className="w-64 md:w-80 h-auto drop-shadow-sm" />
+            <img
+              src="/logo/2.1-removebg-preview.png"
+              alt="Pícaro"
+              className="w-auto select-none"
+              style={{ height: "80vh", maxHeight: "700px", objectFit: "contain" }}
+            />
           </div>
 
-          <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed">
-            {tr.hero.tagline}
-          </p>
+          {/* Right: Badge + name + tagline + buttons */}
+          <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left px-6 md:px-12 pb-20 md:pb-0">
+            <div className="inline-flex items-center gap-2 border border-[#c9a84c]/40 bg-[#c9a84c]/10 text-[#7a5e1a] text-xs tracking-widest uppercase px-4 py-2 mb-8 font-mono">
+              <span className="w-1.5 h-1.5 bg-[#c9a84c] rounded-full animate-pulse" />
+              {tr.hero.badge}
+            </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="#games"
-              className="inline-flex items-center gap-2 bg-[#c9a84c] text-white font-bold text-sm tracking-widest uppercase px-8 py-4 hover:bg-[#b8932e] transition-colors"
-            >
-              {tr.hero.cta}
-              <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                <path d="M5 12l6-6M11 6H5M11 6v6" />
-              </svg>
-            </Link>
-            <Link
-              href="#about"
-              className="inline-flex items-center gap-2 border border-gray-500/40 text-gray-700 font-medium text-sm tracking-widest uppercase px-8 py-4 hover:border-gray-700 hover:text-gray-900 transition-colors"
-            >
-              {tr.hero.about}
-            </Link>
+            <h1 className="text-5xl md:text-7xl font-black text-gray-900 leading-none mb-2 tracking-tight">
+              Pícaro
+            </h1>
+            <p className="text-lg md:text-xl font-mono tracking-[0.25em] text-gray-600 uppercase mb-8">
+              Game Studio
+            </p>
+
+            <p className="text-base md:text-lg text-gray-700 max-w-sm mb-10 leading-relaxed">
+              {tr.hero.tagline}
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link
+                href="#games"
+                className="inline-flex items-center gap-2 bg-[#c9a84c] text-white font-bold text-sm tracking-widest uppercase px-8 py-4 hover:bg-[#b8932e] transition-colors"
+              >
+                {tr.hero.cta}
+                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                  <path d="M5 12l6-6M11 6H5M11 6v6" />
+                </svg>
+              </Link>
+              <Link
+                href="#about"
+                className="inline-flex items-center gap-2 border border-gray-500/40 text-gray-700 font-medium text-sm tracking-widest uppercase px-8 py-4 hover:border-gray-700 hover:text-gray-900 transition-colors"
+              >
+                {tr.hero.about}
+              </Link>
+            </div>
           </div>
         </div>
 
