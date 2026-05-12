@@ -45,7 +45,7 @@ export default function Home() {
         />
 
         {/* Content */}
-        <div className="relative z-10 text-center max-w-4xl">
+        <div className="relative text-center max-w-4xl">
           {/* Studio label */}
           <div className="inline-flex items-center gap-2 border border-gold/20 bg-gold/5 text-gold text-xs tracking-widest uppercase px-4 py-2 mb-8 font-mono">
             <span className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse" />
