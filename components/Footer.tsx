@@ -49,8 +49,7 @@ export default function Footer() {
           <img
             src="/logo/3.png"
             alt="Picaro Game Studio"
-            className="h-8 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
-            style={{ filter: "invert(1) contrast(20)", mixBlendMode: "screen" }}
+            className="h-8 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity"
           />
 
           {/* Social links */}

@@ -59,7 +59,6 @@ export default function Home() {
               src="/logo/1.1.png"
               alt="Picaro Game Studio"
               className="w-44 md:w-56 h-auto"
-              style={{ filter: "invert(1) contrast(20)", mixBlendMode: "screen" }}
             />
           </div>
 
