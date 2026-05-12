@@ -46,14 +46,16 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Logo */}
-          <Image
-            src="/logo/3.png"
-            alt="Picaro Game Studio"
-            width={130}
-            height={40}
-            className="h-8 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
-            style={{ filter: "invert(1)", mixBlendMode: "screen" }}
-          />
+          <div className="opacity-60 hover:opacity-90 transition-opacity" style={{ mixBlendMode: "screen" }}>
+            <Image
+              src="/logo/3.png"
+              alt="Picaro Game Studio"
+              width={130}
+              height={40}
+              className="h-8 w-auto object-contain"
+              style={{ filter: "invert(1) contrast(8)" }}
+            />
+          </div>
 
           {/* Social links */}
           <div className="flex items-center gap-4">

@@ -53,14 +53,14 @@ export default function Home() {
           </div>
 
           {/* Studio logo */}
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-6" style={{ mixBlendMode: "screen" }}>
             <Image
               src="/logo/1.1.png"
               alt="Picaro Game Studio"
               width={260}
               height={260}
               className="w-44 md:w-56 h-auto"
-              style={{ filter: "invert(1)", mixBlendMode: "screen" }}
+              style={{ filter: "invert(1) contrast(8)" }}
               priority
             />
           </div>

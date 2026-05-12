@@ -25,15 +25,17 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
-          <Image
-            src="/logo/3.png"
-            alt="Picaro Game Studio"
-            width={160}
-            height={50}
-            className="h-10 w-auto object-contain transition-opacity group-hover:opacity-80"
-            style={{ filter: "invert(1)", mixBlendMode: "screen" }}
-            priority
-          />
+          <div style={{ mixBlendMode: "screen" }}>
+            <Image
+              src="/logo/3.png"
+              alt="Picaro Game Studio"
+              width={160}
+              height={50}
+              className="h-10 w-auto object-contain transition-opacity group-hover:opacity-80"
+              style={{ filter: "invert(1) contrast(8)" }}
+              priority
+            />
+          </div>
         </Link>
 
         {/* Desktop links */}
