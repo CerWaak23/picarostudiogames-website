@@ -52,10 +52,15 @@ export default function Home() {
           <div className="flex-1 flex items-end justify-center md:justify-end">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/logo/2.1-removebg-preview.png"
+              src="/logo/2.1-hd.png"
               alt="Pícaro"
               className="w-auto select-none"
-              style={{ height: "80vh", maxHeight: "700px", objectFit: "contain" }}
+              style={{
+                height: "80vh",
+                maxHeight: "700px",
+                objectFit: "contain",
+                mixBlendMode: "multiply",
+              }}
             />
           </div>
 
