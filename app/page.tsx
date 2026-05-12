@@ -37,12 +37,31 @@ export default function Home() {
             "linear-gradient(135deg, #a8a8a8 0%, #c8c8c8 25%, #dedede 55%, #efefef 80%, #f8f8f8 100%)",
         }}
       >
+        {/* Grid overlay */}
         <div
           className="absolute inset-0"
           style={{
             backgroundImage:
               "linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px)",
             backgroundSize: "40px 40px",
+          }}
+        />
+
+        {/* Large Tiki silhouette in background */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo/2.1-removebg-preview.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute select-none pointer-events-none"
+          style={{
+            height: "90vh",
+            width: "auto",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            opacity: 0.08,
+            filter: "grayscale(1) contrast(1.2)",
           }}
         />
 
@@ -54,7 +73,7 @@ export default function Home() {
 
           <div className="flex justify-center mb-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo/1.1.png" alt="Picaro Game Studio" className="w-44 md:w-56 h-auto" />
+            <img src="/logo/1.1-removebg-preview.png" alt="Picaro Game Studio" className="w-64 md:w-80 h-auto drop-shadow-sm" />
           </div>
 
           <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed">
