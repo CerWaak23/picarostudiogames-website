@@ -65,7 +65,7 @@ export default function Home() {
           }}
         />
 
-        <div className="relative text-center max-w-4xl">
+        <div className="relative text-center max-w-4xl pb-24">
           <div className="inline-flex items-center gap-2 border border-[#c9a84c]/40 bg-[#c9a84c]/10 text-[#7a5e1a] text-xs tracking-widest uppercase px-4 py-2 mb-8 font-mono">
             <span className="w-1.5 h-1.5 bg-[#c9a84c] rounded-full animate-pulse" />
             {tr.hero.badge}
