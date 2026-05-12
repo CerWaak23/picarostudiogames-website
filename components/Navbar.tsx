@@ -29,12 +29,14 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo/3.png"
-            alt="Picaro Game Studio"
-            className="h-14 w-auto object-contain transition-opacity group-hover:opacity-80"
-          />
+          <div className="px-3 py-1.5 bg-white/40 backdrop-blur-sm border border-white/30">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo/1.1-removebg-preview.png"
+              alt="Picaro Game Studio"
+              className="h-10 w-auto object-contain transition-opacity group-hover:opacity-70"
+            />
+          </div>
         </Link>
 
         {/* Desktop links + lang switcher */}
