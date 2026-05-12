@@ -1,23 +1,30 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useLang } from "@/lib/LanguageContext";
 
-const games = [
-  {
+export default function Home() {
+  const { tr } = useLang();
+
+  const game = {
     slug: "ghost-directive",
     title: "Ghost Directive",
     genre: "Tactical Stealth / Strategy",
-    status: "In Development",
     statusColor: "text-gold border-gold/30 bg-gold/5",
-    description:
-      "A 3D top-down tactical stealth game where you command a squad of operatives. Plan every move in silence, then execute in real time.",
     tags: ["PC", "Unity", "Top-Down", "Stealth"],
     accent: "#c9a84c",
-  },
-];
+  };
 
-export default function Home() {
+  const stats = [
+    { label: tr.about.stat1, value: "1" },
+    { label: tr.about.stat2, value: "Unity" },
+    { label: tr.about.stat3, value: "Tactical" },
+    { label: tr.about.stat4, value: "PC" },
+  ];
+
   return (
     <div className="min-h-screen bg-bg">
       <Navbar />
@@ -30,7 +37,6 @@ export default function Home() {
             "linear-gradient(135deg, #a8a8a8 0%, #c8c8c8 25%, #dedede 55%, #efefef 80%, #f8f8f8 100%)",
         }}
       >
-        {/* Subtle dark grid */}
         <div
           className="absolute inset-0"
           style={{
@@ -40,27 +46,19 @@ export default function Home() {
           }}
         />
 
-        {/* Content */}
         <div className="relative text-center max-w-4xl">
-          {/* Studio label */}
           <div className="inline-flex items-center gap-2 border border-[#c9a84c]/40 bg-[#c9a84c]/10 text-[#7a5e1a] text-xs tracking-widest uppercase px-4 py-2 mb-8 font-mono">
             <span className="w-1.5 h-1.5 bg-[#c9a84c] rounded-full animate-pulse" />
-            Indie Game Studio
+            {tr.hero.badge}
           </div>
 
-          {/* Studio logo */}
           <div className="flex justify-center mb-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo/1.1.png"
-              alt="Picaro Game Studio"
-              className="w-44 md:w-56 h-auto"
-            />
+            <img src="/logo/1.1.png" alt="Picaro Game Studio" className="w-44 md:w-56 h-auto" />
           </div>
 
           <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed">
-            We build games that make you think. Tactical experiences crafted
-            with care — where every decision matters.
+            {tr.hero.tagline}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -68,7 +66,7 @@ export default function Home() {
               href="#games"
               className="inline-flex items-center gap-2 bg-[#c9a84c] text-white font-bold text-sm tracking-widest uppercase px-8 py-4 hover:bg-[#b8932e] transition-colors"
             >
-              See Our Games
+              {tr.hero.cta}
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth={2.5}>
                 <path d="M5 12l6-6M11 6H5M11 6v6" />
               </svg>
@@ -77,14 +75,13 @@ export default function Home() {
               href="#about"
               className="inline-flex items-center gap-2 border border-gray-500/40 text-gray-700 font-medium text-sm tracking-widest uppercase px-8 py-4 hover:border-gray-700 hover:text-gray-900 transition-colors"
             >
-              About Us
+              {tr.hero.about}
             </Link>
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 text-xs tracking-widest uppercase animate-bounce">
-          <span>Scroll</span>
+          <span>{tr.hero.scroll}</span>
           <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth={2}>
             <path d="M8 3v10M3 8l5 5 5-5" />
           </svg>
@@ -94,104 +91,82 @@ export default function Home() {
       {/* ─── GAMES ─── */}
       <section id="games" className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
-          {/* Section header */}
           <div className="mb-16">
             <div className="flex items-center gap-4 mb-4">
               <div className="h-px flex-1 max-w-12 bg-gold/40" />
               <span className="text-gold text-xs tracking-widest uppercase font-mono">
-                Our Games
+                {tr.games.sectionLabel}
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-text-primary">
-              Current Projects
+              {tr.games.sectionTitle}
             </h2>
           </div>
 
-          {/* Games grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {games.map((game) => (
-              <Link key={game.slug} href={`/games/${game.slug}`}>
-                <div className="group relative border border-white/8 bg-surface card-hover h-full flex flex-col">
-                  {/* Placeholder image area */}
+            <Link href={`/games/${game.slug}`}>
+              <div className="group relative border border-white/8 bg-surface card-hover h-full flex flex-col">
+                <div
+                  className="h-52 relative overflow-hidden flex items-center justify-center"
+                  style={{ background: "linear-gradient(135deg, #10101a 0%, #18182a 50%, #0f0f18 100%)" }}
+                >
                   <div
-                    className="h-52 relative overflow-hidden flex items-center justify-center"
+                    className="absolute inset-0 opacity-20"
                     style={{
-                      background: `linear-gradient(135deg, #10101a 0%, #18182a 50%, #0f0f18 100%)`,
+                      backgroundImage: "linear-gradient(rgba(201,168,76,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.15) 1px, transparent 1px)",
+                      backgroundSize: "24px 24px",
                     }}
+                  />
+                  <div
+                    className="w-16 h-16 border-2 rotate-45 flex items-center justify-center opacity-30 group-hover:opacity-60 transition-opacity"
+                    style={{ borderColor: game.accent }}
                   >
-                    <div
-                      className="absolute inset-0 opacity-20"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(rgba(201,168,76,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.15) 1px, transparent 1px)",
-                        backgroundSize: "24px 24px",
-                      }}
-                    />
-                    {/* Diamond logo placeholder */}
-                    <div
-                      className="w-16 h-16 border-2 rotate-45 flex items-center justify-center opacity-30 group-hover:opacity-60 transition-opacity"
-                      style={{ borderColor: game.accent }}
-                    >
-                      <div
-                        className="w-4 h-4 rotate-[-45deg]"
-                        style={{ backgroundColor: game.accent }}
-                      />
-                    </div>
-                    <div className="absolute top-3 right-3 text-xs font-mono tracking-widest uppercase opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: game.accent }}>
-                      KEY ART SOON
-                    </div>
+                    <div className="w-4 h-4 rotate-[-45deg]" style={{ backgroundColor: game.accent }} />
                   </div>
-
-                  {/* Card body */}
-                  <div className="p-6 flex flex-col gap-4 flex-1">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <h3 className="text-xl font-bold text-text-primary group-hover:text-gold transition-colors">
-                          {game.title}
-                        </h3>
-                        <p className="text-sm text-muted mt-1">{game.genre}</p>
-                      </div>
-                      <span
-                        className={`shrink-0 text-xs font-mono tracking-wide border px-2.5 py-1 ${game.statusColor}`}
-                      >
-                        {game.status}
-                      </span>
-                    </div>
-
-                    <p className="text-text-secondary text-sm leading-relaxed">
-                      {game.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 mt-auto">
-                      {game.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-xs text-muted border border-white/8 px-2.5 py-1 font-mono"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Arrow */}
-                  <div className="absolute bottom-6 right-6 text-muted group-hover:text-gold transition-colors group-hover:translate-x-1 group-hover:-translate-y-1 transform transition-transform">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth={2}>
-                      <path d="M5 13L13 5M13 5H7M13 5v6" />
-                    </svg>
+                  <div className="absolute top-3 right-3 text-xs font-mono tracking-widest uppercase opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: game.accent }}>
+                    KEY ART SOON
                   </div>
                 </div>
-              </Link>
-            ))}
 
-            {/* Coming soon card */}
+                <div className="p-6 flex flex-col gap-4 flex-1">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-text-primary group-hover:text-gold transition-colors">
+                        {game.title}
+                      </h3>
+                      <p className="text-sm text-muted mt-1">{game.genre}</p>
+                    </div>
+                    <span className={`shrink-0 text-xs font-mono tracking-wide border px-2.5 py-1 ${game.statusColor}`}>
+                      {tr.games.status}
+                    </span>
+                  </div>
+                  <p className="text-text-secondary text-sm leading-relaxed">
+                    {tr.games.ghostDescription}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {game.tags.map((tag) => (
+                      <span key={tag} className="text-xs text-muted border border-white/8 px-2.5 py-1 font-mono">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="absolute bottom-6 right-6 text-muted group-hover:text-gold transition-colors group-hover:translate-x-1 group-hover:-translate-y-1 transform transition-transform">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <path d="M5 13L13 5M13 5H7M13 5v6" />
+                  </svg>
+                </div>
+              </div>
+            </Link>
+
             <div className="border border-dashed border-white/8 bg-surface/50 flex items-center justify-center h-full min-h-[300px] p-12">
               <div className="text-center">
                 <div className="w-10 h-10 border border-white/10 rotate-45 flex items-center justify-center mx-auto mb-4">
                   <span className="rotate-[-45deg] text-muted text-lg font-thin">+</span>
                 </div>
                 <p className="text-muted text-sm tracking-wider uppercase font-mono">
-                  More coming soon
+                  {tr.games.comingSoon}
                 </p>
               </div>
             </div>
@@ -205,84 +180,48 @@ export default function Home() {
           <div className="flex items-center gap-4 mb-4">
             <div className="h-px flex-1 max-w-12 bg-gold/40" />
             <span className="text-gold text-xs tracking-widest uppercase font-mono">
-              About
+              {tr.about.sectionLabel}
             </span>
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-text-primary mb-16">
-            Who We Are
+            {tr.about.title}
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            {/* Text */}
             <div className="space-y-5 text-text-secondary leading-relaxed text-base">
+              <p>{tr.about.p1}</p>
               <p>
-                Picaro Game Studio is an indie game studio focused on creating
-                thoughtful, strategic experiences. We believe great games
-                reward patience, planning, and creativity.
+                {tr.about.p2.split("Ghost Directive").map((part, i) =>
+                  i === 0 ? part : (
+                    <span key={i}><span className="text-gold font-medium">Ghost Directive</span>{part}</span>
+                  )
+                )}
               </p>
-              <p>
-                Our debut project,{" "}
-                <span className="text-gold font-medium">Ghost Directive</span>,
-                is a tactical stealth game where preparation is half the battle.
-                Command your squad, outsmart the enemy, and vanish like a ghost.
-              </p>
-              <p>
-                We&apos;re a small studio with big ambitions — building every
-                detail with intention and passion for the craft.
-              </p>
+              <p>{tr.about.p3}</p>
 
-              {/* Stats row */}
               <div className="grid grid-cols-2 gap-3 pt-4">
-                {[
-                  { label: "Games in Dev", value: "1" },
-                  { label: "Engine", value: "Unity" },
-                  { label: "Genre Focus", value: "Tactical" },
-                  { label: "Platform", value: "PC" },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="border border-white/8 p-4 flex flex-col gap-1"
-                  >
-                    <span className="text-2xl font-black text-gold">
-                      {item.value}
-                    </span>
-                    <span className="text-xs text-muted uppercase tracking-wider font-mono">
-                      {item.label}
-                    </span>
+                {stats.map((item) => (
+                  <div key={item.label} className="border border-white/8 p-4 flex flex-col gap-1">
+                    <span className="text-2xl font-black text-gold">{item.value}</span>
+                    <span className="text-xs text-muted uppercase tracking-wider font-mono">{item.label}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Team card */}
             <div className="flex flex-col items-center lg:items-start gap-6">
               <div className="border border-white/8 bg-bg p-6 flex flex-col sm:flex-row gap-6 items-center sm:items-start w-full max-w-sm lg:max-w-full">
-                {/* Photo */}
                 <div className="relative shrink-0">
                   <div className="w-28 h-28 overflow-hidden border-2 border-gold/20">
-                    <Image
-                      src="/team/andres.jpg"
-                      alt="Andrés Cerda Waak"
-                      width={112}
-                      height={112}
-                      className="w-full h-full object-cover object-top"
-                    />
+                    <Image src="/team/andres.jpg" alt="Andrés Cerda Waak" width={112} height={112} className="w-full h-full object-cover object-top" />
                   </div>
                   <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-gold/80 rotate-45" />
                 </div>
 
-                {/* Info */}
                 <div className="text-center sm:text-left">
-                  <h3 className="text-text-primary font-bold text-lg">
-                    Andrés Cerda Waak
-                  </h3>
-                  <p className="text-gold text-sm font-mono tracking-wide mt-1">
-                    Founder &amp; Game Developer
-                  </p>
-                  <p className="text-text-secondary text-sm mt-3 leading-relaxed">
-                    Designer, developer, and creative director behind Picaro
-                    Game Studio. Building tactical games from Chile.
-                  </p>
+                  <h3 className="text-text-primary font-bold text-lg">Andrés Cerda Waak</h3>
+                  <p className="text-gold text-sm font-mono tracking-wide mt-1">{tr.about.role}</p>
+                  <p className="text-text-secondary text-sm mt-3 leading-relaxed">{tr.about.bio}</p>
                   <a
                     href="https://www.instagram.com/picarogamestudio"
                     target="_blank"
@@ -307,17 +246,14 @@ export default function Home() {
           <div className="flex items-center justify-center gap-4 mb-4">
             <div className="h-px flex-1 max-w-12 bg-gold/40" />
             <span className="text-gold text-xs tracking-widest uppercase font-mono">
-              Contact
+              {tr.contact.sectionLabel}
             </span>
             <div className="h-px flex-1 max-w-12 bg-gold/40" />
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-text-primary mb-6">
-            Get in Touch
+            {tr.contact.title}
           </h2>
-          <p className="text-text-secondary mb-10 text-lg">
-            For press, collaborations, or just to say hi — we&apos;d love to hear
-            from you.
-          </p>
+          <p className="text-text-secondary mb-10 text-lg">{tr.contact.description}</p>
           <a
             href="mailto:picarogamestudio@gmail.com"
             className="inline-flex items-center gap-3 border border-gold/30 bg-gold/5 text-gold text-sm tracking-widest uppercase px-8 py-4 hover:bg-gold/10 hover:border-gold/60 transition-colors font-mono"

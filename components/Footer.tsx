@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useLang } from "@/lib/LanguageContext";
 
 const socials = [
   {
@@ -40,6 +43,7 @@ const socials = [
 ];
 
 export default function Footer() {
+  const { tr } = useLang();
   return (
     <footer className="border-t border-white/5 bg-surface py-12 px-6">
       <div className="max-w-6xl mx-auto">
@@ -68,9 +72,9 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted">
-          <p>© {new Date().getFullYear()} Picaro Game Studio. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Picaro Game Studio. {tr.footer.rights}</p>
           <p>
-            Made with passion in Chile{" "}
+            {tr.footer.made}{" "}
             <span className="text-gold">♦</span>
           </p>
         </div>

@@ -2,16 +2,21 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useLang } from "@/lib/LanguageContext";
+import type { Lang } from "@/lib/translations";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { lang, setLang, tr } = useLang();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
+
+  const dark = !scrolled;
 
   return (
     <nav
@@ -32,16 +37,17 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Desktop links */}
+        {/* Desktop links + lang switcher */}
         <div className="hidden md:flex items-center gap-8">
-          <NavLink href="/#games" dark={!scrolled}>Games</NavLink>
-          <NavLink href="/#about" dark={!scrolled}>About</NavLink>
-          <NavLink href="/#contact" dark={!scrolled}>Contact</NavLink>
+          <NavLink href="/#games" dark={dark}>{tr.nav.games}</NavLink>
+          <NavLink href="/#about" dark={dark}>{tr.nav.about}</NavLink>
+          <NavLink href="/#contact" dark={dark}>{tr.nav.contact}</NavLink>
+          <LangToggle lang={lang} setLang={setLang} dark={dark} />
         </div>
 
         {/* Mobile burger */}
         <button
-          className={`md:hidden transition-colors ${!scrolled ? "text-gray-700 hover:text-gray-900" : "text-text-secondary hover:text-gold"}`}
+          className={`md:hidden transition-colors ${dark ? "text-gray-700 hover:text-gray-900" : "text-text-secondary hover:text-gold"}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
@@ -60,9 +66,10 @@ export default function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden bg-surface border-t border-white/5 px-6 py-4 flex flex-col gap-4">
-          <NavLink href="/#games" onClick={() => setMenuOpen(false)}>Games</NavLink>
-          <NavLink href="/#about" onClick={() => setMenuOpen(false)}>About</NavLink>
-          <NavLink href="/#contact" onClick={() => setMenuOpen(false)}>Contact</NavLink>
+          <NavLink href="/#games" onClick={() => setMenuOpen(false)}>{tr.nav.games}</NavLink>
+          <NavLink href="/#about" onClick={() => setMenuOpen(false)}>{tr.nav.about}</NavLink>
+          <NavLink href="/#contact" onClick={() => setMenuOpen(false)}>{tr.nav.contact}</NavLink>
+          <LangToggle lang={lang} setLang={setLang} />
         </div>
       )}
     </nav>
@@ -70,10 +77,7 @@ export default function Navbar() {
 }
 
 function NavLink({
-  href,
-  children,
-  onClick,
-  dark,
+  href, children, onClick, dark,
 }: {
   href: string;
   children: React.ReactNode;
@@ -85,12 +89,28 @@ function NavLink({
       href={href}
       onClick={onClick}
       className={`text-sm transition-colors tracking-wide uppercase font-medium ${
-        dark
-          ? "text-gray-700 hover:text-gray-900"
-          : "text-text-secondary hover:text-gold"
+        dark ? "text-gray-700 hover:text-gray-900" : "text-text-secondary hover:text-gold"
       }`}
     >
       {children}
     </Link>
+  );
+}
+
+function LangToggle({ lang, setLang, dark }: { lang: Lang; setLang: (l: Lang) => void; dark?: boolean }) {
+  const base = `text-xs font-mono font-bold tracking-widest px-2 py-1 transition-colors`;
+  const active = dark ? "text-gray-900 border-b-2 border-gray-700" : "text-gold border-b-2 border-gold";
+  const inactive = dark ? "text-gray-400 hover:text-gray-700" : "text-muted hover:text-text-secondary";
+
+  return (
+    <div className="flex items-center gap-1">
+      <button onClick={() => setLang("es")} className={`${base} ${lang === "es" ? active : inactive}`}>
+        ES
+      </button>
+      <span className={`text-xs ${dark ? "text-gray-400" : "text-muted"}`}>/</span>
+      <button onClick={() => setLang("en")} className={`${base} ${lang === "en" ? active : inactive}`}>
+        EN
+      </button>
+    </div>
   );
 }
