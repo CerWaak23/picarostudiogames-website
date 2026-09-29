@@ -48,12 +48,14 @@ export const policy: Record<Lang, { title: string; intro: string; sections: Poli
         id: "datos",
         title: "Qué datos se guardan",
         bullets: [
-          "En tu teléfono: tu progreso en el juego (nivel, repeticiones, armas, eras) y tus ajustes. No salen del aparato.",
+          "En tu teléfono: tu progreso en el juego (nivel, repeticiones, armas, eras) y tus ajustes.",
           "Datos de uso, solo si lo aceptas: información anónima sobre cómo se juega, como tiempo de juego, sesiones, niveles, peleas ganadas o perdidas, repeticiones por pelea, cofres abiertos, modelo del teléfono, sistema operativo, país aproximado y un identificador aleatorio de instalación. Se procesa con Unity Analytics (Unity Technologies) y la usamos solo para mejorar el juego y su balance.",
-          "No pedimos tu nombre, correo, fotos ni ubicación exacta. No vendemos datos ni los usamos para publicidad.",
+          "Ranking, solo si entras: se crea una cuenta anónima (sin correo ni contraseña) y guardamos en los servidores de Unity Gaming Services (Unity Technologies) tu nombre de jugador, tu marco, tu nivel, las repeticiones, duración y ritmo de tus peleas, y la ciudad y el país que elijas. Los demás jugadores ven tu nombre, marco, nivel, repeticiones de la semana y ciudad.",
+          "Para sugerir tu ciudad se puede usar la ubicación aproximada del teléfono, si das el permiso. Las coordenadas se usan dentro del teléfono para buscar la ciudad más cercana y no se envían ni se guardan: solo el nombre de la ciudad.",
+          "No pedimos tu nombre real, correo, fotos ni ubicación exacta. No vendemos datos ni los usamos para publicidad.",
         ],
         after: [
-          "Compartir datos de uso es opcional. Puedes activarlo o desactivarlo en Ajustes → Privacidad y seguridad, y ahí mismo pedir que se borre lo que ya se envió. También puedes escribirnos para acceder a tus datos, corregirlos o eliminarlos.",
+          "Compartir datos de uso es opcional. Puedes activarlo o desactivarlo en Ajustes → Privacidad y seguridad, y ahí mismo pedir que se borre lo que ya se envió. Entrar al ranking también es opcional: en la pestaña Ranking puedes salir y borrar tu cuenta y lo que el servidor guarda de ti. También puedes escribirnos para acceder a tus datos, corregirlos o eliminarlos.",
         ],
       },
       {
@@ -132,12 +134,14 @@ export const policy: Record<Lang, { title: string; intro: string; sections: Poli
         id: "datos",
         title: "What data is kept",
         bullets: [
-          "On your phone: your game progress (level, reps, weapons, eras) and settings. They never leave the device.",
+          "On your phone: your game progress (level, reps, weapons, eras) and settings.",
           "Usage data, only if you agree: anonymous information about how the game is played, such as play time, sessions, levels, fights won or lost, reps per fight, chests opened, phone model, operating system, approximate country and a random install ID. It is processed with Unity Analytics (Unity Technologies) and used only to improve the game and its balance.",
-          "We don't ask for your name, email, photos or exact location. We don't sell data or use it for advertising.",
+          "Ranking, only if you join: an anonymous account is created (no email or password) and we store on Unity Gaming Services servers (Unity Technologies) your player name, frame, level, the reps, duration and pace of your fights, and the city and country you pick. Other players see your name, frame, level, reps this week and city.",
+          "To suggest your city the phone's approximate location can be used, if you grant permission. The coordinates are used on the phone to find the nearest city and are never sent or stored: only the city name.",
+          "We don't ask for your real name, email, photos or exact location. We don't sell data or use it for advertising.",
         ],
         after: [
-          "Sharing usage data is optional. You can turn it on or off in Settings → Privacy and safety, and request deletion of what was already sent there. You can also write to us to access, correct or delete your data.",
+          "Sharing usage data is optional. You can turn it on or off in Settings → Privacy and safety, and request deletion of what was already sent there. Joining the ranking is optional too: in the Ranking tab you can leave and delete your account and what the server keeps about you. You can also write to us to access, correct or delete your data.",
         ],
       },
       {
