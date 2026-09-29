@@ -80,7 +80,7 @@ const features = [
 export default function GhostDirectivePage() {
   return (
     <div className="min-h-screen bg-bg">
-      <Navbar />
+      <Navbar solid />
 
       {/* ─── HERO ─── */}
       <section className="relative pt-32 pb-20 px-6 overflow-hidden">
@@ -114,9 +114,9 @@ export default function GhostDirectivePage() {
           </Link>
 
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-xs font-mono tracking-widest uppercase border border-gold/30 bg-gold/5 text-gold px-3 py-1.5 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse" />
-              In Development
+            <span className="text-xs font-mono tracking-widest uppercase border border-white/15 bg-white/5 text-muted px-3 py-1.5 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-muted rounded-full" />
+              On Hold
             </span>
             <span className="text-xs font-mono tracking-widest uppercase border border-white/8 text-muted px-3 py-1.5">
               PC · Unity
@@ -244,11 +244,11 @@ export default function GhostDirectivePage() {
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
             <h3 className="text-2xl font-black text-text-primary mb-2">
-              Currently in active development
+              Development on hold
             </h3>
             <p className="text-text-secondary text-sm">
-              Follow us on social media to get updates, screenshots, and
-              behind-the-scenes dev logs as we build Ghost Directive.
+              We&apos;re focusing on our mobile games for now. Follow us on
+              social media to hear when Ghost Directive comes back.
             </p>
           </div>
           <div className="flex gap-3 shrink-0">

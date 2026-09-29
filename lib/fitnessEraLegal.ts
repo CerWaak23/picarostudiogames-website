@@ -1,0 +1,190 @@
+import type { Lang } from "./translations";
+
+/**
+ * Política de privacidad, salud y términos de Fitness Era.
+ * Tiene que decir lo mismo que la pantalla que el jugador acepta dentro del juego
+ * (FitnessEra/Assets/RepQuest/Scripts/Legal/LegalTexts.cs). Si cambia algo importante,
+ * se sube la versión aquí y en el juego (Consent.CurrentVersion).
+ */
+export const POLICY_VERSION = 1;
+export const POLICY_DATE: Record<Lang, string> = { es: "29 de septiembre de 2026", en: "September 29, 2026" };
+export const CONTACT_EMAIL = "picarogamestudio@gmail.com";
+
+export interface PolicySection {
+  id: string;
+  title: string;
+  paragraphs?: string[];
+  bullets?: string[];
+  after?: string[];
+}
+
+export const policy: Record<Lang, { title: string; intro: string; sections: PolicySection[] }> = {
+  es: {
+    title: "Privacidad, salud y términos de uso",
+    intro:
+      "Fitness Era usa la cámara del teléfono y te pone a hacer ejercicio de verdad. Aquí explicamos qué pasa con tu imagen y tus datos, y lo que tienes que saber para jugar de forma segura. Es lo mismo que aceptas dentro del juego la primera vez que lo abres.",
+    sections: [
+      {
+        id: "quienes-somos",
+        title: "Quiénes somos",
+        paragraphs: [
+          `Fitness Era es un juego de Pícaro Game Studio (Chile). Para cualquier consulta o solicitud sobre tus datos, escríbenos a ${CONTACT_EMAIL}.`,
+        ],
+      },
+      {
+        id: "camara",
+        title: "Tu imagen no sale de tu teléfono",
+        paragraphs: [
+          "El juego usa la cámara frontal solo para detectar la posición de tu cuerpo y contar repeticiones. Todo ese proceso ocurre dentro del teléfono y en el momento.",
+        ],
+        bullets: [
+          "No grabamos video ni tomamos fotos.",
+          "No guardamos tu imagen ni la enviamos a ningún servidor, ni nuestro ni de terceros.",
+          "Nadie más ve tu cámara: ni nosotros ni otros jugadores.",
+          "La cámara solo se enciende durante una pelea o la práctica libre. Puedes quitarle el permiso cuando quieras desde los ajustes del teléfono.",
+        ],
+      },
+      {
+        id: "datos",
+        title: "Qué datos se guardan",
+        bullets: [
+          "En tu teléfono: tu progreso en el juego (nivel, repeticiones, armas, eras) y tus ajustes. No salen del aparato.",
+          "Datos de uso, solo si lo aceptas: información anónima sobre cómo se juega, como tiempo de juego, sesiones, niveles, peleas ganadas o perdidas, repeticiones por pelea, cofres abiertos, modelo del teléfono, sistema operativo, país aproximado y un identificador aleatorio de instalación. Se procesa con Unity Analytics (Unity Technologies) y la usamos solo para mejorar el juego y su balance.",
+          "No pedimos tu nombre, correo, fotos ni ubicación exacta. No vendemos datos ni los usamos para publicidad.",
+        ],
+        after: [
+          "Compartir datos de uso es opcional. Puedes activarlo o desactivarlo en Ajustes → Privacidad y seguridad, y ahí mismo pedir que se borre lo que ya se envió. También puedes escribirnos para acceder a tus datos, corregirlos o eliminarlos.",
+        ],
+      },
+      {
+        id: "salud",
+        title: "Tu salud es primero",
+        paragraphs: [
+          "Fitness Era es un juego. No es un programa médico ni de entrenamiento personalizado, y no reemplaza la opinión de un profesional de la salud.",
+          "Consulta a un médico antes de jugar si tienes alguna enfermedad del corazón, presión alta, lesiones o dolor en hombros, muñecas, espalda o rodillas, estás embarazada, te estás recuperando de una operación o no haces ejercicio hace tiempo.",
+        ],
+      },
+      {
+        id: "seguridad",
+        title: "Mientras juegas",
+        bullets: [
+          "Para de inmediato si sientes dolor, mareo, falta de aire o presión en el pecho.",
+          "Haz las repeticiones a tu ritmo. Puedes descansar cuando quieras.",
+          "Juega en un espacio despejado, con piso firme y que no resbale, lejos de muebles, escaleras y objetos.",
+          "Deja el teléfono estable en el suelo o apoyado, donde no te tropieces con él.",
+          "Calienta antes, toma agua y usa ropa y calzado cómodos.",
+        ],
+      },
+      {
+        id: "responsabilidad",
+        title: "Responsabilidad",
+        paragraphs: [
+          "Haces los ejercicios de forma voluntaria y bajo tu propia responsabilidad. En la medida que lo permita la ley aplicable, los creadores de Fitness Era no son responsables de lesiones, daños o problemas de salud derivados de hacer ejercicio con el juego, ni de daños al teléfono o a objetos cercanos. Nada de esto limita los derechos que la ley te garantiza como consumidor.",
+        ],
+      },
+      {
+        id: "menores",
+        title: "Menores de edad",
+        paragraphs: [
+          "Si tienes menos de 18 años, juega solo con permiso y supervisión de tu madre, padre o un adulto responsable. El juego no está dirigido a menores de 13 años y no recopilamos a sabiendas datos de ellos.",
+        ],
+      },
+      {
+        id: "prueba",
+        title: "Versión de prueba",
+        paragraphs: [
+          "Durante las pruebas, el juego está en desarrollo: puede tener errores, el conteo de repeticiones puede fallar y el progreso podría reiniciarse entre versiones.",
+        ],
+      },
+      {
+        id: "cambios",
+        title: "Cambios",
+        paragraphs: ["Si cambiamos esta política de manera importante, el juego te pedirá aceptarla de nuevo."],
+      },
+    ],
+  },
+  en: {
+    title: "Privacy, health and terms of use",
+    intro:
+      "Fitness Era uses your phone's camera and gets you doing real exercise. Here we explain what happens to your image and your data, and what you need to know to play safely. It's the same text you accept in the game the first time you open it.",
+    sections: [
+      {
+        id: "quienes-somos",
+        title: "Who we are",
+        paragraphs: [
+          `Fitness Era is a game by Pícaro Game Studio (Chile). For any question or request about your data, write to ${CONTACT_EMAIL}.`,
+        ],
+      },
+      {
+        id: "camara",
+        title: "Your image never leaves your phone",
+        paragraphs: [
+          "The game uses the front camera only to detect your body position and count reps. All of this happens on your phone, in real time.",
+        ],
+        bullets: [
+          "We don't record video or take photos.",
+          "We don't store your image or send it to any server, ours or anyone else's.",
+          "Nobody else sees your camera: not us, not other players.",
+          "The camera only turns on during a fight or free practice. You can revoke its permission anytime in your phone settings.",
+        ],
+      },
+      {
+        id: "datos",
+        title: "What data is kept",
+        bullets: [
+          "On your phone: your game progress (level, reps, weapons, eras) and settings. They never leave the device.",
+          "Usage data, only if you agree: anonymous information about how the game is played, such as play time, sessions, levels, fights won or lost, reps per fight, chests opened, phone model, operating system, approximate country and a random install ID. It is processed with Unity Analytics (Unity Technologies) and used only to improve the game and its balance.",
+          "We don't ask for your name, email, photos or exact location. We don't sell data or use it for advertising.",
+        ],
+        after: [
+          "Sharing usage data is optional. You can turn it on or off in Settings → Privacy and safety, and request deletion of what was already sent there. You can also write to us to access, correct or delete your data.",
+        ],
+      },
+      {
+        id: "salud",
+        title: "Your health comes first",
+        paragraphs: [
+          "Fitness Era is a game. It is not a medical or personal training program and does not replace advice from a health professional.",
+          "Check with a doctor before playing if you have a heart condition, high blood pressure, injuries or pain in your shoulders, wrists, back or knees, are pregnant, are recovering from surgery, or haven't exercised in a while.",
+        ],
+      },
+      {
+        id: "seguridad",
+        title: "While you play",
+        bullets: [
+          "Stop right away if you feel pain, dizziness, shortness of breath or chest pressure.",
+          "Do reps at your own pace. You can rest anytime.",
+          "Play in a clear space with a firm, non-slip floor, away from furniture, stairs and objects.",
+          "Keep the phone stable on the floor or propped up, where you won't trip over it.",
+          "Warm up first, drink water and wear comfortable clothes and shoes.",
+        ],
+      },
+      {
+        id: "responsabilidad",
+        title: "Responsibility",
+        paragraphs: [
+          "You do the exercises voluntarily and at your own risk. To the extent permitted by applicable law, the makers of Fitness Era are not liable for injuries, damages or health problems resulting from exercising with the game, or for damage to your phone or nearby objects. Nothing here limits your statutory rights as a consumer.",
+        ],
+      },
+      {
+        id: "menores",
+        title: "Minors",
+        paragraphs: [
+          "If you are under 18, only play with permission and supervision from a parent or responsible adult. The game is not directed at children under 13 and we do not knowingly collect their data.",
+        ],
+      },
+      {
+        id: "prueba",
+        title: "Test version",
+        paragraphs: [
+          "During testing the game is in development: it may have bugs, rep counting may fail and progress could be reset between versions.",
+        ],
+      },
+      {
+        id: "cambios",
+        title: "Changes",
+        paragraphs: ["If we change this policy in a significant way, the game will ask you to accept it again."],
+      },
+    ],
+  },
+};

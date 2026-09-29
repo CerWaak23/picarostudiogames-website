@@ -5,24 +5,19 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLang } from "@/lib/LanguageContext";
+import { games, type Game } from "@/lib/games";
 
 export default function Home() {
-  const { tr } = useLang();
+  const { tr, lang } = useLang();
 
-  const game = {
-    slug: "ghost-directive",
-    title: "Ghost Directive",
-    genre: "Tactical Stealth / Strategy",
-    statusColor: "text-gold border-gold/30 bg-gold/5",
-    tags: ["PC", "Unity", "Top-Down", "Stealth"],
-    accent: "#c9a84c",
-  };
+  // Primero lo que está en desarrollo; lo pausado, al final.
+  const ordered = [...games].sort((a, b) => (a.status === b.status ? 0 : a.status === "active" ? -1 : 1));
 
   const stats = [
-    { label: tr.about.stat1, value: "1" },
+    { label: tr.about.stat1, value: String(games.length) },
     { label: tr.about.stat2, value: "Unity" },
-    { label: tr.about.stat3, value: "Tactical" },
-    { label: tr.about.stat4, value: "PC" },
+    { label: tr.about.stat3, value: lang === "es" ? "Táctica · Acción" : "Tactics · Action" },
+    { label: tr.about.stat4, value: lang === "es" ? "PC · Móvil" : "PC · Mobile" },
   ];
 
   return (
@@ -126,61 +121,9 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Link href={`/games/${game.slug}`}>
-              <div className="group relative border border-white/8 bg-surface card-hover h-full flex flex-col">
-                <div
-                  className="h-52 relative overflow-hidden flex items-center justify-center"
-                  style={{ background: "linear-gradient(135deg, #10101a 0%, #18182a 50%, #0f0f18 100%)" }}
-                >
-                  <div
-                    className="absolute inset-0 opacity-20"
-                    style={{
-                      backgroundImage: "linear-gradient(rgba(201,168,76,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.15) 1px, transparent 1px)",
-                      backgroundSize: "24px 24px",
-                    }}
-                  />
-                  <div
-                    className="w-16 h-16 border-2 rotate-45 flex items-center justify-center opacity-30 group-hover:opacity-60 transition-opacity"
-                    style={{ borderColor: game.accent }}
-                  >
-                    <div className="w-4 h-4 rotate-[-45deg]" style={{ backgroundColor: game.accent }} />
-                  </div>
-                  <div className="absolute top-3 right-3 text-xs font-mono tracking-widest uppercase opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: game.accent }}>
-                    KEY ART SOON
-                  </div>
-                </div>
-
-                <div className="p-6 flex flex-col gap-4 flex-1">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-text-primary group-hover:text-gold transition-colors">
-                        {game.title}
-                      </h3>
-                      <p className="text-sm text-muted mt-1">{game.genre}</p>
-                    </div>
-                    <span className={`shrink-0 text-xs font-mono tracking-wide border px-2.5 py-1 ${game.statusColor}`}>
-                      {tr.games.status}
-                    </span>
-                  </div>
-                  <p className="text-text-secondary text-sm leading-relaxed">
-                    {tr.games.ghostDescription}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-auto">
-                    {game.tags.map((tag) => (
-                      <span key={tag} className="text-xs text-muted border border-white/8 px-2.5 py-1 font-mono">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="absolute bottom-6 right-6 text-muted group-hover:text-gold transition-colors group-hover:translate-x-1 group-hover:-translate-y-1 transform transition-transform">
-                  <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth={2}>
-                    <path d="M5 13L13 5M13 5H7M13 5v6" />
-                  </svg>
-                </div>
-              </div>
-            </Link>
+            {ordered.map((game) => (
+              <GameCard key={game.slug} game={game} />
+            ))}
 
             <div className="border border-dashed border-white/8 bg-surface/50 flex items-center justify-center h-full min-h-[300px] p-12">
               <div className="text-center">
@@ -291,5 +234,80 @@ export default function Home() {
 
       <Footer />
     </div>
+  );
+}
+
+function GameCard({ game }: { game: Game }) {
+  const { tr, lang } = useLang();
+  const paused = game.status === "paused";
+  const statusColor = paused
+    ? "text-muted border-white/15 bg-white/5"
+    : "text-gold border-gold/30 bg-gold/5";
+
+  return (
+    <Link href={`/games/${game.slug}`}>
+      <div className={`group relative border border-white/8 bg-surface card-hover h-full flex flex-col ${paused ? "opacity-80" : ""}`}>
+        <div
+          className="h-52 relative overflow-hidden flex items-center justify-center"
+          style={{ background: "linear-gradient(135deg, #10101a 0%, #18182a 50%, #0f0f18 100%)" }}
+        >
+          {game.cover ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={game.cover}
+              alt={game.title}
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : (
+            <>
+              <div
+                className="absolute inset-0 opacity-20"
+                style={{
+                  backgroundImage: `linear-gradient(${game.accent}26 1px, transparent 1px), linear-gradient(90deg, ${game.accent}26 1px, transparent 1px)`,
+                  backgroundSize: "24px 24px",
+                }}
+              />
+              <div
+                className="w-16 h-16 border-2 rotate-45 flex items-center justify-center opacity-30 group-hover:opacity-60 transition-opacity"
+                style={{ borderColor: game.accent }}
+              >
+                <div className="w-4 h-4 rotate-[-45deg]" style={{ backgroundColor: game.accent }} />
+              </div>
+              <div className="absolute top-3 right-3 text-xs font-mono tracking-widest uppercase opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: game.accent }}>
+                KEY ART SOON
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className="p-6 flex flex-col gap-4 flex-1">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h3 className="text-xl font-bold text-text-primary group-hover:text-gold transition-colors">
+                {game.title}
+              </h3>
+              <p className="text-sm text-muted mt-1">{game.genre[lang]}</p>
+            </div>
+            <span className={`shrink-0 text-xs font-mono tracking-wide border px-2.5 py-1 ${statusColor}`}>
+              {paused ? tr.games.paused : tr.games.status}
+            </span>
+          </div>
+          <p className="text-text-secondary text-sm leading-relaxed">{game.description[lang]}</p>
+          <div className="flex flex-wrap gap-2 mt-auto pr-8">
+            {game.tags.map((tag) => (
+              <span key={tag} className="text-xs text-muted border border-white/8 px-2.5 py-1 font-mono">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="absolute bottom-6 right-6 text-muted group-hover:text-gold transition-colors group-hover:translate-x-1 group-hover:-translate-y-1 transform transition-transform">
+          <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth={2}>
+            <path d="M5 13L13 5M13 5H7M13 5v6" />
+          </svg>
+        </div>
+      </div>
+    </Link>
   );
 }

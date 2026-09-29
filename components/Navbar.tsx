@@ -5,7 +5,11 @@ import Link from "next/link";
 import { useLang } from "@/lib/LanguageContext";
 import type { Lang } from "@/lib/translations";
 
-export default function Navbar() {
+/**
+ * `solid`: para páginas con fondo oscuro arriba (las de cada juego). La portada tiene el
+ * héroe claro y ahí el texto parte oscuro; en fondo oscuro tiene que partir claro.
+ */
+export default function Navbar({ solid = false }: { solid?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { lang, setLang, tr } = useLang();
@@ -16,7 +20,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  const dark = !scrolled;
+  const dark = !scrolled && !solid;
 
   return (
     <nav
