@@ -6,6 +6,7 @@ export const t = {
       games: "Games",
       about: "About",
       contact: "Contact",
+      support: "Support",
     },
     hero: {
       badge: "Indie Game Studio",
@@ -50,6 +51,7 @@ export const t = {
       games: "Juegos",
       about: "Nosotros",
       contact: "Contacto",
+      support: "Apoyar",
     },
     hero: {
       badge: "Estudio de Videojuegos Indie",

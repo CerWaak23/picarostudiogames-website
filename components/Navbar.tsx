@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/LanguageContext";
 import type { Lang } from "@/lib/translations";
+import { hasSupport } from "@/lib/support";
 
 /**
  * `solid`: para páginas con fondo oscuro arriba (las de cada juego). La portada tiene el
@@ -45,6 +46,7 @@ export default function Navbar({ solid = false }: { solid?: boolean }) {
         <div className="hidden md:flex items-center gap-8">
           <NavLink href="/#games" dark={dark}>{tr.nav.games}</NavLink>
           <NavLink href="/#about" dark={dark}>{tr.nav.about}</NavLink>
+          {hasSupport && <NavLink href="/#apoyar" dark={dark}>{tr.nav.support}</NavLink>}
           <NavLink href="/#contact" dark={dark}>{tr.nav.contact}</NavLink>
           <LangToggle lang={lang} setLang={setLang} dark={dark} />
         </div>
@@ -72,6 +74,7 @@ export default function Navbar({ solid = false }: { solid?: boolean }) {
         <div className="md:hidden bg-surface border-t border-white/5 px-6 py-4 flex flex-col gap-4">
           <NavLink href="/#games" onClick={() => setMenuOpen(false)}>{tr.nav.games}</NavLink>
           <NavLink href="/#about" onClick={() => setMenuOpen(false)}>{tr.nav.about}</NavLink>
+          {hasSupport && <NavLink href="/#apoyar" onClick={() => setMenuOpen(false)}>{tr.nav.support}</NavLink>}
           <NavLink href="/#contact" onClick={() => setMenuOpen(false)}>{tr.nav.contact}</NavLink>
           <LangToggle lang={lang} setLang={setLang} />
         </div>

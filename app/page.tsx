@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SupportSection from "@/components/SupportSection";
 import { useLang } from "@/lib/LanguageContext";
 import { games, type Game } from "@/lib/games";
 
@@ -204,6 +205,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ─── APOYAR ─── */}
+      <SupportSection />
 
       {/* ─── CONTACT ─── */}
       <section id="contact" className="py-24 px-6">
