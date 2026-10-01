@@ -49,13 +49,15 @@ export const policy: Record<Lang, { title: string; intro: string; sections: Poli
         title: "Qué datos se guardan",
         bullets: [
           "En tu teléfono: tu progreso en el juego (nivel, repeticiones, armas, eras) y tus ajustes.",
+          "Progreso en línea: con una cuenta anónima (sin correo ni contraseña) guardamos en los servidores de Unity Gaming Services (Unity Technologies) una copia de tu progreso de juego: nombre de jugador, nivel, repeticiones, victorias y derrotas, monedas, racha, Pase del Héroe, anuncios vistos, compras, versión del juego e idioma. La usamos para darte soporte, moderar el juego (por ejemplo, ante trampas) y enviarte regalos del equipo. No incluye tu imagen, tu ciudad ni tu ubicación, y otros jugadores no la ven.",
+          "Códigos y torneos entre amigos: si canjeas un código guardamos que lo usaste; si juegas un torneo entre amigos guardamos tus intentos, y los participantes ven tu nombre de jugador, nivel y puntaje.",
           "Datos de uso, solo si lo aceptas: información anónima sobre cómo se juega, como tiempo de juego, sesiones, niveles, peleas ganadas o perdidas, repeticiones por pelea, cofres abiertos, modelo del teléfono, sistema operativo, país aproximado y un identificador aleatorio de instalación. Se procesa con Unity Analytics (Unity Technologies) y la usamos solo para mejorar el juego y su balance.",
           "Ranking, solo si entras: se crea una cuenta anónima (sin correo ni contraseña) y guardamos en los servidores de Unity Gaming Services (Unity Technologies) tu nombre de jugador, tu marco, tu nivel, las repeticiones, duración y ritmo de tus peleas, y la ciudad y el país que elijas. Los demás jugadores ven tu nombre, marco, nivel, repeticiones de la semana y ciudad.",
           "Para sugerir tu ciudad se puede usar la ubicación aproximada del teléfono, si das el permiso. Las coordenadas se usan dentro del teléfono para buscar la ciudad más cercana y no se envían ni se guardan: solo el nombre de la ciudad.",
           "No pedimos tu nombre real, correo, fotos ni ubicación exacta. No vendemos datos ni los usamos para publicidad.",
         ],
         after: [
-          "Compartir datos de uso es opcional. Puedes activarlo o desactivarlo en Ajustes → Privacidad y seguridad, y ahí mismo pedir que se borre lo que ya se envió. Entrar al ranking también es opcional: en la pestaña Ranking puedes salir y borrar tu cuenta y lo que el servidor guarda de ti. También puedes escribirnos para acceder a tus datos, corregirlos o eliminarlos.",
+          "Compartir datos de uso es opcional. Puedes activarlo o desactivarlo en Ajustes → Privacidad y seguridad, y ahí mismo borrar todo lo que guardamos en los servidores (tu cuenta anónima, tu progreso en línea y lo enviado); tu progreso en el teléfono no se toca. Entrar al ranking también es opcional: en la pestaña Ranking puedes salir y borrar tu cuenta y lo que el servidor guarda de ti. También puedes escribirnos para acceder a tus datos, corregirlos o eliminarlos.",
         ],
       },
       {
@@ -135,13 +137,15 @@ export const policy: Record<Lang, { title: string; intro: string; sections: Poli
         title: "What data is kept",
         bullets: [
           "On your phone: your game progress (level, reps, weapons, eras) and settings.",
+          "Online progress: with an anonymous account (no email or password) we keep on Unity Gaming Services servers (Unity Technologies) a copy of your game progress: player name, level, reps, wins and losses, currencies, streak, Hero Pass, ads watched, purchases, game version and language. We use it to support you, moderate the game (for example, against cheating) and send you gifts from the team. It does not include your image, your city or your location, and other players don't see it.",
+          "Codes and friends' tournaments: if you redeem a code we keep that you used it; if you play a friends' tournament we keep your attempts, and its players see your player name, level and score.",
           "Usage data, only if you agree: anonymous information about how the game is played, such as play time, sessions, levels, fights won or lost, reps per fight, chests opened, phone model, operating system, approximate country and a random install ID. It is processed with Unity Analytics (Unity Technologies) and used only to improve the game and its balance.",
           "Ranking, only if you join: an anonymous account is created (no email or password) and we store on Unity Gaming Services servers (Unity Technologies) your player name, frame, level, the reps, duration and pace of your fights, and the city and country you pick. Other players see your name, frame, level, reps this week and city.",
           "To suggest your city the phone's approximate location can be used, if you grant permission. The coordinates are used on the phone to find the nearest city and are never sent or stored: only the city name.",
           "We don't ask for your real name, email, photos or exact location. We don't sell data or use it for advertising.",
         ],
         after: [
-          "Sharing usage data is optional. You can turn it on or off in Settings → Privacy and safety, and request deletion of what was already sent there. Joining the ranking is optional too: in the Ranking tab you can leave and delete your account and what the server keeps about you. You can also write to us to access, correct or delete your data.",
+          "Sharing usage data is optional. You can turn it on or off in Settings → Privacy and safety, and delete everything we keep on the servers there (your anonymous account, your online progress and what was sent); your progress on the phone is kept. Joining the ranking is optional too: in the Ranking tab you can leave and delete your account and what the server keeps about you. You can also write to us to access, correct or delete your data.",
         ],
       },
       {
