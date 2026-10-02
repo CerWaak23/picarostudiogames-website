@@ -5,11 +5,11 @@ import { LanguageProvider } from "@/lib/LanguageContext";
 export const metadata: Metadata = {
   title: "Picaro Game Studio",
   description:
-    "Indie game studio crafting tactical and strategy experiences. Home of Ghost Directive.",
-  keywords: ["indie game studio", "tactical games", "strategy games", "Ghost Directive"],
+    "Chilean indie game studio. Home of Fitness Era, Powder & Sail and Ghost Directive.",
+  keywords: ["indie game studio", "Chilean game studio", "Chile", "Fitness Era", "Powder & Sail", "Ghost Directive"],
   openGraph: {
     title: "Picaro Game Studio",
-    description: "Indie game studio crafting tactical and strategy experiences.",
+    description: "Games from the end of the world. Chilean indie game studio.",
     url: "https://picarogamestudio.com",
     siteName: "Picaro Game Studio",
     type: "website",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Picaro Game Studio",
-    description: "Indie game studio crafting tactical and strategy experiences.",
+    description: "Games from the end of the world. Chilean indie game studio.",
   },
 };
 

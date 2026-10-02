@@ -17,7 +17,7 @@ export default function Home() {
   const stats = [
     { label: tr.about.stat1, value: String(games.length) },
     { label: tr.about.stat2, value: "Unity" },
-    { label: tr.about.stat3, value: lang === "es" ? "Táctica · Acción" : "Tactics · Action" },
+    { label: tr.about.stat3, value: lang === "es" ? "Ingenio · Cultura" : "Wit · Culture" },
     { label: tr.about.stat4, value: lang === "es" ? "PC · Móvil" : "PC · Mobile" },
   ];
 

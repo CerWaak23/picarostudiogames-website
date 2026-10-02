@@ -9,8 +9,8 @@ export const t = {
       support: "Support",
     },
     hero: {
-      badge: "Indie Game Studio",
-      tagline: "We build games that make you think. Tactical experiences crafted with care — where every decision matters.",
+      badge: "Indie Game Studio · Chile",
+      tagline: "We make games with wit and picardía — and along the way, we share a bit of Chile with the world.",
       cta: "See Our Games",
       about: "About Us",
       scroll: "Scroll",
@@ -26,15 +26,15 @@ export const t = {
     about: {
       sectionLabel: "About",
       title: "Who We Are",
-      p1: "Picaro Game Studio is an indie game studio focused on creating thoughtful, strategic experiences. We believe great games reward patience, planning, and creativity.",
+      p1: "Pícaro Game Studio is a Chilean indie studio. We make games with our own ideas and a lot of love for the craft.",
       p2: "Today we're building two mobile games: Fitness Era, where real exercise powers every fight, and Powder & Sail, a pirate roguelite on the open sea. Our first project, Ghost Directive, a tactical stealth game, is currently on hold.",
-      p3: "We're a small studio with big ambitions — building every detail with intention and passion for the craft.",
+      p3: "We're inspired by Chile's stories and its picardía — our word for wit with a wink — and we love sharing a bit of that with the world. We're a small studio, and what we lack in budget we make up for with ideas.",
       stat1: "Games",
       stat2: "Engine",
-      stat3: "Genre Focus",
+      stat3: "Our Signature",
       stat4: "Platforms",
       role: "Founder & Game Developer",
-      bio: "Designer, developer, and creative director behind Picaro Game Studio. Building games from Chile.",
+      bio: "Designer, developer, and creative director behind Pícaro Game Studio. Building games from Chile, at the end of the world.",
     },
     contact: {
       sectionLabel: "Contact",
@@ -43,7 +43,7 @@ export const t = {
     },
     footer: {
       rights: "All rights reserved.",
-      made: "Made with passion in Chile",
+      made: "Made with picardía in Chile",
     },
   },
   es: {
@@ -54,8 +54,8 @@ export const t = {
       support: "Apoyar",
     },
     hero: {
-      badge: "Estudio de Videojuegos Indie",
-      tagline: "Hacemos juegos que te hacen pensar. Experiencias tácticas construidas con cuidado — donde cada decisión importa.",
+      badge: "Estudio Indie Chileno",
+      tagline: "Hacemos juegos con ingenio y picardía, y en el camino mostramos un poco de Chile al mundo.",
       cta: "Ver Nuestros Juegos",
       about: "Sobre Nosotros",
       scroll: "Bajar",
@@ -71,15 +71,15 @@ export const t = {
     about: {
       sectionLabel: "Nosotros",
       title: "Quiénes Somos",
-      p1: "Picaro Game Studio es un estudio indie enfocado en crear experiencias estratégicas y reflexivas. Creemos que los grandes juegos recompensan la paciencia, la planificación y la creatividad.",
+      p1: "Pícaro Game Studio es un estudio indie chileno. Hacemos juegos con ideas propias y mucho cariño por el oficio.",
       p2: "Hoy estamos creando dos juegos para celular: Fitness Era, donde el ejercicio de verdad mueve cada pelea, y Powder & Sail, un roguelite pirata en mar abierto. Nuestro primer proyecto, Ghost Directive, un juego de sigilo táctico, está en pausa.",
-      p3: "Somos un estudio pequeño con grandes ambiciones — construyendo cada detalle con intención y pasión.",
+      p3: "Nos inspiran las historias y la picardía de Chile, y nos gusta llevar un poco de eso al mundo. Somos un estudio pequeño, y lo que no tenemos en presupuesto lo compensamos con ideas.",
       stat1: "Juegos",
       stat2: "Motor",
-      stat3: "Género",
+      stat3: "Sello",
       stat4: "Plataformas",
       role: "Fundador & Desarrollador",
-      bio: "Diseñador, desarrollador y director creativo detrás de Picaro Game Studio. Creando juegos desde Chile.",
+      bio: "Diseñador, desarrollador y director creativo detrás de Pícaro Game Studio. Creando juegos desde Chile, en el fin del mundo.",
     },
     contact: {
       sectionLabel: "Contacto",
@@ -88,7 +88,7 @@ export const t = {
     },
     footer: {
       rights: "Todos los derechos reservados.",
-      made: "Hecho con pasión en Chile",
+      made: "Hecho con picardía en Chile",
     },
   },
 } as const;
