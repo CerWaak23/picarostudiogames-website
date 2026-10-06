@@ -1,0 +1,25 @@
+/** Nombre legible de cada acción del panel, para la pantalla Auditoría. */
+export const ACTION_LABELS: Record<string, string> = {
+  "players.summary": "Vio las métricas",
+  "players.search": "Buscó jugadores",
+  "players.view": "Abrió un jugador",
+  "players.ban": "Baneó o desbaneó",
+  "players.hide": "Quitó del ranking",
+  "players.show": "Devolvió al ranking",
+  "players.gift": "Regaló o quitó",
+  "players.admin": "Cambió un administrador",
+  "players.reset": "Reinició una cuenta",
+  "players.restore": "Recuperó una cuenta",
+  "messages.send": "Envió un mensaje",
+  "messages.delete": "Borró un mensaje",
+  "messages.results": "Vio respuestas",
+  "feedback.done": "Marcó un feedback",
+  "reports.done": "Marcó un reporte",
+  "reports.data": "Descargó un reporte",
+  "codes.create": "Creó un código",
+  "codes.pause": "Pausó o reanudó un código",
+  "photos.list": "Revisó fotos",
+  "photos.approve": "Aprobó una foto",
+  "photos.reject": "Rechazó una foto",
+};
+export const labelFor = (action: string) => ACTION_LABELS[action] ?? action;

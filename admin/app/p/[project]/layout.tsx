@@ -18,7 +18,8 @@ export default async function ProjectLayout({ children, params }: { children: Re
   const items: NavItem[] = [
     { href: `/p/${project.id}`, label: "Resumen", icon: "home", exact: true },
     ...project.modules
-      .filter((m) => MODULES[m]?.ready)
+      // La auditoría revela quién hizo qué: solo para owners.
+      .filter((m) => MODULES[m]?.ready && (m !== "audit" || role === "owner"))
       .map((m) => ({ href: `/p/${project.id}/${m}`, label: MODULES[m].label, icon: MODULES[m].icon })),
   ];
 

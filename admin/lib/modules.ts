@@ -11,6 +11,6 @@ export const MODULES: Record<ModuleId, { label: string; icon: IconName; ready: b
   codes: { label: "Códigos", icon: "ticket", ready: true },
   photos: { label: "Fotos", icon: "image", ready: true },
   ban: { label: "Baneos", icon: "shield", ready: false },
-  admins: { label: "Admins", icon: "shield", ready: false },
-  audit: { label: "Auditoría", icon: "list", ready: false },
+  admins: { label: "Admins", icon: "shield", ready: true },
+  audit: { label: "Auditoría", icon: "list", ready: true },
 };
