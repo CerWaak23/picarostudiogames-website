@@ -3,8 +3,6 @@
 import { useState, useTransition } from "react";
 import { createCode, pauseCode } from "./actions";
 
-const box: React.CSSProperties = { padding: 10, borderRadius: 8, border: "1px solid var(--surface-2)", background: "var(--bg)", color: "var(--text)", fontSize: "1rem", width: "100%" };
-
 export function CodeForm({ projectId }: { projectId: string }) {
   const [pending, start] = useTransition();
   const [code, setCode] = useState("");
@@ -32,31 +30,33 @@ export function CodeForm({ projectId }: { projectId: string }) {
     });
 
   return (
-    <div className="card" style={{ display: "grid", gap: 12 }}>
-      <label>Código (4 a 16 letras o números; vacío = al azar)
-        <input style={box} value={code} maxLength={16} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="Ej. SANTI500" />
+    <div className="stack">
+      <label className="field">Código (4 a 16 letras o números; vacío = al azar)
+        <input className="input" value={code} maxLength={16} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="Ej. SANTI500" autoCapitalize="characters" />
       </label>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
-        <label>Cristales<input style={box} type="number" min={0} value={crystals} onChange={(e) => setCrystals(e.target.value)} /></label>
-        <label>Oro<input style={box} type="number" min={0} value={gold} onChange={(e) => setGold(e.target.value)} /></label>
-        <label>Días de pase<input style={box} type="number" min={0} value={pass} onChange={(e) => setPass(e.target.value)} /></label>
+      <div className="grid-3">
+        <label className="field">Cristales<input className="input" type="number" inputMode="numeric" min={0} value={crystals} onChange={(e) => setCrystals(e.target.value)} /></label>
+        <label className="field">Oro<input className="input" type="number" inputMode="numeric" min={0} value={gold} onChange={(e) => setGold(e.target.value)} /></label>
+        <label className="field">Días de pase<input className="input" type="number" inputMode="numeric" min={0} value={pass} onChange={(e) => setPass(e.target.value)} /></label>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-        <label>Usos máximos (0 = sin límite)<input style={box} type="number" min={0} value={maxUses} onChange={(e) => setMaxUses(e.target.value)} /></label>
-        <label>Vence en días (0 = nunca)<input style={box} type="number" min={0} value={days} onChange={(e) => setDays(e.target.value)} /></label>
+      <div className="grid-2">
+        <label className="field">Usos máximos (0 = sin límite)<input className="input" type="number" inputMode="numeric" min={0} value={maxUses} onChange={(e) => setMaxUses(e.target.value)} /></label>
+        <label className="field">Vence en días (0 = nunca)<input className="input" type="number" inputMode="numeric" min={0} value={days} onChange={(e) => setDays(e.target.value)} /></label>
       </div>
-      <label>Nota interna (a quién va, máx. 40)<input style={box} value={note} maxLength={40} onChange={(e) => setNote(e.target.value)} /></label>
-      {msg && <div className={msg.ok ? "" : "err"} style={msg.ok ? { color: "var(--gold)" } : undefined}>{msg.text}</div>}
+      <label className="field">Nota interna (a quién va)
+        <input className="input" value={note} maxLength={40} onChange={(e) => setNote(e.target.value)} placeholder="Máx. 40 caracteres" />
+      </label>
+      {msg && <p className={`notice ${msg.ok ? "ok" : "err"}`} role="status">{msg.text}</p>}
       {confirm ? (
-        <div style={{ display: "grid", gap: 8 }}>
-          <div>Se creará <strong>{code || "un código al azar"}</strong>: {reward || "nada"} · {uses} · {expiry}.</div>
-          <div style={{ display: "flex", gap: 8 }}>
+        <div className="notice gold stack" style={{ gap: 10 }}>
+          <span>Se creará <strong>{code || "un código al azar"}</strong>: {reward || "nada"}, {uses}, {expiry}.</span>
+          <span className="cluster">
             <button className="btn" disabled={pending} onClick={create}>Sí, crear</button>
-            <button className="btn ghost" onClick={() => setConfirm(false)}>Cancelar</button>
-          </div>
+            <button className="btn quiet" onClick={() => setConfirm(false)}>Cancelar</button>
+          </span>
         </div>
       ) : (
-        <div><button className="btn" disabled={pending || !reward} onClick={() => setConfirm(true)}>Crear…</button></div>
+        <div><button className="btn" disabled={pending || !reward} onClick={() => setConfirm(true)}>Revisar y crear</button></div>
       )}
     </div>
   );
@@ -66,12 +66,12 @@ export function PauseButton({ projectId, code, paused }: { projectId: string; co
   const [pending, start] = useTransition();
   const [err, setErr] = useState("");
   return (
-    <>
-      <button className="btn ghost" disabled={pending}
+    <div className="cluster">
+      <button className="btn quiet sm" disabled={pending}
               onClick={() => start(async () => { const r = await pauseCode(projectId, code, !paused); setErr(r.ok ? "" : r.message); })}>
         {paused ? "Reanudar" : "Pausar"}
       </button>
-      {err && <span className="err"> {err}</span>}
-    </>
+      {err && <span className="notice err" role="status">{err}</span>}
+    </div>
   );
 }

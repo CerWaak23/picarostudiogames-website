@@ -38,7 +38,7 @@ export const fitnessera: ProjectConfig = {
       "reports.done": { script: "Mensajes", params: { action: "reporte_revisado" } },
     },
   },
-  modules: ["kpis", "players", "ban", "codes", "messages", "feedback", "admins", "audit"],
+  modules: ["kpis", "players", "messages", "feedback", "codes", "admins", "audit"],
   roles: {
     "picarogamestudio@gmail.com": "owner",
   },

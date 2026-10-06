@@ -18,22 +18,21 @@ export default function ItemActions({ projectId, id, done, kind, restartFor, dow
     });
 
   return (
-    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 8, alignItems: "center" }}>
-      <button className="btn ghost" disabled={pending}
+    <div className="cluster" style={{ marginTop: 4 }}>
+      <button className="btn quiet sm" disabled={pending}
               onClick={() => go(() => (kind === "feedback" ? markFeedback(projectId, id, !done) : markReport(projectId, id, !done)))}>
         {done ? "Marcar pendiente" : "Marcar revisado"}
       </button>
-      {downloadHref && <a className="btn ghost" href={downloadHref} style={{ display: "inline-block" }}>Descargar datos</a>}
+      {downloadHref && <a className="btn quiet sm" href={downloadHref}>Descargar datos</a>}
       {restartFor && !done && (sure ? (
         <>
-          <button className="btn" style={{ background: "var(--danger)", color: "#fff" }} disabled={pending}
-                  onClick={() => go(() => acceptRestart(projectId, id, restartFor))}>Sí, reiniciar su cuenta</button>
-          <button className="btn ghost" onClick={() => setSure(false)}>Cancelar</button>
+          <button className="btn danger sm" disabled={pending} onClick={() => go(() => acceptRestart(projectId, id, restartFor))}>Sí, reiniciar su cuenta</button>
+          <button className="btn quiet sm" onClick={() => setSure(false)}>Cancelar</button>
         </>
       ) : (
-        <button className="btn ghost" style={{ color: "var(--danger)" }} onClick={() => setSure(true)}>Aceptar y reiniciar</button>
+        <button className="btn quiet sm danger-text" onClick={() => setSure(true)}>Aceptar y reiniciar</button>
       ))}
-      {err && <span className="err">{err}</span>}
+      {err && <span className="notice err" role="status">{err}</span>}
     </div>
   );
 }

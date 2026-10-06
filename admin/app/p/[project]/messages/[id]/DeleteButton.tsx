@@ -18,15 +18,15 @@ export default function DeleteButton({ projectId, id }: { projectId: string; id:
     });
 
   return (
-    <div style={{ marginTop: 28 }}>
-      {err && <p className="err">{err}</p>}
+    <div className="section">
+      {err && <p className="notice err" style={{ marginBottom: 10 }}>{err}</p>}
       {sure ? (
-        <span style={{ display: "inline-flex", gap: 8 }}>
-          <button className="btn" style={{ background: "var(--danger)", color: "#fff" }} disabled={pending} onClick={del}>Sí, borrar mensaje</button>
-          <button className="btn ghost" onClick={() => setSure(false)}>Cancelar</button>
+        <span className="cluster">
+          <button className="btn danger" disabled={pending} onClick={del}>Sí, borrar mensaje</button>
+          <button className="btn quiet" onClick={() => setSure(false)}>Cancelar</button>
         </span>
       ) : (
-        <button className="btn ghost" style={{ color: "var(--danger)" }} onClick={() => setSure(true)}>Borrar mensaje</button>
+        <button className="btn quiet danger-text" onClick={() => setSure(true)}>Borrar mensaje</button>
       )}
     </div>
   );

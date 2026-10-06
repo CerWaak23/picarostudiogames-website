@@ -1,18 +1,48 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { requireAccess } from "@/lib/access";
-import { backendFor } from "@/lib/backends";
-import { audit } from "@/lib/audit";
+import { runAdmin } from "@/lib/run";
 
+type Row = { id: string; name: string; level: number; reps: number; streak: number; banned: boolean };
 type Summary = {
   players: number; activeToday: number; active7: number; new7: number;
   reps: number; hours: number; minPerDay: number; minPerSession: number;
   ads: number; buys: number; payers: number; passActive: number; banned: number; avgLevel: number;
-  topReps?: Row[]; topLevel?: Row[];
+  topReps?: Row[]; topLevel?: Row[]; topStreak?: Row[];
 };
-type Row = { id: string; name: string; level: number; reps: number; streak: number; banned: boolean };
 
-const nf = new Intl.NumberFormat("es-CL");
+const nf = new Intl.NumberFormat("es-CL", { maximumFractionDigits: 1 });
+
+function Group({ title, items }: { title: string; items: [string, number][] }) {
+  return (
+    <div>
+      <div className="section-title"><h2>{title}</h2></div>
+      <dl className="panel pad kv" style={{ margin: 0 }}>
+        {items.map(([k, v]) => (
+          <div key={k}><dt>{k}</dt><dd>{nf.format(v)}</dd></div>
+        ))}
+      </dl>
+    </div>
+  );
+}
+
+function Top({ title, rows, unit, pick, base }: { title: string; rows?: Row[]; unit: string; pick: (r: Row) => number; base: string }) {
+  if (!rows?.length) return null;
+  return (
+    <div>
+      <div className="section-title"><h2>{title}</h2></div>
+      <div className="panel rows">
+        {rows.slice(0, 5).map((r, i) => (
+          <Link key={r.id} href={`${base}/${r.id}`} className="row">
+            <div className="main"><div className="title">{i + 1}. {r.name || "Sin nombre"}{r.banned && <span className="badge danger">baneado</span>}</div></div>
+            <div className="aside">{nf.format(pick(r))} {unit}</div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default async function Kpis(props: { params: Promise<{ project: string }> }) {
   const params = await props.params;
@@ -26,64 +56,37 @@ export default async function Kpis(props: { params: Promise<{ project: string }>
   const { project } = access;
   if (!project.modules.includes("kpis")) notFound();
 
-  const res = await backendFor(project).call({ action: "players.summary", params: {} });
-  audit({ who: session!.user!.email!, project: project.id, action: "players.summary" });
-  const out = res.ok ? (res.data as (Summary & { ok?: boolean; reason?: string })) : null;
-
-  const tiles: [string, string][] = out && out.ok !== false ? [
-    ["Jugadores", nf.format(out.players)],
-    ["Activos hoy", nf.format(out.activeToday)],
-    ["Activos 7 días", nf.format(out.active7)],
-    ["Nuevos 7 días", nf.format(out.new7)],
-    ["Repeticiones", nf.format(out.reps)],
-    ["Horas jugadas", nf.format(out.hours)],
-    ["Min por día", nf.format(out.minPerDay)],
-    ["Min por sesión", nf.format(out.minPerSession)],
-    ["Nivel promedio", nf.format(out.avgLevel)],
-    ["Anuncios vistos", nf.format(out.ads)],
-    ["Compras", nf.format(out.buys)],
-    ["Pagadores", nf.format(out.payers)],
-    ["Pase activo", nf.format(out.passActive)],
-    ["Baneados", nf.format(out.banned)],
-  ] : [];
+  const res = await runAdmin<Summary>(project.id, "players.summary", {}, { target: "resumen" });
+  const s = res.ok ? res.data : undefined;
+  const base = `/p/${project.id}/players`;
 
   return (
-    <main>
-      <p><a href={`/p/${project.id}`}>← {project.name}</a></p>
-      <h1>KPIs</h1>
-      {!out || out.ok === false ? (
-        <p className="err">No se pudo leer: {res.error ?? out?.reason ?? "error"}</p>
-      ) : (
-        <>
-          <div className="grid">
-            {tiles.map(([k, v]) => (
-              <div key={k} className="card">
-                <div className="muted">{k}</div>
-                <div style={{ fontSize: "1.6rem", fontWeight: 700 }}>{v}</div>
-              </div>
-            ))}
-          </div>
-          <Top title="Más repeticiones" rows={out.topReps} />
-          <Top title="Mayor nivel" rows={out.topLevel} />
-        </>
-      )}
-    </main>
-  );
-}
-
-function Top({ title, rows }: { title: string; rows?: Row[] }) {
-  if (!rows?.length) return null;
-  return (
-    <section style={{ marginTop: 28 }}>
-      <h2 style={{ fontSize: "1.1rem" }}>{title}</h2>
-      <div className="card">
-        {rows.slice(0, 10).map((r, i) => (
-          <div key={r.id} style={{ display: "flex", justifyContent: "space-between", padding: "4px 0" }}>
-            <span>{i + 1}. {r.name || "Sin nombre"} {r.banned && <span className="tag">baneado</span>}</span>
-            <span className="muted">nivel {r.level} · {nf.format(r.reps)} reps · racha {r.streak}</span>
-          </div>
-        ))}
+    <>
+      <div className="page-head">
+        <h1>Métricas</h1>
+        <p>Cifras del juego completo. Se calculan al abrir esta página.</p>
       </div>
-    </section>
+      {!s ? (
+        <p className="notice err">No se pudo leer: {res.message}</p>
+      ) : (
+        <div className="stack" style={{ gap: 28 }}>
+          <div className="grid-2" style={{ alignItems: "start" }}>
+            <Group title="Actividad" items={[["Jugadores", s.players], ["Activos hoy", s.activeToday], ["Activos en 7 días", s.active7], ["Nuevos en 7 días", s.new7]]} />
+            <Group title="Tiempo de uso" items={[["Horas jugadas", s.hours], ["Minutos por día", s.minPerDay], ["Minutos por sesión", s.minPerSession]]} />
+          </div>
+          <div className="grid-2" style={{ alignItems: "start" }}>
+            <Group title="Ingresos" items={[["Anuncios vistos", s.ads], ["Compras", s.buys], ["Pagadores", s.payers], ["Pase activo", s.passActive]]} />
+            <Group title="Juego" items={[["Repeticiones", s.reps], ["Nivel promedio", s.avgLevel], ["Baneados", s.banned]]} />
+          </div>
+          <div className="grid-2" style={{ alignItems: "start" }}>
+            <Top title="Más repeticiones" rows={s.topReps} unit="reps" pick={(r) => r.reps} base={base} />
+            <Top title="Mayor nivel" rows={s.topLevel} unit="nivel" pick={(r) => r.level} base={base} />
+          </div>
+          <div className="grid-2" style={{ alignItems: "start" }}>
+            <Top title="Mejor racha" rows={s.topStreak} unit="días" pick={(r) => r.streak} base={base} />
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { requireAccess } from "@/lib/access";
 import { backendFor } from "@/lib/backends";
 import { audit } from "@/lib/audit";
+import Icon from "@/components/Icon";
 
 type Row = {
   id: string; name: string; level: number; last: number; reps: number; streak: number;
@@ -11,7 +13,7 @@ type Row = {
 type Found = { ok?: boolean; reason?: string; total?: number; players?: Row[] };
 
 const nf = new Intl.NumberFormat("es-CL");
-const day = (unix: number) => (unix ? new Date(unix * 1000).toLocaleDateString("es-CL", { timeZone: "America/Santiago" }) : "—");
+const day = (unix: number) => (unix ? new Date(unix * 1000).toLocaleDateString("es-CL", { timeZone: "America/Santiago", day: "numeric", month: "short" }) : "nunca");
 
 export default async function Players(props: {
   params: Promise<{ project: string }>;
@@ -33,58 +35,56 @@ export default async function Players(props: {
   const res = await backendFor(project).call({ action: "players.search", params: { q } });
   audit({ who: session!.user!.email!, project: project.id, action: "players.search", detail: { q } });
   const out = res.ok ? (res.data as Found) : null;
+  const shown = out?.players?.length ?? 0;
 
   return (
-    <main>
-      <p><a href={`/p/${project.id}`}>← {project.name}</a></p>
-      <h1>Jugadores</h1>
-      <form method="get" style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-        <input
-          name="q"
-          defaultValue={q}
-          placeholder="Nombre o inicio del id"
-          maxLength={40}
-          style={{ flex: 1, padding: 10, borderRadius: 8, border: "1px solid var(--surface-2)", background: "var(--surface)", color: "var(--text)", fontSize: "1rem" }}
-        />
+    <>
+      <div className="page-head">
+        <h1>Jugadores</h1>
+        <p>Busca por nombre o por el inicio de su id. Abre uno para ver su perfil de juego y moderarlo.</p>
+      </div>
+
+      <form method="get" className="cluster" style={{ flexWrap: "nowrap", marginBottom: 18 }}>
+        <input className="input" name="q" defaultValue={q} placeholder="Nombre o inicio del id" maxLength={40} aria-label="Buscar jugador" />
         <button className="btn">Buscar</button>
+        {q && <Link href={`/p/${project.id}/players`} className="btn quiet">Limpiar</Link>}
       </form>
 
       {!out || out.ok === false ? (
-        <p className="err">No se pudo buscar: {res.error ?? out?.reason ?? "error"}</p>
+        <p className="notice err">No se pudo buscar: {res.error ?? out?.reason ?? "error"}</p>
+      ) : shown === 0 ? (
+        <div className="panel empty">
+          <strong>{q ? "Nadie con ese nombre." : "Aún no hay jugadores."}</strong>
+          {q ? "Prueba con otra parte del nombre o con el id." : "Cuando alguien abra el juego aparecerá aquí."}
+        </div>
       ) : (
         <>
-          <p className="muted">{nf.format(out.total ?? 0)} jugadores{(out.total ?? 0) > (out.players?.length ?? 0) ? ` (mostrando ${out.players?.length})` : ""}</p>
-          <div className="card" style={{ padding: 0, overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 560 }}>
-              <thead>
-                <tr className="muted" style={{ textAlign: "left" }}>
-                  <th style={th}>Jugador</th><th style={th}>Nivel</th><th style={th}>Reps</th><th style={th}>Racha</th><th style={th}>Visto</th>
-                </tr>
-              </thead>
-              <tbody>
-                {out.players?.map((p) => (
-                  <tr key={p.id} style={{ borderTop: "1px solid var(--surface-2)" }}>
-                    <td style={td}>
-                      <a href={`/p/${project.id}/players/${p.id}`}>{p.name || "Sin nombre"}</a>
-                      {p.banned && <span className="tag">baneado</span>}
-                      {p.hidden && <span className="tag">oculto</span>}
-                      {p.noProfile && <span className="tag">sin perfil</span>}
-                      <div className="muted" style={{ fontSize: ".75rem" }}>{p.id}</div>
-                    </td>
-                    <td style={td}>{p.level}</td>
-                    <td style={td}>{nf.format(p.reps)}</td>
-                    <td style={td}>{p.streak}</td>
-                    <td style={td}>{day(p.last)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <p className="faint" style={{ fontSize: "0.82rem", marginBottom: 10 }}>
+            {nf.format(out.total ?? shown)} jugador{(out.total ?? shown) === 1 ? "" : "es"}
+            {(out.total ?? 0) > shown ? `, mostrando ${shown}` : ""}
+          </p>
+          <div className="panel rows">
+            {out.players!.map((p) => (
+              <Link key={p.id} href={`/p/${project.id}/players/${p.id}`} className="row">
+                <div className="main">
+                  <div className="title">
+                    {p.name || "Sin nombre"}
+                    {p.banned && <span className="badge danger">baneado</span>}
+                    {p.hidden && <span className="badge">oculto</span>}
+                    {p.noProfile && <span className="badge">sin perfil</span>}
+                  </div>
+                  <div className="sub"><span className="mono">{p.id.slice(0, 8)}</span> · visto {day(p.last)}</div>
+                </div>
+                <div className="aside">
+                  <div>Nivel {p.level}</div>
+                  <div className="faint">{nf.format(p.reps)} reps{p.streak > 0 ? ` · racha ${p.streak}` : ""}</div>
+                </div>
+                <Icon name="chevron" className="chev" />
+              </Link>
+            ))}
           </div>
         </>
       )}
-    </main>
+    </>
   );
 }
-
-const th: React.CSSProperties = { padding: "10px 12px", fontWeight: 500, fontSize: ".8rem" };
-const td: React.CSSProperties = { padding: "10px 12px", verticalAlign: "top" };
