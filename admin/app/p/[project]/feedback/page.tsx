@@ -9,7 +9,8 @@ type Rep = { id: string; p: string; n: string; kind: string; cat: string; text: 
 
 const when = (unix: number) => new Date(unix * 1000).toLocaleString("es-CL", { timeZone: "America/Santiago", dateStyle: "short", timeStyle: "short" });
 
-export default async function Feedback({ params }: { params: { project: string } }) {
+export default async function Feedback(props: { params: Promise<{ project: string }> }) {
+  const params = await props.params;
   const session = await auth();
   let access;
   try {

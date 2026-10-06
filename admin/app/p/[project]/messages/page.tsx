@@ -10,7 +10,8 @@ type Player = { id: string; name: string };
 const KIND: Record<string, string> = { none: "aviso", text: "texto", one: "una opción", many: "varias", stars: "nota 1-5" };
 const when = (unix: number) => new Date(unix * 1000).toLocaleString("es-CL", { timeZone: "America/Santiago", dateStyle: "short", timeStyle: "short" });
 
-export default async function Messages({ params }: { params: { project: string } }) {
+export default async function Messages(props: { params: Promise<{ project: string }> }) {
+  const params = await props.params;
   const session = await auth();
   let access;
   try {

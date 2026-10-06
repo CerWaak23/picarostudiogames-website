@@ -14,7 +14,8 @@ type Row = { id: string; name: string; level: number; reps: number; streak: numb
 
 const nf = new Intl.NumberFormat("es-CL");
 
-export default async function Kpis({ params }: { params: { project: string } }) {
+export default async function Kpis(props: { params: Promise<{ project: string }> }) {
+  const params = await props.params;
   const session = await auth();
   let access;
   try {

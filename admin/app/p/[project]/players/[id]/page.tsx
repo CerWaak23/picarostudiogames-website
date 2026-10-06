@@ -20,7 +20,8 @@ function show(v: unknown): string {
   return String(v);
 }
 
-export default async function PlayerPage({ params }: { params: { project: string; id: string } }) {
+export default async function PlayerPage(props: { params: Promise<{ project: string; id: string }> }) {
+  const params = await props.params;
   const session = await auth();
   let access;
   try {

@@ -5,7 +5,8 @@ import { requireAccess } from "@/lib/access";
 /** Módulos ya construidos; el resto aparece como pendiente. */
 const READY = ["kpis", "players", "messages", "feedback", "codes"];
 
-export default async function ProjectPage({ params }: { params: { project: string } }) {
+export default async function ProjectPage(props: { params: Promise<{ project: string }> }) {
+  const params = await props.params;
   const session = await auth();
   let access;
   try {

@@ -12,7 +12,8 @@ type Res = {
 
 const when = (unix: number) => new Date(unix * 1000).toLocaleString("es-CL", { timeZone: "America/Santiago", dateStyle: "short", timeStyle: "short" });
 
-export default async function MessageResults({ params }: { params: { project: string; id: string } }) {
+export default async function MessageResults(props: { params: Promise<{ project: string; id: string }> }) {
+  const params = await props.params;
   const session = await auth();
   let access;
   try {

@@ -13,13 +13,12 @@ type Found = { ok?: boolean; reason?: string; total?: number; players?: Row[] };
 const nf = new Intl.NumberFormat("es-CL");
 const day = (unix: number) => (unix ? new Date(unix * 1000).toLocaleDateString("es-CL", { timeZone: "America/Santiago" }) : "—");
 
-export default async function Players({
-  params,
-  searchParams,
-}: {
-  params: { project: string };
-  searchParams: { q?: string };
+export default async function Players(props: {
+  params: Promise<{ project: string }>;
+  searchParams: Promise<{ q?: string }>;
 }) {
+  const params = await props.params;
+  const searchParams = await props.searchParams;
   const session = await auth();
   let access;
   try {

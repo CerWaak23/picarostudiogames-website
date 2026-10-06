@@ -1,6 +1,7 @@
 import { signIn } from "@/auth";
 
-export default function Login({ searchParams }: { searchParams: { error?: string } }) {
+export default async function Login(props: { searchParams: Promise<{ error?: string }> }) {
+  const searchParams = await props.searchParams;
   return (
     <div className="center">
       <div className="card" style={{ maxWidth: 360, textAlign: "center" }}>

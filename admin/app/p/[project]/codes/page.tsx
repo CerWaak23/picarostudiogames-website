@@ -19,7 +19,8 @@ function status(c: Code, now: number): [string, string] {
   return ["activo", "var(--gold)"];
 }
 
-export default async function Codes({ params }: { params: { project: string } }) {
+export default async function Codes(props: { params: Promise<{ project: string }> }) {
+  const params = await props.params;
   const session = await auth();
   let access;
   try {
