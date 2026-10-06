@@ -2,7 +2,7 @@
 export type Role = "owner" | "viewer";
 
 /** Módulos que un juego puede activar. Cada uno es una pantalla + acciones. */
-export type ModuleId = "kpis" | "players" | "ban" | "codes" | "messages" | "feedback" | "admins" | "audit";
+export type ModuleId = "kpis" | "players" | "ban" | "codes" | "messages" | "feedback" | "photos" | "admins" | "audit";
 
 /** Un backend sabe ejecutar una acción de admin de un juego. Cada tipo (ugs, http…) lo implementa. */
 export interface Backend {
