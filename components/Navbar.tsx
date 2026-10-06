@@ -49,6 +49,7 @@ export default function Navbar({ solid = false }: { solid?: boolean }) {
           {hasSupport && <NavLink href="/#apoyar" dark={dark}>{tr.nav.support}</NavLink>}
           <NavLink href="/#contact" dark={dark}>{tr.nav.contact}</NavLink>
           <LangToggle lang={lang} setLang={setLang} dark={dark} />
+          <AdminLink dark={dark} />
         </div>
 
         {/* Mobile burger */}
@@ -77,6 +78,7 @@ export default function Navbar({ solid = false }: { solid?: boolean }) {
           {hasSupport && <NavLink href="/#apoyar" onClick={() => setMenuOpen(false)}>{tr.nav.support}</NavLink>}
           <NavLink href="/#contact" onClick={() => setMenuOpen(false)}>{tr.nav.contact}</NavLink>
           <LangToggle lang={lang} setLang={setLang} />
+          <AdminLink />
         </div>
       )}
     </nav>
@@ -101,6 +103,21 @@ function NavLink({
     >
       {children}
     </Link>
+  );
+}
+
+/** Acceso al panel del estudio: discreto a propósito. Lo protege el login de Google, no el secreto. */
+function AdminLink({ dark }: { dark?: boolean }) {
+  return (
+    <a
+      href="https://admin.picarogamestudio.com"
+      rel="noopener noreferrer"
+      className={`text-[11px] font-mono tracking-widest uppercase opacity-[.55] hover:opacity-100 transition-opacity ${
+        dark ? "text-gray-700" : "text-text-secondary hover:text-gold"
+      }`}
+    >
+      Admin
+    </a>
   );
 }
 
