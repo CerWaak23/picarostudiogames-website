@@ -54,6 +54,11 @@ export async function giftPlayer(projectId: string, target: string, crystals: nu
   return run(projectId, "players.gift", target, { gift, note: note(why) }, { ...gift, why: note(why) });
 }
 
+/** Le llena la vida: le llega la próxima vez que abra el juego (como los regalos). */
+export async function healPlayer(projectId: string, target: string, why: string) {
+  return run(projectId, "players.gift", target, { gift: { fullHp: true }, note: note(why) }, { fullHp: true, why: note(why) });
+}
+
 export async function adminPlayer(projectId: string, target: string, on: boolean) {
   return run(projectId, "players.admin", target, { on }, { on });
 }

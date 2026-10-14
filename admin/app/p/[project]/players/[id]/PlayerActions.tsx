@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { adminPlayer, banPlayer, deletePlayer, giftPlayer, hidePlayer, resetPlayer, restorePlayer, type ActionResult } from "./actions";
+import { adminPlayer, banPlayer, deletePlayer, giftPlayer, healPlayer, hidePlayer, resetPlayer, restorePlayer, type ActionResult } from "./actions";
 
 type Props = { projectId: string; target: string; banned: boolean; hidden: boolean; isAdmin: boolean; baseAdmin: boolean };
 
@@ -72,8 +72,11 @@ export default function PlayerActions({ projectId, target, banned, hidden, isAdm
             <label className="field">Oro<input className="input" type="number" inputMode="numeric" value={gold} onChange={(e) => setGold(e.target.value)} /></label>
             <label className="field">Días de pase<input className="input" type="number" inputMode="numeric" value={pass} onChange={(e) => setPass(e.target.value)} /></label>
           </div>
-          <Two id="gift" label="Enviar" sure={`Confirmar: ${giftSummary || "nada"}`}
-               run={() => giftPlayer(projectId, target, Number(crystals), Number(gold), Number(pass), why)} />
+          <div className="cluster">
+            <Two id="gift" label="Enviar" sure={`Confirmar: ${giftSummary || "nada"}`}
+                 run={() => giftPlayer(projectId, target, Number(crystals), Number(gold), Number(pass), why)} />
+            <Two id="heal" label="Llenar la vida" sure="Sí, llenar la vida" run={() => healPlayer(projectId, target, why)} />
+          </div>
         </div>
 
         <details className="fold">
