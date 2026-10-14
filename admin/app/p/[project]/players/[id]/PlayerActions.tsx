@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { adminPlayer, banPlayer, giftPlayer, hidePlayer, resetPlayer, restorePlayer, type ActionResult } from "./actions";
+import { useRouter } from "next/navigation";
+import { adminPlayer, banPlayer, deletePlayer, giftPlayer, hidePlayer, resetPlayer, restorePlayer, type ActionResult } from "./actions";
 
 type Props = { projectId: string; target: string; banned: boolean; hidden: boolean; isAdmin: boolean; baseAdmin: boolean };
 
@@ -14,6 +15,8 @@ export default function PlayerActions({ projectId, target, banned, hidden, isAdm
   const [pass, setPass] = useState("0");
   const [why, setWhy] = useState("");
   const [typed, setTyped] = useState("");
+  const [typedDel, setTypedDel] = useState("");
+  const router = useRouter();
 
   const exec = (f: () => Promise<ActionResult>) =>
     start(async () => {
@@ -85,6 +88,23 @@ export default function PlayerActions({ projectId, target, banned, hidden, isAdm
               <button className="btn danger" disabled={pending || typed.trim() !== "REINICIAR"} onClick={() => exec(() => resetPlayer(projectId, target, typed, why))}>Reiniciar cuenta</button>
               <Two id="restore" label="Recuperar (24 h)" sure="Confirmar recuperar" run={() => restorePlayer(projectId, target)} />
             </div>
+            {!baseAdmin && (
+              <>
+                <p className="muted" style={{ marginTop: 8 }}>
+                  Borrar elimina la cuenta del todo: sus datos y su cuenta de inicio de sesión. Es para limpiar cuentas que ya nadie usa.
+                  <strong> No se puede deshacer.</strong> Si esa persona vuelve a abrir el juego, parte con una cuenta nueva. Escribe <strong>BORRAR</strong> para habilitarlo.
+                </p>
+                <div className="cluster">
+                  <input className="input" style={{ width: "11rem" }} value={typedDel} onChange={(e) => setTypedDel(e.target.value)} placeholder="BORRAR" aria-label="Escribe BORRAR para confirmar" />
+                  <button className="btn danger" disabled={pending || typedDel.trim() !== "BORRAR"}
+                          onClick={() => start(async () => {
+                            const r = await deletePlayer(projectId, target, typedDel);
+                            setMsg(r);
+                            if (r.ok) router.push(`/p/${projectId}/players`);
+                          })}>Borrar cuenta</button>
+                </div>
+              </>
+            )}
           </div>
         </details>
       </div>

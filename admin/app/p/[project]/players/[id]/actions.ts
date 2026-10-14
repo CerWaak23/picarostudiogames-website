@@ -64,6 +64,37 @@ export async function resetPlayer(projectId: string, target: string, typed: stri
   return run(projectId, "players.reset", target, { note: note(why) }, { why: note(why) });
 }
 
+/**
+ * Borra la cuenta del todo (para limpiar cuentas que ya nadie usa). Exige escribir BORRAR.
+ * Primero el juego borra sus datos; después se borra su cuenta de inicio de sesión en Unity.
+ * No se puede deshacer.
+ */
+export async function deletePlayer(projectId: string, target: string, typed: string): Promise<ActionResult> {
+  if (typed.trim() !== "BORRAR") return { ok: false, message: "Escribe BORRAR para confirmar" };
+  let email: string | undefined;
+  try {
+    const session = await auth();
+    email = session?.user?.email ?? undefined;
+    const { project } = requireAccess(email, projectId, "owner");
+    if (!ID.test(target)) return { ok: false, message: "Id de jugador inválido" };
+
+    const backend = backendFor(project);
+    const res = await backend.call({ action: "players.delete", params: { target } });
+    const data = res.data as { ok?: boolean; reason?: string } | undefined;
+    const dataOk = res.ok && data?.ok !== false;
+    const acct = dataOk && backend.deletePlayerAccount ? await backend.deletePlayerAccount(target) : null;
+    const ok = dataOk && (acct?.ok ?? false);
+    audit({ who: email!, project: project.id, action: "players.delete", target,
+            detail: { ok, data: dataOk, account: acct?.ok ?? false, reason: data?.reason ?? acct?.error } });
+    revalidatePath(`/p/${projectId}/players`);
+    if (!dataOk) return { ok: false, message: res.error ?? data?.reason ?? "No se pudo borrar" };
+    if (!acct?.ok) return { ok: false, message: `Se borraron sus datos, pero no la cuenta: ${acct?.error ?? "sin soporte"}` };
+    return { ok: true, message: "Cuenta borrada" };
+  } catch (e) {
+    return { ok: false, message: e instanceof Error ? e.message : "Error" };
+  }
+}
+
 /** Deshace un reinicio (el teléfono guarda una copia por 24 horas). */
 export async function restorePlayer(projectId: string, target: string) {
   return run(projectId, "players.restore", target, { note: "Recuperación" });

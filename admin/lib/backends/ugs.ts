@@ -2,6 +2,9 @@ import type { Backend, BackendCall, BackendConfig, BackendResult } from "../type
 
 const AUTH = "https://services.api.unity.com/auth/v1/token-exchange";
 const CODE = "https://cloud-code.services.api.unity.com/v1/projects";
+// Player Authentication Admin API: borrar un jugador. Pide el rol "Authentication Admin" (o Editor)
+// en el service account. https://docs.unity.com/en-us/oas-player-auth-admin/latest
+const IDENTITY = "https://services.api.unity.com/player-identity/v1/projects";
 
 type Cached = { token: string; exp: number };
 const cache = new Map<string, Cached>();
@@ -37,6 +40,25 @@ export function ugsBackend(cfg: BackendConfig): Backend {
   }
 
   return {
+    async deletePlayerAccount(playerId: string): Promise<BackendResult> {
+      const key = process.env[`${cfg.credsEnv}_KEY`];
+      const secret = process.env[`${cfg.credsEnv}_SECRET`];
+      if (!key || !secret) return { ok: false, error: `Faltan las llaves ${cfg.credsEnv}_KEY / _SECRET` };
+      try {
+        const res = await fetch(`${IDENTITY}/${cfg.projectId}/users/${encodeURIComponent(playerId)}`, {
+          method: "DELETE",
+          headers: { Authorization: `Basic ${Buffer.from(`${key}:${secret}`).toString("base64")}` },
+          cache: "no-store",
+        });
+        if (res.ok || res.status === 404) return { ok: true };   // 404: ya no existía
+        if (res.status === 401 || res.status === 403)
+          return { ok: false, error: "Al service account le falta el rol Authentication Admin en Unity" };
+        return { ok: false, error: `Borrar cuenta en Unity falló (${res.status})` };
+      } catch (e) {
+        return { ok: false, error: e instanceof Error ? e.message : "error" };
+      }
+    },
+
     async call({ action, params }: BackendCall): Promise<BackendResult> {
       const map = cfg.actions[action];
       if (!map) return { ok: false, error: `Acción no soportada por este juego: ${action}` };

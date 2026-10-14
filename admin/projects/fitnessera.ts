@@ -24,6 +24,7 @@ export const fitnessera: ProjectConfig = {
       "players.admin": { script: "Jugadores", params: { action: "admin" } },
       "players.reset": { script: "Jugadores", params: { action: "reiniciar" } },
       "players.restore": { script: "Jugadores", params: { action: "recuperar" } },
+      "players.delete": { script: "Jugadores", params: { action: "borrar" } },
       "codes.create": { script: "Codigos", params: { action: "crear" } },
       "codes.list": { script: "Codigos", params: { action: "lista" } },
       "codes.pause": { script: "Codigos", params: { action: "pausar" } },

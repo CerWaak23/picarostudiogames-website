@@ -10,6 +10,7 @@ export const ACTION_LABELS: Record<string, string> = {
   "players.admin": "Cambió un administrador",
   "players.reset": "Reinició una cuenta",
   "players.restore": "Recuperó una cuenta",
+  "players.delete": "Borró una cuenta",
   "messages.send": "Envió un mensaje",
   "messages.delete": "Borró un mensaje",
   "messages.results": "Vio respuestas",

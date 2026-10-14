@@ -7,6 +7,8 @@ export type ModuleId = "kpis" | "players" | "ban" | "codes" | "messages" | "feed
 /** Un backend sabe ejecutar una acción de admin de un juego. Cada tipo (ugs, http…) lo implementa. */
 export interface Backend {
   call(action: BackendCall): Promise<BackendResult>;
+  /** Borra la cuenta de inicio de sesión del jugador (no sus datos: eso lo hace el juego antes). */
+  deletePlayerAccount?(playerId: string): Promise<BackendResult>;
 }
 
 export interface BackendCall {
