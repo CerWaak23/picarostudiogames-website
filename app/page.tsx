@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import SupportSection from "@/components/SupportSection";
 import CollaborateSection from "@/components/CollaborateSection";
 import SectionLabel from "@/components/SectionLabel";
+import Trama from "@/components/Trama";
 import { useLang } from "@/lib/LanguageContext";
 import { games, type Game } from "@/lib/games";
 
@@ -86,7 +87,7 @@ export default function Home() {
           {/* La trama: encima del arte, como la trama de un impreso, pero por
               debajo del contenido. Se abre en la misma diagonal que el
               resplandor, así el degradado es de color y de puntos a la vez. */}
-          <div className="absolute inset-0 halftone-strong halftone-sweep" aria-hidden />
+          <Trama sweep />
 
           <div className="relative flex-1 flex items-center pt-28 pb-12">
             {/* En pantalla ancha el texto vive en el 62% izquierdo y el arte en
@@ -238,7 +239,7 @@ export default function Home() {
 
         {/* ─────────────── CIERRE ─────────────── */}
         <section id="contact" className="relative overflow-hidden py-20 sm:py-28 px-6 scroll-mt-20">
-          <div className="absolute inset-0 halftone-strong" aria-hidden />
+          <Trama />
           <div className="relative max-w-6xl mx-auto">
             <SectionLabel label={tr.contact.label} title={tr.contact.title} />
             <p className="text-bone-dim text-lg max-w-prose mb-10">{tr.contact.description}</p>

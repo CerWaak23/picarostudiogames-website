@@ -320,6 +320,31 @@ html[data-sweep] .halftone-sweep {
 }
 
 
+/* La lente de la trama: los puntos se doblan donde pasa el mouse y hacen una
+   onda donde se hace clic (lib/dotLens.ts). El canvas que los dibuja va DENTRO
+   del div de la trama, no al lado: así hereda su máscara —la caída diagonal del
+   héroe se le aplica sola— y mientras dibuja basta con apagarle a ese div su
+   propia trama. La primera versión le recortaba un agujero con `mask-image` que
+   seguía al cursor, y repintar esa máscara costaba 25 ms por cuadro.
+
+   Fuera de todo @layer a propósito: así le gana a `.halftone-strong`, que vive
+   en el layer de utilidades de Tailwind. */
+.dot-lens {
+  position: absolute;
+  inset: 0;
+  /* El tamaño va explícito: un canvas es un elemento reemplazado, así que con
+     `inset: 0` y sin medidas se queda en sus 300x150 de fábrica en vez de
+     estirarse como lo haría un div. */
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.halftone-lens[data-lens] {
+  background-image: none;
+}
+
+
 /* Entrada de página: la aplica app/template.tsx, que Next vuelve a montar en
    cada navegación. Corta y solo con transform/opacity. */
 @keyframes pageEnter {
