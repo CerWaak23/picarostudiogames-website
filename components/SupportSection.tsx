@@ -42,18 +42,18 @@ export default function SupportSection() {
     <section id="apoyar" className="py-24 px-6 scroll-mt-16">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center gap-4 mb-4">
-          <div className="h-px flex-1 max-w-12 bg-gold/40" />
-          <span className="text-gold text-xs tracking-widest uppercase font-mono">{c.label}</span>
+          <div className="h-px flex-1 max-w-12 bg-accent/40" />
+          <span className="text-accent-text text-xs tracking-widest uppercase font-mono">{c.label}</span>
         </div>
-        <h2 className="text-3xl md:text-5xl font-black text-text-primary mb-6">{c.title}</h2>
-        <p className="text-text-secondary text-lg leading-relaxed max-w-2xl mb-12">{c.intro}</p>
+        <h2 className="font-sans font-light tracking-[-0.025em] text-[clamp(2rem,5.2vw,3.6rem)] text-bone mb-6">{c.title}</h2>
+        <p className="text-bone-dim text-lg leading-relaxed max-w-2xl mb-12">{c.intro}</p>
 
         <div className={`grid grid-cols-1 ${hasKofi && hasMercadoPago ? "md:grid-cols-2" : ""} gap-5`}>
           {hasMercadoPago && (
-            <div className="border border-white/8 bg-surface p-6 md:p-8 flex flex-col gap-5">
+            <div className="border border-graphite-2 bg-ink-2 p-6 md:p-8 flex flex-col gap-5">
               <div>
-                <h3 className="text-xl font-bold text-text-primary">{c.chileTitle}</h3>
-                <p className="text-sm text-text-secondary mt-1">{c.chileText}</p>
+                <h3 className="text-xl font-sans font-semibold text-bone">{c.chileTitle}</h3>
+                <p className="text-sm text-bone-dim mt-1">{c.chileText}</p>
               </div>
               <div className="grid grid-cols-3 gap-3">
                 {mercadoPagoAmounts.map((a) => (
@@ -62,7 +62,7 @@ export default function SupportSection() {
                     href={a.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-center border border-gold/30 bg-gold/5 text-gold font-bold py-3 hover:bg-gold/15 hover:border-gold/60 transition-colors font-mono"
+                    className="text-center rounded-full border border-accent/30 bg-accent/5 text-accent-text font-mono font-bold py-3 hover:bg-accent/15 hover:border-accent/60 transition-colors font-mono"
                   >
                     {a.label}
                   </a>
@@ -73,7 +73,7 @@ export default function SupportSection() {
                   href={support.mercadoPago.other}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-center text-sm text-text-secondary border border-white/10 py-3 hover:text-gold hover:border-gold/40 transition-colors"
+                  className="text-center text-sm text-bone-dim rounded-full border border-graphite-2 py-3 hover:text-accent-text hover:border-accent/40 transition-colors"
                 >
                   {c.other}
                 </a>
@@ -83,16 +83,16 @@ export default function SupportSection() {
           )}
 
           {hasKofi && (
-            <div className="border border-white/8 bg-surface p-6 md:p-8 flex flex-col gap-5">
+            <div className="border border-graphite-2 bg-ink-2 p-6 md:p-8 flex flex-col gap-5">
               <div>
-                <h3 className="text-xl font-bold text-text-primary">{c.worldTitle}</h3>
-                <p className="text-sm text-text-secondary mt-1">{c.worldText}</p>
+                <h3 className="text-xl font-sans font-semibold text-bone">{c.worldTitle}</h3>
+                <p className="text-sm text-bone-dim mt-1">{c.worldText}</p>
               </div>
               <a
                 href={support.kofi}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-gold text-bg font-bold text-sm tracking-widest uppercase px-6 py-4 hover:bg-gold-light transition-colors"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-accent-fill text-accent-on font-mono font-bold text-xs tracking-[0.18em] uppercase px-6 py-4 hover:bg-bone transition-colors"
               >
                 <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth={2}>
                   <path d="M3 7h11v5a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7z" />

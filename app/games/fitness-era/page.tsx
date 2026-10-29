@@ -119,7 +119,7 @@ export default function FitnessEraPage() {
   const c = copy[lang];
 
   return (
-    <div className="min-h-screen bg-bg">
+    <div className="min-h-screen bg-ink">
       <Navbar solid />
 
       {/* ─── HERO ─── */}
@@ -140,7 +140,7 @@ export default function FitnessEraPage() {
         <div className="relative z-10 max-w-4xl mx-auto">
           <Link
             href="/#games"
-            className="inline-flex items-center gap-2 text-muted text-sm hover:text-gold transition-colors mb-10 font-mono uppercase tracking-wider"
+            className="inline-flex items-center gap-2 text-muted text-sm hover:text-accent-text transition-colors mb-10 font-mono uppercase tracking-wider"
           >
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth={2}>
               <path d="M11 5L5 11M5 11h6M5 11V5" />
@@ -156,7 +156,7 @@ export default function FitnessEraPage() {
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: ACCENT }} />
               {c.status}
             </span>
-            <span className="text-xs font-mono tracking-widest uppercase border border-white/8 text-muted px-3 py-1.5">
+            <span className="text-xs font-mono tracking-widest uppercase border border-graphite-2 text-muted px-3 py-1.5">
               {c.platforms}
             </span>
           </div>
@@ -166,17 +166,17 @@ export default function FitnessEraPage() {
             <img
               src="/games/fitness-era/icon.png"
               alt=""
-              className="w-16 h-16 md:w-20 md:h-20 rounded-2xl border border-white/10 shrink-0"
+              className="w-16 h-16 md:w-20 md:h-20 rounded-2xl border border-graphite-2 shrink-0"
             />
             <h1
-              className="text-5xl md:text-7xl font-black tracking-tight text-text-primary"
+              className="font-display text-[clamp(2.6rem,7vw,5rem)] leading-[0.92] tracking-display text-bone"
               style={{ textShadow: "0 0 80px rgba(255,153,51,0.15)" }}
             >
               FITNESS <span style={{ color: ACCENT }}>ERA</span>
             </h1>
           </div>
 
-          <p className="text-xl text-text-secondary max-w-2xl leading-relaxed">{c.tagline}</p>
+          <p className="text-xl text-bone-dim max-w-2xl leading-relaxed">{c.tagline}</p>
         </div>
       </section>
 
@@ -184,12 +184,12 @@ export default function FitnessEraPage() {
       <section className="px-6 pb-20">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
           {c.eras.map((era) => (
-            <div key={era.name} className="relative border border-white/8 overflow-hidden aspect-[2.3/1]">
+            <div key={era.name} className="relative border border-graphite-2 overflow-hidden aspect-[2.3/1]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={era.img} alt={era.name} className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-5">
-                <p className="text-white font-black text-xl">{era.name}</p>
+                <p className="text-white font-display text-xl tracking-display">{era.name}</p>
                 <p className="text-white/70 text-sm">{era.sub}</p>
               </div>
             </div>
@@ -198,11 +198,11 @@ export default function FitnessEraPage() {
       </section>
 
       {/* ─── ABOUT ─── */}
-      <section className="py-20 px-6 bg-surface">
+      <section className="py-20 px-6 bg-ink-2">
         <div className="max-w-4xl mx-auto">
           <SectionLabel>{c.aboutLabel}</SectionLabel>
-          <h2 className="text-3xl md:text-4xl font-black text-text-primary mb-8">{c.aboutTitle}</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 text-text-secondary leading-relaxed text-base">
+          <h2 className="font-sans font-light tracking-[-0.025em] text-[clamp(1.9rem,4.4vw,3rem)] text-bone mb-8">{c.aboutTitle}</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 text-bone-dim leading-relaxed text-base">
             {c.about.map((p) => (
               <p key={p}>{p}</p>
             ))}
@@ -214,13 +214,13 @@ export default function FitnessEraPage() {
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <SectionLabel>{c.featuresLabel}</SectionLabel>
-          <h2 className="text-3xl md:text-4xl font-black text-text-primary mb-12">{c.featuresTitle}</h2>
+          <h2 className="font-sans font-light tracking-[-0.025em] text-[clamp(1.9rem,4.4vw,3rem)] text-bone mb-12">{c.featuresTitle}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {c.features.map((f) => (
-              <div key={f.title} className="border border-white/8 bg-surface p-6 flex flex-col gap-3 hover:border-gold/20 transition-colors">
+              <div key={f.title} className="border border-graphite-2 bg-ink-2 p-6 flex flex-col gap-3 hover:border-accent/20 transition-colors">
                 <div className="w-2 h-2 rotate-45" style={{ backgroundColor: ACCENT }} />
-                <h3 className="font-bold text-text-primary">{f.title}</h3>
-                <p className="text-sm text-text-secondary leading-relaxed">{f.text}</p>
+                <h3 className="font-sans font-semibold text-bone">{f.title}</h3>
+                <p className="text-sm text-bone-dim leading-relaxed">{f.text}</p>
               </div>
             ))}
           </div>
@@ -228,21 +228,21 @@ export default function FitnessEraPage() {
       </section>
 
       {/* ─── PRIVACIDAD Y SEGURIDAD ─── */}
-      <section id="privacidad" className="py-20 px-6 bg-surface border-t border-white/5 scroll-mt-20">
+      <section id="privacidad" className="py-20 px-6 bg-ink-2 border-t border-graphite-2/60 scroll-mt-20">
         <div className="max-w-4xl mx-auto">
           <SectionLabel>{c.privacyLabel}</SectionLabel>
-          <h2 className="text-3xl md:text-4xl font-black text-text-primary mb-4">{c.privacyTitle}</h2>
-          <p className="text-text-secondary max-w-2xl mb-10 leading-relaxed">{c.privacyIntro}</p>
+          <h2 className="font-sans font-light tracking-[-0.025em] text-[clamp(1.9rem,4.4vw,3rem)] text-bone mb-4">{c.privacyTitle}</h2>
+          <p className="text-bone-dim max-w-2xl mb-10 leading-relaxed">{c.privacyIntro}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
             {c.privacy.map((item, i) => (
-              <div key={item.title} className="border border-white/8 bg-bg p-6 flex gap-4">
+              <div key={item.title} className="border border-graphite-2 bg-ink p-6 flex gap-4">
                 <div className="shrink-0 mt-0.5" style={{ color: ACCENT }}>
                   {privacyIcons[i]}
                 </div>
                 <div>
-                  <h3 className="font-bold text-text-primary mb-2">{item.title}</h3>
-                  <p className="text-sm text-text-secondary leading-relaxed">{item.text}</p>
+                  <h3 className="font-sans font-semibold text-bone mb-2">{item.title}</h3>
+                  <p className="text-sm text-bone-dim leading-relaxed">{item.text}</p>
                 </div>
               </div>
             ))}
@@ -251,7 +251,7 @@ export default function FitnessEraPage() {
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <Link
               href="/games/fitness-era/privacidad"
-              className="inline-flex items-center justify-center gap-2 font-bold text-sm tracking-widest uppercase px-6 py-3 transition-opacity hover:opacity-90"
+              className="inline-flex items-center justify-center gap-2 rounded-full font-mono font-bold text-xs tracking-[0.18em] uppercase px-6 py-3 transition-opacity hover:opacity-90"
               style={{ backgroundColor: ACCENT, color: "#08080e" }}
             >
               {c.readPolicy}
@@ -261,7 +261,7 @@ export default function FitnessEraPage() {
             </Link>
             <p className="text-sm text-muted">
               {c.questions}{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-text-secondary hover:text-gold transition-colors">
+              <a href={`mailto:${CONTACT_EMAIL}`} className="text-bone-dim hover:text-accent-text transition-colors">
                 {CONTACT_EMAIL}
               </a>
             </p>
@@ -270,15 +270,15 @@ export default function FitnessEraPage() {
       </section>
 
       {/* ─── STATUS BANNER ─── */}
-      <section className="py-16 px-6 border-t border-b border-white/5">
+      <section className="py-16 px-6 border-t border-b border-graphite-2/60">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
-            <h3 className="text-2xl font-black text-text-primary mb-2">{c.bannerTitle}</h3>
-            <p className="text-text-secondary text-sm">{c.bannerText}</p>
+            <h3 className="font-display text-[clamp(1.6rem,3vw,2.2rem)] tracking-display text-bone mb-2">{c.bannerTitle}</h3>
+            <p className="text-bone-dim text-sm">{c.bannerText}</p>
           </div>
           <a
             href={`mailto:${CONTACT_EMAIL}?subject=Playtesting%20Fitness%20Era`}
-            className="shrink-0 inline-flex items-center gap-2 bg-gold text-bg font-bold text-sm tracking-widest uppercase px-6 py-3 hover:bg-gold-light transition-colors"
+            className="shrink-0 inline-flex items-center gap-2 rounded-full bg-accent-fill text-accent-on font-mono font-bold text-xs tracking-[0.18em] uppercase px-6 py-3 hover:bg-bone transition-colors"
           >
             {c.bannerCta}
           </a>
@@ -293,8 +293,8 @@ export default function FitnessEraPage() {
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-4 mb-4">
-      <div className="h-px flex-1 max-w-12 bg-gold/40" />
-      <span className="text-gold text-xs tracking-widest uppercase font-mono">{children}</span>
+      <div className="h-px flex-1 max-w-12 bg-accent/40" />
+      <span className="text-accent-text text-xs tracking-widest uppercase font-mono">{children}</span>
     </div>
   );
 }

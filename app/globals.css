@@ -1,10 +1,115 @@
-/* Las fuentes Inter y JetBrains Mono nunca se cargaron: su @import estaba después de las reglas de
-   Tailwind y el navegador lo ignoraba. La web se ve con la fuente del sistema. Para activarlas, usar
-   next/font/google en app/layout.tsx (se verían más anchas: revisar los botones del héroe). */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Las fuentes se cargan en app/layout.tsx con next/font (DeLight y Ruina son
+   locales, JetBrains Mono viene de Google). No usar @import aquí: el navegador
+   ignora un @import que va después de las reglas de Tailwind, que fue el motivo
+   por el que antes la web se veía con la fuente del sistema.
+
+   ── ESTILOS ──────────────────────────────────────────────────────────────
+   Los colores son variables, así que el sitio entero cambia de piel con un
+   atributo en <html>. Las tres pieles salen del mismo manual:
+
+     citrico  grafito + cítrico (#b4ef04), como el key visual
+     vino     negro + vino chileno (#e02135), como la página de fotografía
+     papel    blanco pálido + rojo, como las páginas de logo y color
+
+   El visitante elige con el selector de abajo a la derecha
+   (components/SkinSwitcher.tsx) y la elección se guarda. `citrico` es la que
+   toma :root cuando no hay nada guardado, o sea la que ve alguien que llega
+   por primera vez; para cambiar esa, mover el bloque :root de más abajo.
+
+   Los canales van separados por espacio para que Tailwind pueda aplicarles
+   opacidad (bg-accent/40). Cada par de texto/fondo está medido para pasar
+   contraste AA; ver DESIGN.md.
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root,
+:root[data-skin="citrico"] {
+  --c-ink: 22 24 20;
+  --c-ink-2: 35 37 33;
+  --c-graphite: 56 56 56;
+  --c-graphite-2: 63 64 61;
+  --c-bone: 238 238 238;
+  --c-bone-dim: 163 166 160;
+  --c-muted: 132 135 130;
+
+  --c-accent: 180 239 4;
+  --c-accent-text: 180 239 4;
+  --c-accent-fill: 180 239 4;
+  --c-accent-on: 22 24 20;
+  --c-mark: 224 33 53;
+
+  --dot: 238 238 238;
+  --dot-alpha: 0.055;
+  --dot-alpha-strong: 0.07;
+  --c-plus: 193 19 80;
+  --glow: 180 239 4;
+  --glow-alpha: 0.22;
+  --art-opacity: 0.55;
+}
+
+:root[data-skin="vino"] {
+  --c-ink: 19 12 12;
+  --c-ink-2: 34 25 24;
+  --c-graphite: 53 43 42;
+  --c-graphite-2: 68 57 56;
+  --c-bone: 238 238 238;
+  --c-bone-dim: 172 162 161;
+  --c-muted: 142 131 130;
+
+  /* El rojo de marca pasa 3:1, suficiente para la tipografía grande y las
+     reglas. Para texto chico va un paso más claro, y para relleno de botón
+     uno más oscuro, que es lo que deja el texto blanco encima sobre 4.5:1. */
+  --c-accent: 224 33 53;
+  --c-accent-text: 233 70 73;
+  --c-accent-fill: 208 14 45;
+  --c-accent-on: 238 238 238;
+  --c-mark: 224 33 53;
+
+  --dot: 238 238 238;
+  --dot-alpha: 0.05;
+  --dot-alpha-strong: 0.065;
+  --c-plus: 193 19 80;
+  --glow: 224 33 53;
+  --glow-alpha: 0.2;
+  --art-opacity: 0.5;
+}
+
+:root[data-skin="papel"] {
+  /* Piel clara: «ink» sigue siendo el fondo y «bone» el texto, solo que dados
+     vuelta. Así ningún componente necesita saber en qué piel está. */
+  --c-ink: 238 238 238;
+  --c-ink-2: 233 232 229;
+  --c-graphite: 222 221 217;
+  --c-graphite-2: 206 205 200;
+  --c-bone: 37 36 33;
+  --c-bone-dim: 101 99 94;
+  --c-muted: 122 120 115;
+
+  --c-accent: 224 33 53;
+  --c-accent-text: 203 0 40;
+  --c-accent-fill: 203 0 40;
+  --c-accent-on: 238 238 238;
+  --c-mark: 224 33 53;
+
+  --dot: 37 36 33;
+  --dot-alpha: 0.07;
+  --dot-alpha-strong: 0.1;
+  --c-plus: 193 19 80;
+  --glow: 224 33 53;
+  --glow-alpha: 0.13;
+  --art-opacity: 0.7;
+}
+
+:root {
+  --ease: cubic-bezier(0.165, 0.84, 0.44, 1);
+  color-scheme: dark;
+}
+:root[data-skin="papel"] {
+  color-scheme: light;
+}
 
 * {
   box-sizing: border-box;
@@ -14,50 +119,222 @@
 
 html {
   scroll-behavior: smooth;
+  /* Para que los anclajes no queden tapados por la barra fija. */
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background-color: #08080e;
-  color: #e8e8f2;
-  font-family: 'Inter', system-ui, sans-serif;
+  background-color: rgb(var(--c-ink));
+  color: rgb(var(--c-bone));
+  font-family: var(--font-delight), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Al cambiar de estilo se apagan las TRANSICIONES por un instante: si no, cada
+   elemento con `transition-colors` (pensado para el hover) se pone a desvanecer
+   su color y el cambio se ve lento y sucio.
+
+   Ojo: solo transiciones, nunca `animation`. Apagar también las animaciones
+   mataba la ola antes de que alcanzara a partir. Lo pone y lo saca
+   SkinSwitcher. */
+html[data-switching],
+html[data-switching] *,
+html[data-switching] *::before,
+html[data-switching] *::after {
+  transition: none !important;
 }
 
 ::selection {
-  background-color: rgba(201, 168, 76, 0.3);
-  color: #e8c87a;
+  background-color: rgb(var(--c-accent));
+  color: rgb(var(--c-ink));
+}
+
+/* Foco visible y en color de marca: se ve igual en todo el sitio. */
+:focus-visible {
+  outline: 2px solid rgb(var(--c-accent));
+  outline-offset: 3px;
+  border-radius: 1px;
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 10px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #08080e;
+  background: rgb(var(--c-ink));
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #2a2a3a;
-  border-radius: 3px;
+  background: rgb(var(--c-graphite-2));
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #c9a84c;
+  background: rgb(var(--c-accent));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-  .gold-glow {
-    text-shadow: 0 0 30px rgba(201, 168, 76, 0.4);
+
+  /* Trama de puntos del key visual del manual. Patrón CSS, no imagen. */
+  .halftone {
+    background-image: radial-gradient(
+      circle at center,
+      rgb(var(--dot) / var(--dot-alpha)) 1.1px,
+      transparent 1.2px
+    );
+    background-size: 7px 7px;
   }
-  .card-hover {
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+  /* El degradado no es solo de color: la trama también se abre. Los puntos
+     van densos en la esquina del logo y se van abriendo en la misma diagonal
+     que el resplandor, como una trama de imprenta de verdad. No llega a cero
+     para que el otro extremo no quede liso. */
+  .halftone-sweep {
+    -webkit-mask-image: radial-gradient(
+      95% 105% at -2% -8%,
+      #000 0%,
+      rgba(0, 0, 0, 0.62) 38%,
+      rgba(0, 0, 0, 0.22) 68%,
+      rgba(0, 0, 0, 0.12) 100%
+    );
+    mask-image: radial-gradient(
+      95% 105% at -2% -8%,
+      #000 0%,
+      rgba(0, 0, 0, 0.62) 38%,
+      rgba(0, 0, 0, 0.22) 68%,
+      rgba(0, 0, 0, 0.12) 100%
+    );
   }
-  .card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(201, 168, 76, 0.08);
-    border-color: rgba(201, 168, 76, 0.35);
+
+  /* La trama marcada de los carteles del manual: se ve de verdad, no es una
+     textura que haya que buscar. Va en el héroe y en el cierre. */
+  .halftone-strong {
+    background-image: radial-gradient(
+      circle at center,
+      rgb(var(--dot) / var(--dot-alpha-strong)) 1.35px,
+      transparent 1.45px
+    );
+    background-size: 6px 6px;
+  }
+
+  /* El resplandor de la esquina del key visual. Solo en el héroe. */
+  /* El resplandor del key visual: nace en la esquina del logo y se abre en
+     diagonal hasta la máscara de la derecha, sin llegar a cerrarse. */
+  .brand-glow {
+    background: radial-gradient(
+      88% 100% at -2% -8%,
+      rgb(var(--glow) / var(--glow-alpha)) 0%,
+      rgb(var(--glow) / calc(var(--glow-alpha) * 0.4)) 30%,
+      rgb(var(--glow) / calc(var(--glow-alpha) * 0.1)) 52%,
+      transparent 72%
+    );
+  }
+
+  /* Las formas del logo como máscara: el color lo pone el background, así que
+     el SVG no entra al bundle de JS y se puede pintar con cualquier token. */
+  .mask-pic,
+  .mask-logo {
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+  .mask-pic {
+    -webkit-mask-image: url("/brand/mark.svg");
+    mask-image: url("/brand/mark.svg");
+  }
+  .mask-logo {
+    -webkit-mask-image: url("/brand/logo.svg");
+    mask-image: url("/brand/logo.svg");
+  }
+
+  .art-veil {
+    opacity: var(--art-opacity);
+  }
+
+  .ease-out-quart {
+    transition-timing-function: var(--ease);
+  }
+}
+
+/* Entrada del héroe: una sola vez, corta, y solo transform/opacity. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.7s var(--ease) both;
+}
+
+/* Al cambiar de estilo el color salta de golpe, pero el resplandor entra en
+   diagonal desde la esquina contraria: el cambio se siente sin que nada se
+   desvanezca. Lo dispara SkinSwitcher con data-sweep. */
+@keyframes glowSweep {
+  from {
+    transform: translate3d(46%, 38%, 0);
+    opacity: 0.45;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+html[data-sweep] .brand-glow,
+html[data-sweep] .halftone-sweep {
+  animation: glowSweep 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* El enjambre: muchos puntos viajando hacia la esquina del logo, como si
+   fueran armando el fondo. Una banda deslizándose se leía como «una esquina
+   que se mueve»; esto son partículas de verdad, así que va en un canvas y lo
+   dibuja components/SkinSwitcher.tsx. Acá solo vive la capa. */
+/* Detrás del contenido y delante del fondo del documento: lo que se rehace es
+   el fondo, nunca el logo ni los textos ni las imágenes, que se quedan donde
+   están. El contenido se sube a z-10 en app/template.tsx. */
+.skin-wave {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* Entrada de página: la aplica app/template.tsx, que Next vuelve a montar en
+   cada navegación. Corta y solo con transform/opacity. */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page-enter {
+  animation: pageEnter 0.42s var(--ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }

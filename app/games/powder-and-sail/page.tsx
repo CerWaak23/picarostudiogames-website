@@ -65,7 +65,7 @@ export default function PowderAndSailPage() {
   const c = copy[lang];
 
   return (
-    <div className="min-h-screen bg-bg">
+    <div className="min-h-screen bg-ink">
       <Navbar solid />
 
       <section className="relative pt-32 pb-20 px-6 overflow-hidden">
@@ -85,7 +85,7 @@ export default function PowderAndSailPage() {
         <div className="relative z-10 max-w-4xl mx-auto">
           <Link
             href="/#games"
-            className="inline-flex items-center gap-2 text-muted text-sm hover:text-gold transition-colors mb-10 font-mono uppercase tracking-wider"
+            className="inline-flex items-center gap-2 text-muted text-sm hover:text-accent-text transition-colors mb-10 font-mono uppercase tracking-wider"
           >
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth={2}>
               <path d="M11 5L5 11M5 11h6M5 11V5" />
@@ -101,25 +101,25 @@ export default function PowderAndSailPage() {
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: ACCENT }} />
               {c.status}
             </span>
-            <span className="text-xs font-mono tracking-widest uppercase border border-white/8 text-muted px-3 py-1.5">
+            <span className="text-xs font-mono tracking-widest uppercase border border-graphite-2 text-muted px-3 py-1.5">
               {c.platforms}
             </span>
           </div>
 
           <h1
-            className="text-5xl md:text-7xl font-black tracking-tight text-text-primary mb-6"
+            className="font-display text-[clamp(2.6rem,7vw,5rem)] leading-[0.92] tracking-display text-bone mb-6"
             style={{ textShadow: "0 0 80px rgba(74,159,216,0.18)" }}
           >
             POWDER <span style={{ color: ACCENT }}>&amp; SAIL</span>
           </h1>
-          <p className="text-xl text-text-secondary max-w-2xl leading-relaxed">{c.tagline}</p>
+          <p className="text-xl text-bone-dim max-w-2xl leading-relaxed">{c.tagline}</p>
         </div>
       </section>
 
       <section className="px-6 pb-20">
         <div className="max-w-4xl mx-auto">
           <div
-            className="w-full h-72 md:h-96 border border-white/8 flex items-center justify-center relative overflow-hidden"
+            className="w-full h-72 md:h-96 border border-graphite-2 flex items-center justify-center relative overflow-hidden"
             style={{ background: "linear-gradient(135deg, #0a1420 0%, #0f2033 50%, #08111b 100%)" }}
           >
             <div
@@ -140,11 +140,11 @@ export default function PowderAndSailPage() {
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-surface">
+      <section className="py-20 px-6 bg-ink-2">
         <div className="max-w-4xl mx-auto">
           <SectionLabel>{c.aboutLabel}</SectionLabel>
-          <h2 className="text-3xl md:text-4xl font-black text-text-primary mb-8">{c.aboutTitle}</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 text-text-secondary leading-relaxed text-base">
+          <h2 className="font-sans font-light tracking-[-0.025em] text-[clamp(1.9rem,4.4vw,3rem)] text-bone mb-8">{c.aboutTitle}</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 text-bone-dim leading-relaxed text-base">
             {c.about.map((p) => (
               <p key={p}>{p}</p>
             ))}
@@ -155,28 +155,28 @@ export default function PowderAndSailPage() {
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <SectionLabel>{c.featuresLabel}</SectionLabel>
-          <h2 className="text-3xl md:text-4xl font-black text-text-primary mb-12">{c.featuresTitle}</h2>
+          <h2 className="font-sans font-light tracking-[-0.025em] text-[clamp(1.9rem,4.4vw,3rem)] text-bone mb-12">{c.featuresTitle}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {c.features.map((f) => (
-              <div key={f.title} className="border border-white/8 bg-surface p-6 flex flex-col gap-3 hover:border-gold/20 transition-colors">
+              <div key={f.title} className="border border-graphite-2 bg-ink-2 p-6 flex flex-col gap-3 hover:border-accent/20 transition-colors">
                 <div className="w-2 h-2 rotate-45" style={{ backgroundColor: ACCENT }} />
-                <h3 className="font-bold text-text-primary">{f.title}</h3>
-                <p className="text-sm text-text-secondary leading-relaxed">{f.text}</p>
+                <h3 className="font-sans font-semibold text-bone">{f.title}</h3>
+                <p className="text-sm text-bone-dim leading-relaxed">{f.text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-surface border-t border-b border-white/5">
+      <section className="py-16 px-6 bg-ink-2 border-t border-b border-graphite-2/60">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
-            <h3 className="text-2xl font-black text-text-primary mb-2">{c.bannerTitle}</h3>
-            <p className="text-text-secondary text-sm">{c.bannerText}</p>
+            <h3 className="font-display text-[clamp(1.6rem,3vw,2.2rem)] tracking-display text-bone mb-2">{c.bannerTitle}</h3>
+            <p className="text-bone-dim text-sm">{c.bannerText}</p>
           </div>
           <Link
             href="/#contact"
-            className="shrink-0 inline-flex items-center gap-2 bg-gold text-bg font-bold text-sm tracking-widest uppercase px-6 py-3 hover:bg-gold-light transition-colors"
+            className="shrink-0 inline-flex items-center gap-2 rounded-full bg-accent-fill text-accent-on font-mono font-bold text-xs tracking-[0.18em] uppercase px-6 py-3 hover:bg-bone transition-colors"
           >
             {c.bannerCta}
           </Link>
@@ -191,8 +191,8 @@ export default function PowderAndSailPage() {
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-4 mb-4">
-      <div className="h-px flex-1 max-w-12 bg-gold/40" />
-      <span className="text-gold text-xs tracking-widest uppercase font-mono">{children}</span>
+      <div className="h-px flex-1 max-w-12 bg-accent/40" />
+      <span className="text-accent-text text-xs tracking-widest uppercase font-mono">{children}</span>
     </div>
   );
 }

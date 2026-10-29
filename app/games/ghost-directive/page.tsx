@@ -79,7 +79,7 @@ const features = [
 
 export default function GhostDirectivePage() {
   return (
-    <div className="min-h-screen bg-bg">
+    <div className="min-h-screen bg-ink">
       <Navbar solid />
 
       {/* ─── HERO ─── */}
@@ -95,6 +95,7 @@ export default function GhostDirectivePage() {
         />
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] pointer-events-none"
+            aria-hidden
           style={{
             background:
               "radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%)",
@@ -105,7 +106,7 @@ export default function GhostDirectivePage() {
           {/* Back link */}
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-muted text-sm hover:text-gold transition-colors mb-10 font-mono uppercase tracking-wider"
+            className="inline-flex items-center gap-2 text-muted text-sm hover:text-accent-text transition-colors mb-10 font-mono uppercase tracking-wider"
           >
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth={2}>
               <path d="M11 5L5 11M5 11h6M5 11V5" />
@@ -114,25 +115,25 @@ export default function GhostDirectivePage() {
           </Link>
 
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-xs font-mono tracking-widest uppercase border border-white/15 bg-white/5 text-muted px-3 py-1.5 flex items-center gap-2">
+            <span className="text-xs font-mono tracking-widest uppercase border border-graphite-2 bg-white/5 text-muted px-3 py-1.5 flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-muted rounded-full" />
               On Hold
             </span>
-            <span className="text-xs font-mono tracking-widest uppercase border border-white/8 text-muted px-3 py-1.5">
+            <span className="text-xs font-mono tracking-widest uppercase border border-graphite-2 text-muted px-3 py-1.5">
               PC · Unity
             </span>
           </div>
 
           <h1
-            className="text-5xl md:text-7xl font-black tracking-tight text-text-primary mb-6"
+            className="font-display text-[clamp(2.6rem,7vw,5rem)] leading-[0.92] tracking-display text-bone mb-6"
             style={{ textShadow: "0 0 80px rgba(201,168,76,0.15)" }}
           >
             GHOST
             <br />
-            <span className="text-gold">DIRECTIVE</span>
+            <span className="text-accent-text">DIRECTIVE</span>
           </h1>
 
-          <p className="text-xl text-text-secondary max-w-2xl leading-relaxed">
+          <p className="text-xl text-bone-dim max-w-2xl leading-relaxed">
             A 3D top-down tactical stealth game where preparation is everything.
             Plan every move in the silence of the planning phase — then watch your
             squad execute in real time.
@@ -144,7 +145,7 @@ export default function GhostDirectivePage() {
       <section className="px-6 pb-20">
         <div className="max-w-4xl mx-auto">
           <div
-            className="w-full h-72 md:h-96 border border-white/8 flex items-center justify-center relative overflow-hidden"
+            className="w-full h-72 md:h-96 border border-graphite-2 flex items-center justify-center relative overflow-hidden"
             style={{
               background: "linear-gradient(135deg, #0d0d16 0%, #141424 50%, #0a0a12 100%)",
             }}
@@ -158,8 +159,8 @@ export default function GhostDirectivePage() {
               }}
             />
             <div className="text-center relative z-10">
-              <div className="w-20 h-20 border-2 border-gold/30 rotate-45 flex items-center justify-center mx-auto mb-4">
-                <div className="w-5 h-5 bg-gold/50 rotate-[-45deg]" />
+              <div className="w-20 h-20 border-2 border-accent/30 rotate-45 flex items-center justify-center mx-auto mb-4">
+                <div className="w-5 h-5 bg-accent/50 rotate-[-45deg]" />
               </div>
               <p className="text-muted font-mono text-xs tracking-widest uppercase">
                 Screenshots & Trailer Coming Soon
@@ -170,21 +171,21 @@ export default function GhostDirectivePage() {
       </section>
 
       {/* ─── ABOUT THE GAME ─── */}
-      <section className="py-20 px-6 bg-surface">
+      <section className="py-20 px-6 bg-ink-2">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-4 mb-4">
-            <div className="h-px flex-1 max-w-12 bg-gold/40" />
-            <span className="text-gold text-xs tracking-widest uppercase font-mono">
+            <div className="h-px flex-1 max-w-12 bg-accent/40" />
+            <span className="text-accent-text text-xs tracking-widest uppercase font-mono">
               About
             </span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-black text-text-primary mb-8">
+          <h2 className="font-sans font-light tracking-[-0.025em] text-[clamp(1.9rem,4.4vw,3rem)] text-bone mb-8">
             The Mission
           </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 text-text-secondary leading-relaxed text-base">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 text-bone-dim leading-relaxed text-base">
             <div className="space-y-4">
               <p>
-                Every mission in <span className="text-gold font-medium">Ghost Directive</span> is a
+                Every mission in <span className="text-accent-text font-medium">Ghost Directive</span> is a
                 puzzle. You control time itself — pausing to study the map, mark
                 patrol routes, and assign your operatives their exact movements and
                 actions.
@@ -214,23 +215,23 @@ export default function GhostDirectivePage() {
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-4 mb-4">
-            <div className="h-px flex-1 max-w-12 bg-gold/40" />
-            <span className="text-gold text-xs tracking-widest uppercase font-mono">
+            <div className="h-px flex-1 max-w-12 bg-accent/40" />
+            <span className="text-accent-text text-xs tracking-widest uppercase font-mono">
               Features
             </span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-black text-text-primary mb-12">
+          <h2 className="font-sans font-light tracking-[-0.025em] text-[clamp(1.9rem,4.4vw,3rem)] text-bone mb-12">
             Core Mechanics
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f) => (
               <div
                 key={f.title}
-                className="border border-white/8 bg-surface p-6 flex flex-col gap-4 hover:border-gold/20 transition-colors"
+                className="border border-graphite-2 bg-ink-2 p-6 flex flex-col gap-4 hover:border-accent/20 transition-colors"
               >
-                <div className="text-gold">{f.icon}</div>
-                <h3 className="font-bold text-text-primary">{f.title}</h3>
-                <p className="text-sm text-text-secondary leading-relaxed">
+                <div className="text-accent-text">{f.icon}</div>
+                <h3 className="font-sans font-semibold text-bone">{f.title}</h3>
+                <p className="text-sm text-bone-dim leading-relaxed">
                   {f.description}
                 </p>
               </div>
@@ -240,13 +241,13 @@ export default function GhostDirectivePage() {
       </section>
 
       {/* ─── STATUS BANNER ─── */}
-      <section className="py-16 px-6 bg-surface border-t border-b border-white/5">
+      <section className="py-16 px-6 bg-ink-2 border-t border-b border-graphite-2/60">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
-            <h3 className="text-2xl font-black text-text-primary mb-2">
+            <h3 className="font-display text-[clamp(1.6rem,3vw,2.2rem)] tracking-display text-bone mb-2">
               Development on hold
             </h3>
-            <p className="text-text-secondary text-sm">
+            <p className="text-bone-dim text-sm">
               We&apos;re focusing on our mobile games for now. Follow us on
               social media to hear when Ghost Directive comes back.
             </p>
@@ -254,7 +255,7 @@ export default function GhostDirectivePage() {
           <div className="flex gap-3 shrink-0">
             <Link
               href="/#contact"
-              className="inline-flex items-center gap-2 bg-gold text-bg font-bold text-sm tracking-widest uppercase px-6 py-3 hover:bg-gold-light transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-accent-fill text-accent-on font-mono font-bold text-xs tracking-[0.18em] uppercase px-6 py-3 hover:bg-bone transition-colors"
             >
               Stay Updated
             </Link>

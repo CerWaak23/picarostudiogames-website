@@ -23,6 +23,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     if (saved === "en" || saved === "es") setLangState(saved);
   }, []);
 
+  /* El atributo lang del documento tiene que seguir al idioma elegido: de eso
+     dependen los lectores de pantalla y la partición de palabras. */
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   const setLang = (l: Lang) => {
     setLangState(l);
     localStorage.setItem("lang", l);

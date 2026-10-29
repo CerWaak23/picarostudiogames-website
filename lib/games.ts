@@ -27,7 +27,7 @@ export const games: Game[] = [
     },
     tags: ["PC", "Unity", "Top-Down", "Stealth"],
     platform: "PC",
-    accent: "#c9a84c",
+    accent: "#848782",
     status: "paused",
   },
   {
@@ -40,7 +40,7 @@ export const games: Game[] = [
     },
     tags: ["Android", "iOS", "Unity", "Fitness"],
     platform: "Mobile",
-    accent: "#ff9933",
+    accent: "#f3590b",
     status: "active",
     cover: "/games/fitness-era/prehistoria.jpg",
   },
@@ -54,7 +54,7 @@ export const games: Game[] = [
     },
     tags: ["Android", "iOS", "Unity", "Roguelite"],
     platform: "Mobile",
-    accent: "#4a9fd8",
+    accent: "#333dea",
     status: "active",
   },
 ];
