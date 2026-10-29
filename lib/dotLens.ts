@@ -27,8 +27,9 @@ const PASO = 6;
 /** El radio del punto: el mismo de `.halftone-strong`. */
 const RADIO = 1.35;
 
-/** Cuánto dura la onda de un clic. */
-const ONDA_DUR = 900;
+/** Cuánto dura la onda de un clic. Esto es lo que la hace lenta o apurada: el
+ *  frente siempre llega a ONDA_LEJOS, lo que cambia es en cuánto. */
+const ONDA_DUR = 1500;
 /** Hasta dónde llega el frente de la onda, en pixeles de CSS. Lo que cuesta un
  *  cuadro crece con esto: es la superficie de trama que hay que reponer y volver
  *  a dibujar. A 420 son unos 6.000 puntos en el peor cuadro. */
