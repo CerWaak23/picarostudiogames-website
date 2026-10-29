@@ -265,12 +265,15 @@ export function paintSkin(
            de la máscara se abren juntas y el borde vuelve a ser una línea recta,
            que es justo lo que hay que evitar. Con el desorden, las casillas se
            abren salpicadas y el relevo se lee como lo que es: puntos cayendo. */
-        u: uOf(x, y) + (Math.random() - 0.5) * 0.045,
+        u: uOf(x, y) + (Math.random() - 0.5) * 0.025,
         /* Llegan volando desde abajo a la derecha, con algo de dispersión. */
         ox: dist * (0.8 + Math.random() * 0.45),
         oy: dist * (0.55 + Math.random() * 0.45),
         a,
-        dur: FLIGHT * (0.6 + Math.random() * 0.8),
+        /* Poca variación a propósito: con un rango ancho el borde se desarma y
+           los puntos quedan despegados unos de otros. Lo justo para que no se
+           abran todos juntos por diagonal. */
+        dur: FLIGHT * (0.94 + Math.random() * 0.12),
       });
     }
   }
