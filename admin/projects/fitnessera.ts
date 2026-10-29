@@ -25,6 +25,7 @@ export const fitnessera: ProjectConfig = {
       "players.reset": { script: "Jugadores", params: { action: "reiniciar" } },
       "players.restore": { script: "Jugadores", params: { action: "recuperar" } },
       "players.delete": { script: "Jugadores", params: { action: "borrar" } },
+      "playtesters.list": { script: "Playtesters", params: { action: "lista" } },
       "codes.create": { script: "Codigos", params: { action: "crear" } },
       "codes.list": { script: "Codigos", params: { action: "lista" } },
       "codes.pause": { script: "Codigos", params: { action: "pausar" } },
@@ -46,7 +47,7 @@ export const fitnessera: ProjectConfig = {
       "reports.done": { script: "Mensajes", params: { action: "reporte_revisado" } },
     },
   },
-  modules: ["kpis", "players", "messages", "feedback", "codes", "photos", "admins", "audit"],
+  modules: ["kpis", "players", "playtesters", "messages", "feedback", "codes", "photos", "admins", "audit"],
   roles: {
     "picarogamestudio@gmail.com": "owner",
   },

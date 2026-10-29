@@ -6,6 +6,7 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SupportSection from "@/components/SupportSection";
+import CollaborateSection from "@/components/CollaborateSection";
 import SectionLabel from "@/components/SectionLabel";
 import { useLang } from "@/lib/LanguageContext";
 import { games, type Game } from "@/lib/games";
@@ -211,6 +212,8 @@ export default function Home() {
         </section>
 
         <SupportSection />
+
+        <CollaborateSection />
 
         {/* ─────────────── CIERRE ─────────────── */}
         <section id="contact" className="relative overflow-hidden py-20 sm:py-28 px-6 scroll-mt-20">

@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLang } from "@/lib/LanguageContext";
 import { CONTACT_EMAIL } from "@/lib/fitnessEraLegal";
+import PlaytestingForm from "./PlaytestingForm";
 
 const ACCENT = "#ff9933";
 
@@ -48,8 +49,7 @@ const copy = {
     readPolicy: "Leer la política completa",
     questions: "Dudas sobre tus datos:",
     bannerTitle: "Playtesting muy pronto",
-    bannerText: "Estamos preparando las primeras pruebas en Android e iOS. Escríbenos si quieres probarlo.",
-    bannerCta: "Quiero probarlo",
+    bannerText: "Estamos preparando las primeras pruebas en Android e iOS. Déjanos tu correo y te avisamos cuando haya build.",
   },
   en: {
     back: "All Games",
@@ -90,8 +90,7 @@ const copy = {
     readPolicy: "Read the full policy",
     questions: "Questions about your data:",
     bannerTitle: "Playtesting soon",
-    bannerText: "We're getting the first tests ready on Android and iOS. Write to us if you'd like to try it.",
-    bannerCta: "I want to try it",
+    bannerText: "We're getting the first tests ready on Android and iOS. Leave your email and we'll tell you when there's a build.",
   },
 };
 
@@ -270,18 +269,13 @@ export default function FitnessEraPage() {
       </section>
 
       {/* ─── STATUS BANNER ─── */}
-      <section className="py-16 px-6 border-t border-b border-graphite-2/60">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-          <div>
+      <section id="playtesting" className="py-16 px-6 border-t border-b border-graphite-2/60 scroll-mt-20">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row md:items-start justify-between gap-10">
+          <div className="md:pt-1 md:max-w-sm">
             <h3 className="font-display text-[clamp(1.6rem,3vw,2.2rem)] tracking-display text-bone mb-2">{c.bannerTitle}</h3>
-            <p className="text-bone-dim text-sm">{c.bannerText}</p>
+            <p className="text-bone-dim text-sm leading-relaxed">{c.bannerText}</p>
           </div>
-          <a
-            href={`mailto:${CONTACT_EMAIL}?subject=Playtesting%20Fitness%20Era`}
-            className="shrink-0 inline-flex items-center gap-2 rounded-full bg-accent-fill text-accent-on font-mono font-bold text-xs tracking-[0.18em] uppercase px-6 py-3 hover:bg-bone transition-colors"
-          >
-            {c.bannerCta}
-          </a>
+          <PlaytestingForm />
         </div>
       </section>
 

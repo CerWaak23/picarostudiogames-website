@@ -7,6 +7,30 @@ import { useLang } from "@/lib/LanguageContext";
 import { policy, POLICY_DATE, POLICY_VERSION, CONTACT_EMAIL } from "@/lib/fitnessEraLegal";
 
 /**
+ * Si te anotas en la lista de espera del playtesting (el formulario de /games/fitness-era).
+ * Es algo de esta web, no del juego, así que no vive en `fitnessEraLegal.ts`: ese archivo tiene
+ * que decir exactamente lo mismo que la pantalla que el jugador acepta dentro del juego.
+ */
+const waitlist = {
+  es: {
+    title: "Si te anotas en la lista de espera del playtesting",
+    paragraphs: [
+      "El formulario de la página de Fitness Era guarda tu correo y, si los escribes, tu nombre y la plataforma en la que quieres probarlo. Se guardan en los servidores de Unity Gaming Services (Unity Technologies), los mismos del juego.",
+      "Los usamos solo para avisarte cuando abra el playtesting y para contarte cómo entrar. No te mandamos publicidad, no se los damos a nadie y no se cruzan con tu cuenta del juego: la lista de espera no sabe nada de tu progreso.",
+      `Escríbenos a ${CONTACT_EMAIL} y te sacamos de la lista o te decimos qué tenemos tuyo. No hace falta explicar por qué.`,
+    ],
+  },
+  en: {
+    title: "If you join the playtesting waiting list",
+    paragraphs: [
+      "The form on the Fitness Era page stores your email and, if you fill them in, your name and the platform you want to play on. They're kept on Unity Gaming Services (Unity Technologies) servers, the same ones the game uses.",
+      "We use them only to tell you when playtesting opens and how to get in. No marketing, we don't give them to anyone, and they're not linked to your game account: the waiting list knows nothing about your progress.",
+      `Write to ${CONTACT_EMAIL} and we'll take you off the list or tell you what we have. No need to explain why.`,
+    ],
+  },
+};
+
+/**
  * La política completa de Fitness Era. Esta es la dirección que se entrega a Google Play y
  * a App Store Connect, y la que abre el botón «Ver política completa» dentro del juego.
  */
@@ -75,6 +99,17 @@ export default function FitnessEraPrivacyPage() {
               </section>
             ))}
           </div>
+
+          {/* La lista de espera es de esta web, no del juego: por eso va fuera de las secciones
+              de arriba, que tienen que decir lo mismo que la pantalla de consentimiento. */}
+          <section id="lista-de-espera" className="mt-14 border border-graphite-2 bg-ink-2 p-6 scroll-mt-24">
+            <h2 className="text-lg font-sans font-semibold text-bone mb-3">{waitlist[lang].title}</h2>
+            <div className="space-y-3 text-bone-dim leading-relaxed text-sm">
+              {waitlist[lang].paragraphs.map((t) => (
+                <p key={t}>{t}</p>
+              ))}
+            </div>
+          </section>
 
           <div className="mt-16 pt-8 border-t border-graphite-2 text-sm text-muted">
             {lang === "es" ? "Contacto:" : "Contact:"}{" "}
