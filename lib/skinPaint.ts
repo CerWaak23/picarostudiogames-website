@@ -91,6 +91,28 @@ const mix = (a: Rgb, b: Rgb, t: number): Rgb => [
   Math.round(a[2] + (b[2] - a[2]) * t),
 ];
 
+/**
+ * Dónde está el puntero, en pixeles de CSS. Se sigue SIEMPRE, no solo mientras
+ * dura el barrido: quien aprieta una muestra deja el mouse quieto encima, así
+ * que durante la animación no llega ni un `pointermove` y el imán no haría nada
+ * justo en el caso más común. Un listener pasivo, puesto una vez.
+ */
+let punteroX = -1e6;
+let punteroY = -1e6;
+let siguiendo = false;
+function sigueAlPuntero() {
+  if (siguiendo || typeof window === "undefined") return;
+  siguiendo = true;
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      punteroX = e.clientX;
+      punteroY = e.clientY;
+    },
+    { passive: true },
+  );
+}
+
 export function paintSkin(
   canvas: HTMLCanvasElement,
   /** El estilo que se va: se pinta por DELANTE del frente, donde todavía no llega. */
@@ -113,6 +135,8 @@ export function paintSkin(
   onFront: (u: number, mascara?: string) => void,
   onDone: () => void
 ) {
+  sigueAlPuntero();
+
   const ctx0 = canvas.getContext("2d");
   if (!ctx0) {
     onApply();
@@ -373,8 +397,8 @@ export function paintSkin(
            pesara. La fuerza cae con la distancia y se apaga con el punto, así que
            al aterrizar queda EXACTO en su casilla de la trama y el relevo con el
            CSS sigue siendo invisible. */
-        const dx = ratonX - px;
-        const dy = ratonY - py;
+        const dx = punteroX * dpr - px;
+        const dy = punteroY * dpr - py;
         const dist = Math.hypot(dx, dy);
         if (dist < IMAN * dpr && dist > 0.5) {
           const tiron = (1 - dist / (IMAN * dpr)) * IMAN_FUERZA * glow;
@@ -409,23 +433,12 @@ export function paintSkin(
     cancelAnimationFrame(raf);
     window.clearTimeout(corte);
     document.removeEventListener("visibilitychange", siSeOculta);
-    window.removeEventListener("pointermove", sigueRaton);
     ctx.clearRect(0, 0, W, H);
     canvas.style.opacity = "1";
     /* Por si quedó a medias: que no tape nada. */
     onFront(-1);
     onDone();
   }
-
-  /* El puntero tira de los puntos que van pasando cerca, como si pesara. Solo
-     se escucha mientras dura la animación: fuera de ella no hay nada que mover. */
-  let ratonX = -1e6;
-  let ratonY = -1e6;
-  const sigueRaton = (e: PointerEvent) => {
-    ratonX = e.clientX * dpr;
-    ratonY = e.clientY * dpr;
-  };
-  window.addEventListener("pointermove", sigueRaton, { passive: true });
 
   /* Red de seguridad. Si los cuadros dejan de llegar (la pestaña se va a segundo
      plano y el navegador congela requestAnimationFrame, por ejemplo), la copia
