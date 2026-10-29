@@ -228,7 +228,11 @@ export function paintSkin(
   /* La trama del héroe se abre en diagonal (.halftone-sweep). Acá se repite esa
      caída para que lo construido calce con lo que hay debajo. */
   const falloff = (x: number, y: number) => {
-    const d = Math.hypot((x / W + 0.02) / 0.95, (y / H + 0.08) / 1.05);
+    /* Con `Math.sqrt` y no `Math.hypot`: esto corre una vez por celda, o sea
+       45.000 veces dentro del clic, y `hypot` cuesta bastante más. */
+    const ex = (x / W + 0.02) / 0.95;
+    const ey = (y / H + 0.08) / 1.05;
+    const d = Math.sqrt(ex * ex + ey * ey);
     return 1 - clamp01((d - 0.15) / 1.1) * 0.85;
   };
 
@@ -294,7 +298,11 @@ export function paintSkin(
 
   let raf = 0;
   /** Índice del siguiente punto que falta clavar, recorriendo por diagonales. */
-  const pending: { x: number; y: number; i: number; j: number; u: number; ox: number; oy: number; a: number; dur: number }[] = [];
+  /* `t0` va declarado acá aunque se llene al despegar: si se le agrega una
+     propiedad después de crearlo, V8 le cambia la forma a los 45.000 objetos y
+     los pasa a modo diccionario, que encarece tanto armarlos como leerlos en
+     cada cuadro. */
+  const pending: { x: number; y: number; i: number; j: number; u: number; ox: number; oy: number; a: number; dur: number; t0: number }[] = [];
   for (let j = 0; j < rows; j++) {
     for (let i = 0; i < cols; i++) {
       const x = i * step + step * 0.5;
@@ -322,11 +330,40 @@ export function paintSkin(
            los puntos quedan despegados unos de otros. Lo justo para que no se
            abran todos juntos por diagonal. */
         dur: FLIGHT * (0.94 + Math.random() * 0.12),
+        /* Se llena cuando el frente lo alcanza. */
+        t0: 0,
       });
     }
   }
-  /* De la diagonal más lejana a la más cercana a la esquina. */
-  pending.sort((p, q) => q.u - p.u);
+  /* De la diagonal más lejana a la más cercana a la esquina, por CUBETAS y no
+     con `sort`: ordenar 45.000 objetos con un comparador era lo más caro de
+     toda la preparación, y la preparación entera pasa dentro del clic, antes
+     de que se dibuje el primer cuadro. Repartirlos en cubetas de `u` es O(n) y
+     no compara nada.
+
+     Dentro de una cubeta el orden queda cualquiera, y da igual: una cubeta
+     cubre 1/2048 de la diagonal, menos de lo que avanza el frente en un cuadro,
+     así que un punto puede despegar un cuadro antes o después de lo que le
+     tocaba. El temblor de `u` ya los desordena bastante más que eso a propósito. */
+  const CUBETAS = 2048;
+  const cubeta = (u: number) => {
+    const c = (u * CUBETAS) | 0;
+    return c < 0 ? 0 : c >= CUBETAS ? CUBETAS - 1 : c;
+  };
+  {
+    const cuantos = new Int32Array(CUBETAS);
+    for (const p of pending) cuantos[cubeta(p.u)]++;
+    /* Dónde empieza cada cubeta, recorriéndolas de la más alta a la más baja. */
+    const cursor = new Int32Array(CUBETAS);
+    let acc = 0;
+    for (let c = CUBETAS - 1; c >= 0; c--) {
+      cursor[c] = acc;
+      acc += cuantos[c];
+    }
+    const ordenado: typeof pending = new Array(pending.length);
+    for (const p of pending) ordenado[cursor[cubeta(p.u)]++] = p;
+    for (let k = 0; k < ordenado.length; k++) pending[k] = ordenado[k];
+  }
 
   let nextIdx = 0;
   const flying: typeof pending = [];
@@ -352,7 +389,7 @@ export function paintSkin(
       /* Despegan los que el frente acaba de alcanzar. */
       while (nextIdx < pending.length && pending[nextIdx].u >= front) {
         const p = pending[nextIdx++];
-        (p as typeof p & { t0: number }).t0 = t;
+        p.t0 = t;
         flying.push(p);
       }
 
@@ -391,7 +428,7 @@ export function paintSkin(
       /* Lo que va en el aire. Al llegar a 1 se clava en la capa de abajo y no se
          vuelve a dibujar nunca más: por eso no hay salto al final. */
       for (let k = flying.length - 1; k >= 0; k--) {
-        const p = flying[k] as (typeof pending)[number] & { t0: number };
+        const p = flying[k];
         const local = clamp01((t - p.t0) / p.dur);
         if (local >= 1) {
           /* Clavado: redondo y con el color y la opacidad exactos de la trama real,
