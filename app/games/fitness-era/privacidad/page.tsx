@@ -39,7 +39,7 @@ export default function FitnessEraPrivacyPage() {
   const p = policy[lang];
 
   return (
-    <div className="min-h-screen bg-ink">
+    <div className="min-h-screen">
       <Navbar solid />
 
       <main className="pt-32 pb-24 px-6">

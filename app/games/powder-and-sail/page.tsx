@@ -65,7 +65,7 @@ export default function PowderAndSailPage() {
   const c = copy[lang];
 
   return (
-    <div className="min-h-screen bg-ink">
+    <div className="min-h-screen">
       <Navbar solid />
 
       <section className="relative pt-32 pb-20 px-6 overflow-hidden">

@@ -131,17 +131,28 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Al cambiar de estilo se apagan las TRANSICIONES por un instante: si no, cada
-   elemento con `transition-colors` (pensado para el hover) se pone a desvanecer
-   su color y el cambio se ve lento y sucio.
+/* Al cambiar de estilo no se desvanece nada: lo viejo lo sigue mostrando la copia
+   que deja SkinSwitcher por encima, hasta que el frente la recorta. Si además se
+   dejaran correr las transiciones, cada `transition-colors` pensado para el hover
+   se pondría a mezclar por debajo y el cambio saldría sucio.
 
    Ojo: solo transiciones, nunca `animation`. Apagar también las animaciones
-   mataba la ola antes de que alcanzara a partir. Lo pone y lo saca
-   SkinSwitcher. */
-html[data-switching],
-html[data-switching] *,
-html[data-switching] *::before,
-html[data-switching] *::after {
+   mataba la ola antes de que alcanzara a partir. */
+html[data-painting],
+html[data-painting] *,
+html[data-painting] *::before,
+html[data-painting] *::after {
+  transition: none !important;
+}
+
+/* La copia congelada en el estilo saliente (SkinSwitcher). Tiene que verse igual
+   a lo que ya estaba en pantalla, así que no vuelve a animar nada: al clonar, las
+   entradas (`.rise`, `pageEnter`) arrancarían de cero, en opacidad 0. */
+[data-skin-copy],
+[data-skin-copy] *,
+[data-skin-copy] *::before,
+[data-skin-copy] *::after {
+  animation: none !important;
   transition: none !important;
 }
 

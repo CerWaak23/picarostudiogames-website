@@ -3,6 +3,11 @@
 out/
 build/
 
+# TypeScript
+# Caché incremental del compilador: se regenera sola y cambia en cada build,
+# así que fuera del repo. Cubre la web y admin/.
+*.tsbuildinfo
+
 # Node
 node_modules/
 npm-debug.log*

@@ -123,34 +123,50 @@ Tres movimientos propios:
 |---|---|---|
 | Entrada de página | `app/template.tsx` | `pageEnter`, 0.42s. Next remonta el template en cada navegación |
 | Entrada del héroe | `.rise` | 0.7s escalonada, una sola vez |
-| Cambio de estilo | `lib/skinPaint.ts` | 1.85s en canvas. Ver abajo |
+| Cambio de estilo | `lib/skinPaint.ts` | 2s en canvas. Ver abajo |
 
-El cambio de estilo **se pinta por detrás**, no salta. Un frente diagonal
-avanza desde la esquina de abajo a la derecha hacia la esquina del logo,
-cubriendo el fondo con el color del estilo nuevo. Por delante del frente van
-puntos que vuelan en el color de acento y se clavan en la retícula; detrás
+El cambio de estilo **se pinta**, no salta. Un frente diagonal avanza desde la
+esquina de abajo a la derecha hacia la esquina del logo. Por delante del frente
+van puntos que vuelan en el color de acento y se clavan en la retícula; detrás
 queda la retícula ya armada. Es una obra en construcción: lo que ya se
 construyó no se vuelve a mover.
 
-Dos reglas que lo sostienen:
+**El fondo y las letras se pintan al mismo ritmo.** El canvas rehace el fondo,
+pero los textos, bordes y botones viven en el DOM y cambiarían todos de golpe.
+Para evitarlo, `capaSaliente()` deja encima una copia congelada del contenido
+con el estilo que se va, y la recorta con la misma diagonal: donde el frente ya
+pasó se ve el contenido real con el estilo nuevo, donde no, la copia. Las
+paletas se declaran en `:root[data-skin=…]` y **no se heredan a un clon**, así
+que a la copia hay que copiarle las 19 variables a mano con `getComputedStyle`
+antes de cambiar nada. Lleva fondo opaco (si no, se ven copia y contenido real
+a la vez y las letras salen fantasma) y el atributo `data-skin-copy`, que en
+`globals.css` le apaga `animation` y `transition`: al clonar, `.rise` y
+`pageEnter` arrancan de nuevo desde opacidad 0 y la copia salía lavada.
 
-1. **El canvas va detrás del contenido** (`.skin-wave` en z-0, el contenido en
-   z-10 desde `app/template.tsx`). Nunca tapa el logo, los textos ni las
-   imágenes: lo que se rehace es el fondo.
-2. **Los puntos aterrizan en la retícula de verdad**: misma separación de 6px,
-   mismo color y misma opacidad que `.halftone-strong` del estilo nuevo, con la
-   misma caída diagonal. Por eso al final el canvas se limpia de una y no
-   aparece «otra imagen»: debajo ya está lo mismo, en el mismo sitio.
+### Tres trampas, por si alguien las vuelve a pisar
 
-El estilo se aplica al 62% del recorrido, cuando el frente ya cruzó. Para que
-28.000 puntos no se dibujen cuadro a cuadro, los que ya aterrizaron se pintan
-una vez en un canvas aparte y cada cuadro solo se copia esa capa y se dibujan
-los que van en el aire.
+1. **Ningún envoltorio de página puede llevar `bg-ink`.** `app/template.tsx`
+   envuelve todo en `.page-enter.relative.z-10`, que crea contexto de
+   apilamiento; si además cada página repinta `bg-ink` opaco, ese fondo tapa el
+   canvas (que vive en `z-0`) y la animación corre perfecta pero **invisible**.
+   Por eso las cinco páginas llevan el envoltorio sin fondo: `body` ya pinta
+   `bg-ink` y alcanza. Si vuelve a aparecer un `min-h-screen bg-ink`, deja de
+   verse todo.
+2. **Nada de dibujar punto por punto.** Veinte mil dibujos en el cuadro del
+   clic costaban 78 ms de tranque. Los puntos en reposo se copian de un sello
+   pre-dibujado y la capa saliente va de una sola pasada con un patrón: 12–16 ms.
+3. **No quitar las redes de seguridad** de `paintSkin` (corte por tiempo a
+   `DUR + 600`, `visibilitychange`, guarda de ventana sin tamaño y los dos
+   `try/catch`). Si los cuadros se detienen o algo revienta, la copia se queda
+   encima **tapando la página entera** y no hay forma de recuperarse salvo
+   recargando. Pasó dos veces durante el desarrollo.
 
-`html[data-switching]` corta las transiciones ese instante, solo las
-transiciones y nunca las animaciones: apagar también `animation` mataba la
-animación antes de que partiera. Con `prefers-reduced-motion` no hay pintura:
-el estilo se aplica y listo.
+El estilo se aplica **al empezar**, no a mitad: como el canvas cubre la
+pantalla (el saliente por delante del frente, el entrante por detrás), el DOM
+puede cambiar desde el primer cuadro sin que se note. `html[data-painting]`
+corta las transiciones ese rato, solo las transiciones y nunca las animaciones:
+apagar también `animation` mataba la animación antes de que partiera. Con
+`prefers-reduced-motion` no hay pintura: el estilo se aplica y listo.
 
 ## La máscara del héroe
 

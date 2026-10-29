@@ -23,7 +23,7 @@ export default function Home() {
     .sort((a, b) => (a.status === b.status ? 0 : a.status === "active" ? -1 : 1));
 
   return (
-    <div className="min-h-screen bg-ink">
+    <div className="min-h-screen">
       <Navbar />
       <main id="contenido">
         {/* ─────────────── HÉROE ─────────────── */}
@@ -42,7 +42,7 @@ export default function Home() {
               forma. Una sola no alcanza. */}
           <div
             aria-hidden
-            className="hidden lg:block absolute top-0 right-0 h-full w-[38%]"
+            className="hidden lg:block absolute top-28 bottom-0 right-0 w-[38%]"
             style={{
               maskImage: "linear-gradient(to right, transparent 0%, #000 42%)",
               WebkitMaskImage: "linear-gradient(to right, transparent 0%, #000 42%)",
@@ -50,6 +50,27 @@ export default function Home() {
           >
             <div className="relative h-full w-full mask-pic art-veil bg-graphite">
               <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-ink/60" />
+              <div className="absolute inset-0 halftone-strong" />
+            </div>
+          </div>
+
+          {/* En teléfono la máscara no cabe en su columna, pero dejarla fuera
+              deja la pantalla vacía. Va detrás del texto, grande y saliéndose
+              por el borde, con la misma máscara de degradado que la versión
+              ancha para que no corte en seco.
+
+              Sin `blur`: el manual prohíbe desenfocar la marca (pág. 9). El
+              «atrás» se consigue con opacidad baja y el borde difuminado, que
+              es lo mismo a la vista y no se sale de la norma. */}
+          <div
+            aria-hidden
+            className="lg:hidden absolute top-28 right-[-22%] h-[52%] w-[92%]"
+            style={{
+              maskImage: "linear-gradient(to right, transparent 0%, #000 55%)",
+              WebkitMaskImage: "linear-gradient(to right, transparent 0%, #000 55%)",
+            }}
+          >
+            <div className="relative h-full w-full mask-pic bg-graphite opacity-40">
               <div className="absolute inset-0 halftone-strong" />
             </div>
           </div>

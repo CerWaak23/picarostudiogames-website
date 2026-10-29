@@ -79,7 +79,7 @@ const features = [
 
 export default function GhostDirectivePage() {
   return (
-    <div className="min-h-screen bg-ink">
+    <div className="min-h-screen">
       <Navbar solid />
 
       {/* ─── HERO ─── */}

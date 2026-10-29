@@ -118,7 +118,7 @@ export default function FitnessEraPage() {
   const c = copy[lang];
 
   return (
-    <div className="min-h-screen bg-ink">
+    <div className="min-h-screen">
       <Navbar solid />
 
       {/* ─── HERO ─── */}
