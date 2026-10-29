@@ -112,6 +112,9 @@ function capaSaliente(): { recortar: (u: number, mascara?: string) => void; quit
   capa.appendChild(marco);
   document.body.appendChild(capa);
 
+  /** Si la máscara de puntos ya está montada: lo que no cambia se pone una vez. */
+  let conMascara = false;
+
   return {
     /**
      * `u` es la diagonal del frente. Los dos recortes son complementarios y de
@@ -128,16 +131,22 @@ function capaSaliente(): { recortar: (u: number, mascara?: string) => void; quit
            su casilla. Estirada al tamaño de la pantalla, cada casilla queda del
            porte de un punto, así que lo que destapa el estilo nuevo son ellos y
            no un borde dibujado aparte. */
-        capa.style.clipPath = "none";
-        /* Fondo plano del estilo saliente: la copia es una plancha opaca con el
-           aspecto viejo, y lo que la agujerea son los puntos. Sin este fondo se
-           transparentaba el contenido real y la pantalla entera salía lavada. */
-        capa.style.background = tintaVieja;
+        if (!conMascara) {
+          conMascara = true;
+          capa.style.clipPath = "none";
+          /* Fondo plano del estilo saliente: la copia es una plancha opaca con el
+             aspecto viejo, y lo que la agujerea son los puntos. Sin este fondo se
+             transparentaba el contenido real y la pantalla entera salía lavada. */
+          capa.style.background = tintaVieja;
+          capa.style.setProperty("-webkit-mask-size", "100% 100%");
+          capa.style.setProperty("mask-size", "100% 100%");
+          capa.style.setProperty("mask-repeat", "no-repeat");
+        }
+        /* Lo único que cambia cuadro a cuadro es la imagen. Las demás van una sola
+           vez: reescribirlas todas obligaba al navegador a repasar el estilo de una
+           capa del porte de la pantalla con una copia de la página entera dentro. */
         capa.style.setProperty("-webkit-mask-image", `url(${mascara})`);
         capa.style.setProperty("mask-image", `url(${mascara})`);
-        capa.style.setProperty("-webkit-mask-size", "100% 100%");
-        capa.style.setProperty("mask-size", "100% 100%");
-        capa.style.setProperty("mask-repeat", "no-repeat");
         return;
       }
       /* El texto se corta con borde VIVO: dos formas semitransparentes encimadas

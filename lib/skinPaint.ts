@@ -200,6 +200,28 @@ export function paintSkin(
   const stampCtx = stamp.getContext("2d");
   if (stampCtx) disc(stampCtx, stampR, stampR, r, rgba(dot, 1));
 
+  /* Los colores del vuelo, en escalones, calculados UNA vez.
+
+     En cada cuadro van miles de puntos en el aire, y `fillStyle = "rgba(...)"`
+     hace que el navegador parsee un color CSS por punto. Medido en esta misma
+     pantalla con 14.762 puntos en el aire: 10 ms de los 16,7 que tiene un cuadro
+     a 60 Hz, y no por armar el string ni por mezclar el color (con un string fijo
+     cuesta lo mismo), sino por el parseo. Con el color en escalones, y como
+     `flying` está casi ordenado por lo asentado que va cada punto, `fillStyle`
+     cambia unas decenas de veces por cuadro en vez de catorce mil: 2,8 ms.
+
+     La opacidad sí es de cada punto, así que va en `globalAlpha`, que es un
+     número y no se parsea.
+
+     32 escalones y no más: con 64, el temblor que lleva cada punto lo hace
+     saltar de escalón en casi cada vuelta y volvemos a parsear por punto
+     (medido: 20 ms, peor que el original). */
+  const PASOS = 32;
+  const paleta: string[] = [];
+  for (let i = 0; i <= PASOS; i++) paleta.push(rgba(mix(accent, dot, i / PASOS), 1));
+  /* El alcance del imán al cuadrado, para comparar sin sacar raíces. */
+  const alcance2 = IMAN * dpr * (IMAN * dpr);
+
   const cols = Math.ceil(W / step) + 1;
   const rows = Math.ceil(H / step) + 1;
 
@@ -364,6 +386,8 @@ export function paintSkin(
       /* Lo ya construido, de una sola copia. */
       ctx.drawImage(settled, 0, 0);
 
+      /** Qué escalón de `paleta` está puesto; -1 = ninguno todavía. */
+      let ultimoEscalon = -1;
       /* Lo que va en el aire. Al llegar a 1 se clava en la capa de abajo y no se
          vuelve a dibujar nunca más: por eso no hay salto al final. */
       for (let k = flying.length - 1; k >= 0; k--) {
@@ -401,19 +425,31 @@ export function paintSkin(
            CSS sigue siendo invisible. */
         const dx = punteroX * dpr - px;
         const dy = punteroY * dpr - py;
-        const dist = Math.hypot(dx, dy);
-        if (dist < IMAN * dpr && dist > 0.5) {
+        /* Comparado al cuadrado, que la raíz solo hace falta para los pocos que
+           caen dentro del alcance: `Math.hypot` por punto es de lo más caro que
+           hay en este bucle. */
+        const d2 = dx * dx + dy * dy;
+        if (d2 < alcance2 && d2 > 0.25) {
           /* Al cuadrado: los que pasan al lado se doblan harto y los del borde
              del alcance casi nada, así el límite no se lee como un círculo
              recortado por más que se agrande. */
-          const cerca = 1 - dist / (IMAN * dpr);
+          const cerca = 1 - Math.sqrt(d2) / (IMAN * dpr);
           const tiron = cerca * cerca * IMAN_FUERZA * glow;
           px += dx * tiron;
           py += dy * tiron;
         }
-        ctx.fillStyle = rgba(mix(accent, dot, settle), (p.a + 0.5 * glow) * entra);
+        const escalon = (settle * PASOS) | 0;
+        if (escalon !== ultimoEscalon) {
+          ctx.fillStyle = paleta[escalon];
+          ultimoEscalon = escalon;
+        }
+        ctx.globalAlpha = (p.a + 0.5 * glow) * entra;
         ctx.fillRect(px - rr, py - rr, rr * 2, rr * 2);
       }
+
+      /* La opacidad vuelve a 1. El cuadro que viene arranca copiando capas
+         enteras con `drawImage` y saldrían lavadas. */
+      ctx.globalAlpha = 1;
 
       /* Entrega: la página de abajo ya tiene el estilo nuevo desde el principio,
          así que el canvas se cruza con ella en vez de irse de un tijeretazo. */
