@@ -49,7 +49,7 @@ export default function Home() {
               WebkitMaskImage: "linear-gradient(to right, transparent 0%, #000 42%)",
             }}
           >
-            <div className="relative h-full w-full mask-pic art-veil bg-graphite">
+            <div className="relative h-full w-full mask-pic art-veil bg-art">
               <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-ink/60" />
               <div className="absolute inset-0 halftone-strong" />
             </div>
@@ -71,7 +71,7 @@ export default function Home() {
               WebkitMaskImage: "linear-gradient(to right, transparent 0%, #000 55%)",
             }}
           >
-            <div className="relative h-full w-full mask-pic bg-graphite opacity-40">
+            <div className="relative h-full w-full mask-pic bg-art opacity-40">
               <div className="absolute inset-0 halftone-strong" />
             </div>
           </div>

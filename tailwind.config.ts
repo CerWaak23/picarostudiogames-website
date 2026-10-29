@@ -20,6 +20,8 @@ const config: Config = {
         "ink-2": c("ink-2"),
         graphite: c("graphite"),
         "graphite-2": c("graphite-2"),
+        /** El tinte del tiki del héroe, aparte del de las superficies. */
+        art: c("art"),
         bone: c("bone"),
         "bone-dim": c("bone-dim"),
         muted: c("muted"),

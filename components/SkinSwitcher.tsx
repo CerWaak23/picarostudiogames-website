@@ -45,7 +45,7 @@ const VARS = [
   "--c-ink", "--c-ink-2", "--c-graphite", "--c-graphite-2", "--c-bone", "--c-bone-dim",
   "--c-muted", "--c-accent", "--c-accent-text", "--c-accent-fill", "--c-accent-on",
   "--c-mark", "--c-plus", "--dot", "--dot-alpha", "--dot-alpha-strong", "--glow",
-  "--glow-alpha", "--art-opacity",
+  "--glow-alpha", "--c-art", "--art-opacity",
 ];
 
 /**

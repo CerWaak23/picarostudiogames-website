@@ -47,6 +47,10 @@
   --c-plus: 193 19 80;
   --glow: 180 239 4;
   --glow-alpha: 0.22;
+  /* El tinte del tiki del héroe. Va aparte de `--c-graphite` porque ese también
+     pinta tarjetas y bordes: en las pieles oscuras son el mismo valor, pero en
+     papel el arte necesita bajar bastante más que las superficies. */
+  --c-art: 56 56 56;
   --art-opacity: 0.55;
 }
 
@@ -74,6 +78,7 @@
   --c-plus: 193 19 80;
   --glow: 224 33 53;
   --glow-alpha: 0.2;
+  --c-art: 53 43 42;
   --art-opacity: 0.5;
 }
 
@@ -100,6 +105,10 @@
   --c-plus: 193 19 80;
   --glow: 224 33 53;
   --glow-alpha: 0.13;
+  /* Más oscuro que `--c-graphite` (222): con ese, el tiki quedaba a 11 niveles
+     del fondo y no se veía. Con este queda a 35, que sobre un fondo claro es lo
+     que hace falta para que se lea como marca de agua y no como una mancha. */
+  --c-art: 188 186 181;
   --art-opacity: 0.7;
 }
 
