@@ -19,7 +19,7 @@ type Area = (typeof AREAS)[number];
 const copy = {
   es: {
     label: "Trabajemos juntos",
-    title: "Faltan manos, no ideas.",
+    title: "Se buscan cómplices.",
     intro:
       "El estudio es una persona, y hay más ideas que manos. Si haces arte, música, código, historia o producción y quieres meterte en un proyecto, cuéntame qué sabes hacer.",
     aside:
@@ -49,7 +49,7 @@ const copy = {
   },
   en: {
     label: "Let's work together",
-    title: "Ideas aren't the problem. Hands are.",
+    title: "Accomplices wanted.",
     intro:
       "The studio is one person, and there are more ideas than hands. If you do art, music, code, writing or production and want in on a project, tell me what you're good at.",
     aside:
