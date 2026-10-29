@@ -134,7 +134,7 @@ export function paintSkin(
    * estilo viejo, y así las letras y los botones se pintan en el mismo orden y
    * la misma dirección que el fondo.
    */
-  onFront: (u: number, mascara?: string) => void,
+  onFront: (u: number) => void,
   onDone: () => void
 ) {
   sigueAlPuntero();
@@ -280,29 +280,13 @@ export function paintSkin(
     }
   }
 
-  /* La MÁSCARA de la copia: una casilla por celda de la trama, negra al empezar
-     (la copia se ve entera). Cada punto, al aterrizar, borra SU casilla, y con eso
-     destapa el estilo nuevo justo en su trozo, letras incluidas. Es la forma de
-     que el cambio de color lo hagan los puntos y no un recorte con forma
-     inventada. Va a una casilla por celda, no a resolución completa, porque hay
-     que convertirla a imagen en cada cuadro; al estirarse, cada casilla vuelve a
-     quedar del tamaño y la redondez de un punto. */
-  const mask = document.createElement("canvas");
-  mask.width = cols;
-  mask.height = rows;
-  const mctx = mask.getContext("2d");
-  if (mctx) {
-    mctx.fillStyle = "#000";
-    mctx.fillRect(0, 0, cols, rows);
-  }
-
   let raf = 0;
   /** Índice del siguiente punto que falta clavar, recorriendo por diagonales. */
   /* `t0` va declarado acá aunque se llene al despegar: si se le agrega una
      propiedad después de crearlo, V8 le cambia la forma a los 45.000 objetos y
      los pasa a modo diccionario, que encarece tanto armarlos como leerlos en
      cada cuadro. */
-  const pending: { x: number; y: number; i: number; j: number; u: number; ox: number; oy: number; a: number; dur: number; t0: number }[] = [];
+  const pending: { x: number; y: number; u: number; ox: number; oy: number; a: number; dur: number; t0: number }[] = [];
   for (let j = 0; j < rows; j++) {
     for (let i = 0; i < cols; i++) {
       const x = i * step + step * 0.5;
@@ -313,14 +297,10 @@ export function paintSkin(
       pending.push({
         x,
         y,
-        /* Su casilla en la máscara: una por celda de la trama. */
-        i,
-        j,
-        /* Desorden en el despegue Y en lo que tarda el vuelo. Sin esto, todos
-           los puntos de una misma diagonal salen y llegan a la vez, sus casillas
-           de la máscara se abren juntas y el borde vuelve a ser una línea recta,
-           que es justo lo que hay que evitar. Con el desorden, las casillas se
-           abren salpicadas y el relevo se lee como lo que es: puntos cayendo. */
+        /* Desorden en el despegue Y en lo que tarda el vuelo. Sin esto, todos los
+           puntos de una misma diagonal salen y llegan a la vez y el borde vuelve a
+           ser una línea recta, que es justo lo que hay que evitar. Con el desorden
+           el relevo se lee como lo que es: puntos cayendo. */
         u: uOf(x, y) + (Math.random() - 0.5) * 0.025,
         /* Llegan volando desde abajo a la derecha, con algo de dispersión. */
         ox: dist * (0.8 + Math.random() * 0.45),
@@ -384,7 +364,7 @@ export function paintSkin(
          dejaba una punta del estilo viejo clavada en la esquina del logo durante
          los últimos 760 ms, hasta que la retiraba el cierre. Así llega a cero
          justo cuando el frente termina de cruzar, sin tocar el paso del fondo. */
-      onFront((1 + ADELANTO) * (1 - avance), mask.toDataURL());
+      onFront((1 + ADELANTO) * (1 - avance));
 
       /* Despegan los que el frente acaba de alcanzar. */
       while (nextIdx < pending.length && pending[nextIdx].u >= front) {
@@ -435,9 +415,6 @@ export function paintSkin(
              así al retirarse el canvas la textura no cambia. */
           sctx.globalAlpha = p.a;
           sctx.drawImage(stamp, p.x - stampR, p.y - stampR);
-          /* Y destapa su casilla de la máscara: ACÁ es donde este punto cambia
-             el color, también el de las letras que tenga encima. */
-          if (mctx) mctx.clearRect(p.i, p.j, 1, 1);
           flying.splice(k, 1);
           continue;
         }

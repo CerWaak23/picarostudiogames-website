@@ -58,7 +58,7 @@ const VARS = [
  * Las paletas están declaradas en `:root`, así que a la copia hay que ponerle los
  * valores salientes a mano: se leen del documento justo antes de cambiarlo.
  */
-function capaSaliente(): { recortar: (u: number, mascara?: string) => void; quitar: () => void } | null {
+function capaSaliente(): { recortar: (u: number) => void; quitar: () => void } | null {
   const contenido = document.querySelector<HTMLElement>(".page-enter");
   if (!contenido || typeof contenido.cloneNode !== "function") return null;
 
@@ -112,9 +112,6 @@ function capaSaliente(): { recortar: (u: number, mascara?: string) => void; quit
   capa.appendChild(marco);
   document.body.appendChild(capa);
 
-  /** Si la máscara de puntos ya está montada: lo que no cambia se pone una vez. */
-  let conMascara = false;
-
   return {
     /**
      * `u` es la diagonal del frente. Los dos recortes son complementarios y de
@@ -124,31 +121,8 @@ function capaSaliente(): { recortar: (u: number, mascara?: string) => void; quit
      * difuminado. El borde solo se nota en el texto, que es donde tiene que
      * notarse: no hay una raya de color cruzando la pantalla.
      */
-    recortar: (u: number, mascara?: string) => {
+    recortar: (u: number) => {
       const s = u * 2;
-      if (mascara) {
-        /* La máscara viene de los propios puntos: cada uno, al aterrizar, abrió
-           su casilla. Estirada al tamaño de la pantalla, cada casilla queda del
-           porte de un punto, así que lo que destapa el estilo nuevo son ellos y
-           no un borde dibujado aparte. */
-        if (!conMascara) {
-          conMascara = true;
-          capa.style.clipPath = "none";
-          /* Fondo plano del estilo saliente: la copia es una plancha opaca con el
-             aspecto viejo, y lo que la agujerea son los puntos. Sin este fondo se
-             transparentaba el contenido real y la pantalla entera salía lavada. */
-          capa.style.background = tintaVieja;
-          capa.style.setProperty("-webkit-mask-size", "100% 100%");
-          capa.style.setProperty("mask-size", "100% 100%");
-          capa.style.setProperty("mask-repeat", "no-repeat");
-        }
-        /* Lo único que cambia cuadro a cuadro es la imagen. Las demás van una sola
-           vez: reescribirlas todas obligaba al navegador a repasar el estilo de una
-           capa del porte de la pantalla con una copia de la página entera dentro. */
-        capa.style.setProperty("-webkit-mask-image", `url(${mascara})`);
-        capa.style.setProperty("mask-image", `url(${mascara})`);
-        return;
-      }
       /* El texto se corta con borde VIVO: dos formas semitransparentes encimadas
          siempre darían fantasma. Pero el borde no es una recta ni una forma
          inventada: es una fila de ARCOS del tamaño de la trama, unos mordiendo
@@ -246,7 +220,7 @@ export function useSkin() {
         { ink: saliente.ink, accent: saliente.accent, dot: saliente.dot, dotAlpha: saliente.dotAlpha },
         { ink: target.ink, accent: target.accent, dot: target.dot, dotAlpha: target.dotAlpha },
         apply,
-        (u, mascara) => capa?.recortar(u, mascara),
+        (u) => capa?.recortar(u),
         () => {
           capa?.quitar();
           cancel.current = null;
