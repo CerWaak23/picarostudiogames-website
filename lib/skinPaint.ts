@@ -55,10 +55,12 @@ const EDGE = 0.16;
 /** Cuánto se adelanta el recorte de la copia al frente. Fijo: no sigue a EDGE,
  *  para poder tocar el difuminado sin mover el momento en que cambian las letras. */
 const ADELANTO = 0.13;
-/** Hasta dónde llega la atracción del puntero, en pixeles de pantalla. */
-const IMAN = 170;
+/** Hasta dónde llega la atracción del puntero, en pixeles de pantalla. Amplio a
+ *  propósito: el enjambre pasa por un punto dado durante menos de medio segundo,
+ *  así que con un alcance chico el efecto existe pero no alcanza a verse. */
+const IMAN = 300;
 /** Cuánto se desvía un punto que pasa justo por encima del puntero (0 a 1). */
-const IMAN_FUERZA = 0.42;
+const IMAN_FUERZA = 0.8;
 /** El canvas se va cruzándose con la página, no de un tijeretazo. */
 const HANDOFF = 0.12;
 
@@ -401,7 +403,11 @@ export function paintSkin(
         const dy = punteroY * dpr - py;
         const dist = Math.hypot(dx, dy);
         if (dist < IMAN * dpr && dist > 0.5) {
-          const tiron = (1 - dist / (IMAN * dpr)) * IMAN_FUERZA * glow;
+          /* Al cuadrado: los que pasan al lado se doblan harto y los del borde
+             del alcance casi nada, así el límite no se lee como un círculo
+             recortado por más que se agrande. */
+          const cerca = 1 - dist / (IMAN * dpr);
+          const tiron = cerca * cerca * IMAN_FUERZA * glow;
           px += dx * tiron;
           py += dy * tiron;
         }
