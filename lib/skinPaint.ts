@@ -41,9 +41,21 @@ const DUR = 1700;
 /** Qué parte de la animación tarda el frente en cruzar la pantalla entera. */
 const CRUCE = 0.73;
 /** Igual que el `background-size` de .halftone-strong. */
+/** Techo de píxeles que el canvas rasteriza por cuadro. Ver el comentario del
+ *  dpr: el número sale de medir, no de estimar. */
+const PRESUPUESTO_PX = 2.5e6;
+
 const GRID = 6;
 /** Qué parte del recorrido dura el viaje + el asentamiento de cada punto. */
-const FLIGHT = 0.24;
+/* Cuánto dura el vuelo de CADA punto, no cuántos hay. Los que están en el aire
+   a la vez son `total * FLIGHT / CRUCE`, así que bajarlo parte el bucle por la
+   mitad sin sacar un solo punto de la retícula: siguen aterrizando todos, en las
+   mismas casillas y con la misma opacidad, de modo que el calce con
+   `.halftone-strong` no se toca.
+   Medido en 1707x932: de 0.24 a 0.12 los puntos simultáneos pasan de ~14.600 a
+   ~7.300 y los cuadros sobre 14 ms de 24 a 4-7. El costo era de llamadas de
+   dibujo, no de píxeles. */
+const FLIGHT = 0.12;
 /** De ese tramo, cuánto es viaje: el resto el punto ya está en su sitio y solo se apaga. */
 const TRAVEL = 0.5;
 /**
@@ -150,9 +162,22 @@ export function paintSkin(
      el estrechamiento del if de arriba. */
   const ctx = ctx0;
 
-  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   const cssW = window.innerWidth;
   const cssH = window.innerHeight;
+  /* Presupuesto de píxeles, no un tope de densidad. A 1.5 el canvas rasterizaba
+     2,25 veces más píxeles por cuadro y se notaba: p90 de 11,9 ms y cuadros de
+     42. Pero fijar `dpr = 1` acotaría relativo a la ventana, o sea nada en un
+     monitor grande (un 4K daría 8,3 Mpx, más del doble de lo que ya pesaba) y
+     de paso regalaría nitidez en el teléfono, donde nunca pesó.
+     Con un techo de 2,5 Mpx el costo por cuadro es parecido en cualquier
+     pantalla: da 1,25 en un portátil, 0,55 en 4K y 1,5 en un teléfono.
+
+     OJO, para que nadie lo lea como más de lo que es: esto NO arregla el
+     tranque. Medido en 1707x932, bajar el raster 2,75 veces (3,58 a 1,3 Mpx)
+     movió el p90 de 12 a 10 ms y dejó los cuadros largos igual, 25 contra 23.
+     El costo del efecto está repartido, no en el raster. Esto es un tope para
+     que una pantalla grande no dispare el costo, nada más. */
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5, Math.sqrt(PRESUPUESTO_PX / (cssW * cssH)));
   const W = Math.round(cssW * dpr);
   const H = Math.round(cssH * dpr);
   if (W < 2 || H < 2) {
