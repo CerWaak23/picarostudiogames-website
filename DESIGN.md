@@ -143,7 +143,7 @@ a la vez y las letras salen fantasma) y el atributo `data-skin-copy`, que en
 `globals.css` le apaga `animation` y `transition`: al clonar, `.rise` y
 `pageEnter` arrancan de nuevo desde opacidad 0 y la copia salía lavada.
 
-### Tres trampas, por si alguien las vuelve a pisar
+### Cuatro trampas, por si alguien las vuelve a pisar
 
 1. **Ningún envoltorio de página puede llevar `bg-ink`.** `app/template.tsx`
    envuelve todo en `.page-enter.relative.z-10`, que crea contexto de
@@ -160,6 +160,30 @@ a la vez y las letras salen fantasma) y el atributo `data-skin-copy`, que en
    `try/catch`). Si los cuadros se detienen o algo revienta, la copia se queda
    encima **tapando la página entera** y no hay forma de recuperarse salvo
    recargando. Pasó dos veces durante el desarrollo.
+
+   Ninguna de las cuatro es defensiva «por si acaso»: las cuatro se dispararon
+   de verdad. La de ventana sin tamaño salta cada vez que el panel del
+   navegador queda colapsado (`innerWidth: 0`), que es un estado normal, no un
+   caso raro; sin ella, `drawImage` revienta con «canvas de ancho 0» y la
+   excepción corta antes de que se armen las otras tres. Y los cuadros pueden dejar de
+   llegar sin que el documento se declare oculto (pasa con el panel del navegador
+   en segundo plano: `document.hidden` sigue en false y `requestAnimationFrame`
+   da 0 cuadros). Ahí `visibilitychange` no salta, y el corte por tiempo es lo
+   único que retira la copia. Por eso están las dos y no una.
+
+4. **El desorden por punto no es decorativo, y su rango es estrecho a
+   propósito.** El jitter en `u` al despegar (±0.025) y la duración de vuelo
+   propia de cada punto (`FLIGHT * 0.94…1.06`) son lo que impide que las
+   casillas de la máscara se abran todas juntas por diagonal.
+
+   Se rompe por los dos lados, así que no es un «más es mejor»:
+
+   - **Sin desorden**, las casillas se abren a la vez por diagonal y el borde
+     vuelve a ser una línea recta, que es justo lo que este mecanismo venía a
+     resolver.
+   - **Con demasiado**, los puntos del borde se desparraman y deja de leerse
+     como un frente. Con el rango original (`0.6…1.4`) el borde se abría unos
+     313 px; con el actual, unos 47.
 
 El estilo se aplica **al empezar**, no a mitad: como el canvas cubre la
 pantalla (el saliente por delante del frente, el entrante por detrás), el DOM
