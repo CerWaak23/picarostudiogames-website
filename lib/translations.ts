@@ -34,9 +34,9 @@ export const t = {
     about: {
       label: "The studio",
       title: "Who's behind this",
-      p1: "Pícaro Game Studio is a one-person indie studio in Chile. Every game starts as an idea that seemed too good to leave alone.",
+      p1: "Pícaro Game Studio is a Chilean indie studio. Every game starts from something out of everyday life here: a trick, a joke, someone getting away with it.",
       p2: "Right now there are two mobile games in the works: Fitness Era, where real push-ups power every fight, and Mar Bravo, a pirate roguelite on the open sea. Ghost Directive, the first project, is on hold.",
-      p3: "We take after Chile's stories and its picardía: wit with a wink, where the smartest player wins. Small studio, few resources, plenty of ideas.",
+      p3: "We take after Chile's stories and its picardía: wit with a wink, where the smartest player wins.",
       role: "Founder & developer",
       bio: "Designer, developer and creative director behind Pícaro. Making games from the end of the world.",
     },
@@ -80,9 +80,9 @@ export const t = {
     about: {
       label: "El estudio",
       title: "Quién está detrás",
-      p1: "Pícaro Game Studio es un estudio indie chileno de una persona. Cada juego parte de una idea que daba pena dejar botada.",
+      p1: "Pícaro Game Studio es un estudio indie chileno. Cada juego parte de una idea del día a día de acá: una maña, una talla, alguien saliéndose con la suya.",
       p2: "Ahora hay dos juegos de celular en obra: Fitness Era, donde las flexiones de verdad mueven cada pelea, y Mar Bravo, un roguelite pirata en mar abierto. Ghost Directive, el primer proyecto, está en pausa.",
-      p3: "Nos salen las historias y la picardía de Chile: ingenio con humor, donde gana el más astuto. Estudio chico, pocos recursos, ideas de sobra.",
+      p3: "Nos salen las historias y la picardía de Chile: ingenio con humor, donde gana el más astuto.",
       role: "Fundador y desarrollador",
       bio: "Diseñador, desarrollador y director creativo detrás de Pícaro. Haciendo juegos desde el fin del mundo.",
     },
