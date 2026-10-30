@@ -195,7 +195,7 @@ export default function Home() {
                   {tr.about.p1}
                 </p>
                 <p>
-                  <Highlight text={tr.about.p2} words={["Fitness Era", "Powder & Sail", "Ghost Directive"]} />
+                  <Highlight text={tr.about.p2} words={["Fitness Era", "Mar Bravo", "Ghost Directive"]} />
                 </p>
                 <p>{tr.about.p3}</p>
               </div>

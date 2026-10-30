@@ -45,8 +45,8 @@ export const games: Game[] = [
     cover: "/games/fitness-era/prehistoria.jpg",
   },
   {
-    slug: "powder-and-sail",
-    title: "Powder & Sail",
+    slug: "mar-bravo",
+    title: "Mar Bravo",
     genre: { en: "Naval Roguelite / Mobile", es: "Roguelite naval / Móvil" },
     description: {
       en: "Command a pirate ship on the open sea. Clear each zone of enemies, pick upgrade cards and sail on — every run is different.",

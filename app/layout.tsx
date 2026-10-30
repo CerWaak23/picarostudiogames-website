@@ -37,13 +37,13 @@ export const metadata: Metadata = {
     template: "%s · Pícaro Game Studio",
   },
   description:
-    "Estudio indie chileno. Juegos ingeniosos, con humor y astucia. Fitness Era, Powder & Sail y Ghost Directive.",
+    "Estudio indie chileno. Juegos ingeniosos, con humor y astucia. Fitness Era, Mar Bravo y Ghost Directive.",
   keywords: [
     "estudio indie",
     "videojuegos chilenos",
     "Chile",
     "Fitness Era",
-    "Powder & Sail",
+    "Mar Bravo",
     "Ghost Directive",
   ],
   openGraph: {

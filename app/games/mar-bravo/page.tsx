@@ -18,7 +18,7 @@ const copy = {
     aboutLabel: "El juego",
     aboutTitle: "A toda vela",
     about: [
-      "Powder & Sail es un roguelite de barcos piratas para celular, visto desde arriba. Cada partida es una travesía: despejas una zona del mar y sigues a la siguiente, cada vez más peligrosa.",
+      "Mar Bravo es un roguelite de barcos piratas para celular, visto desde arriba. Cada partida es una travesía: despejas una zona del mar y sigues a la siguiente, cada vez más peligrosa.",
       "Tu barco dispara por las bandas, así que ganar es cuestión de maniobrar: ponerte de costado, esquivar las andanadas enemigas y elegir bien cuándo acercarte.",
     ],
     featuresLabel: "Características",
@@ -30,7 +30,7 @@ const copy = {
       { title: "Islas", text: "Islas que esconden recompensas y otras que te obligan a rodearlas." },
     ],
     bannerTitle: "En desarrollo activo",
-    bannerText: "Síguenos en redes para ver avances y devlogs de Powder & Sail.",
+    bannerText: "Síguenos en redes para ver avances y devlogs de Mar Bravo.",
     bannerCta: "Mantenerme al tanto",
   },
   en: {
@@ -43,7 +43,7 @@ const copy = {
     aboutLabel: "The game",
     aboutTitle: "Full sail ahead",
     about: [
-      "Powder & Sail is a top-down pirate ship roguelite for mobile. Every run is a voyage: clear a zone of the sea and sail on to the next, each more dangerous than the last.",
+      "Mar Bravo is a top-down pirate ship roguelite for mobile. Every run is a voyage: clear a zone of the sea and sail on to the next, each more dangerous than the last.",
       "Your ship fires from its broadsides, so winning is all about maneuvering: turning side-on, dodging enemy volleys and choosing when to close in.",
     ],
     featuresLabel: "Features",
@@ -55,12 +55,12 @@ const copy = {
       { title: "Islands", text: "Islands that hide rewards, and others you'll have to sail around." },
     ],
     bannerTitle: "In active development",
-    bannerText: "Follow us on social media for progress and Powder & Sail devlogs.",
+    bannerText: "Follow us on social media for progress and Mar Bravo devlogs.",
     bannerCta: "Stay Updated",
   },
 };
 
-export default function PowderAndSailPage() {
+export default function MarBravoPage() {
   const { lang } = useLang();
   const c = copy[lang];
 
@@ -110,7 +110,7 @@ export default function PowderAndSailPage() {
             className="font-display text-[clamp(2.6rem,7vw,5rem)] leading-[0.92] tracking-display text-bone mb-6"
             style={{ textShadow: "0 0 80px rgba(74,159,216,0.18)" }}
           >
-            POWDER <span style={{ color: ACCENT }}>&amp; SAIL</span>
+            MAR <span style={{ color: ACCENT }}>BRAVO</span>
           </h1>
           <p className="text-xl text-bone-dim max-w-2xl leading-relaxed">{c.tagline}</p>
         </div>
