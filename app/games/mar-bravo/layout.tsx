@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Mar Bravo — Picaro Game Studio",
   description:
-    "A naval roguelite for mobile. Command a pirate ship on the open sea, clear each zone, pick upgrade cards and sail on.",
+    "A naval roguelite for mobile. Your cannons fire from the sides, so steering is aiming: survive the rounds, beat each captain and build your ship.",
 };
 
 export default function MarBravoLayout({ children }: { children: React.ReactNode }) {

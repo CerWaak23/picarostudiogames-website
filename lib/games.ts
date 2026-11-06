@@ -49,10 +49,10 @@ export const games: Game[] = [
     title: "Mar Bravo",
     genre: { en: "Naval Roguelite / Mobile", es: "Roguelite naval / Móvil" },
     description: {
-      en: "Command a pirate ship on the open sea. Clear each zone of enemies, pick upgrade cards and sail on — every run is different.",
-      es: "Comanda un barco pirata en mar abierto. Despeja cada zona de enemigos, elige cartas de mejora y sigue navegando: cada partida es distinta.",
+      en: "A naval roguelite from the far south. Your cannons fire from the sides, so steering is aiming: survive the rounds, beat each captain and build your ship.",
+      es: "Un roguelite naval del sur del mundo. Tus cañones disparan por los costados, así que maniobrar es apuntar: sobrevive a las rondas, vence a cada capitán y arma tu barco.",
     },
-    tags: ["Android", "iOS", "Unity", "Roguelite"],
+    tags: ["Android", "iOS", "Unity", "Roguelite", "PvP"],
     platform: "Mobile",
     accent: "#333dea",
     status: "active",
