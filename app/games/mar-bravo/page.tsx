@@ -111,12 +111,20 @@ export default function MarBravoPage() {
             </span>
           </div>
 
-          <h1
-            className="font-display text-[clamp(2.6rem,7vw,5rem)] leading-[0.92] tracking-display text-bone mb-6"
-            style={{ textShadow: "0 0 80px rgba(74,159,216,0.18)" }}
-          >
-            MAR <span style={{ color: ACCENT }}>BRAVO</span>
-          </h1>
+          <div className="flex items-center gap-5 mb-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/games/mar-bravo/icon.png"
+              alt=""
+              className="w-16 h-16 md:w-20 md:h-20 rounded-2xl border border-graphite-2 shrink-0"
+            />
+            <h1
+              className="font-display text-[clamp(2.6rem,7vw,5rem)] leading-[0.92] tracking-display text-bone"
+              style={{ textShadow: "0 0 80px rgba(74,159,216,0.18)" }}
+            >
+              MAR <span style={{ color: ACCENT }}>BRAVO</span>
+            </h1>
+          </div>
           <p className="text-xl text-bone-dim max-w-2xl leading-relaxed">{c.tagline}</p>
         </div>
       </section>
