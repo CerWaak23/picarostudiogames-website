@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -14,7 +15,7 @@ const copy = {
     platforms: "Android · iOS · Unity",
     tagline:
       "Comanda un barco pirata en mar abierto. Despeja cada zona de enemigos, elige cartas de mejora y sigue navegando: cada partida es distinta.",
-    art: "Capturas y tráiler próximamente",
+    art: "Mar Bravo: un bergantín dispara su andanada frente a una ola gigante",
     aboutLabel: "El juego",
     aboutTitle: "A toda vela",
     about: [
@@ -39,7 +40,7 @@ const copy = {
     platforms: "Android · iOS · Unity",
     tagline:
       "Command a pirate ship on the open sea. Clear each zone of enemies, pick upgrade cards and sail on — every run is different.",
-    art: "Screenshots & trailer coming soon",
+    art: "Mar Bravo: a brig fires its broadside in front of a giant wave",
     aboutLabel: "The game",
     aboutTitle: "Full sail ahead",
     about: [
@@ -118,23 +119,25 @@ export default function MarBravoPage() {
 
       <section className="px-6 pb-20">
         <div className="max-w-4xl mx-auto">
-          <div
-            className="w-full h-72 md:h-96 border border-graphite-2 flex items-center justify-center relative overflow-hidden"
-            style={{ background: "linear-gradient(135deg, #0a1420 0%, #0f2033 50%, #08111b 100%)" }}
-          >
-            <div
-              className="absolute inset-0 opacity-30"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(74,159,216,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(74,159,216,0.12) 1px, transparent 1px)",
-                backgroundSize: "20px 20px",
-              }}
-            />
-            <div className="text-center relative z-10">
-              <div className="w-20 h-20 border-2 rotate-45 flex items-center justify-center mx-auto mb-4" style={{ borderColor: `${ACCENT}4d` }}>
-                <div className="w-5 h-5 rotate-[-45deg]" style={{ backgroundColor: `${ACCENT}80` }} />
-              </div>
-              <p className="text-muted font-mono text-xs tracking-widest uppercase">{c.art}</p>
+          <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-5">
+            <div className="relative w-full aspect-video border border-graphite-2 overflow-hidden">
+              <Image
+                src="/games/mar-bravo/portada-titulo.jpg"
+                alt={c.art}
+                fill
+                priority
+                sizes="(min-width: 768px) 600px, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="relative w-full aspect-[2/3] border border-graphite-2 overflow-hidden hidden md:block">
+              <Image
+                src="/games/mar-bravo/portada-vertical.jpg"
+                alt={c.art}
+                fill
+                sizes="300px"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>

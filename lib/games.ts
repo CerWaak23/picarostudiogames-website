@@ -56,5 +56,6 @@ export const games: Game[] = [
     platform: "Mobile",
     accent: "#333dea",
     status: "active",
+    cover: "/games/mar-bravo/portada.jpg",
   },
 ];
