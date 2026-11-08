@@ -23,11 +23,12 @@ export default async function ProjectHome(props: { params: Promise<{ project: st
   const { project, role } = access;
   const has = (m: string) => project.modules.includes(m as never);
 
-  const [sum, fb, rp, ph] = await Promise.all([
+  const [sum, fb, rp, ph, cm] = await Promise.all([
     has("kpis") ? runAdmin<Summary>(project.id, "players.summary", {}, { log: false }) : null,
     has("feedback") ? runAdmin<{ feedback?: Fb[] }>(project.id, "feedback.list", {}, { log: false }) : null,
     has("feedback") ? runAdmin<{ pending?: number }>(project.id, "reports.list", {}, { log: false }) : null,
     has("photos") ? runAdmin<{ pendientes?: number }>(project.id, "photos.count", {}, { log: false }) : null,
+    has("comments") ? runAdmin<{ pendientes?: number }>(project.id, "comments.list", {}, { log: false }) : null,
   ]);
 
   const s = sum?.ok ? sum.data : undefined;
@@ -42,6 +43,7 @@ export default async function ProjectHome(props: { params: Promise<{ project: st
     { label: "Feedback sin revisar", n: feedbackPending, href: `/p/${project.id}/feedback`, show: has("feedback") },
     { label: "Reportes de pelea sin revisar", n: reportsPending, href: `/p/${project.id}/feedback`, show: has("feedback") },
     { label: "Fotos de perfil por aprobar", n: photosPending, href: `/p/${project.id}/photos`, show: has("photos") },
+    { label: "Comentarios sin revisar", n: cm?.data?.pendientes ?? 0, href: `/p/${project.id}/comments`, show: has("comments") },
   ].filter((a) => a.show);
   const open = attention.reduce((t, a) => t + a.n, 0);
 

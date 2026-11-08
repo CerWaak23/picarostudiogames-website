@@ -10,6 +10,7 @@ export const MODULES: Record<ModuleId, { label: string; icon: IconName; ready: b
   collaborators: { label: "Trabajar juntos", icon: "handshake", ready: true },
   messages: { label: "Mensajes", icon: "mail", ready: true },
   feedback: { label: "Feedback", icon: "inbox", ready: true },
+  comments: { label: "Comentarios", icon: "inbox", ready: true },
   codes: { label: "Códigos", icon: "ticket", ready: true },
   photos: { label: "Fotos", icon: "image", ready: true },
   ban: { label: "Baneos", icon: "shield", ready: false },

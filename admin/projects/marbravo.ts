@@ -18,9 +18,11 @@ export const marbravo: ProjectConfig = {
       "players.summary": { script: "Jugadores", params: { action: "resumen" } },
       "players.search": { script: "Jugadores", params: { action: "buscar" } },
       "players.view": { script: "Jugadores", params: { action: "ver" } },
+      "comments.list": { script: "Jugadores", params: { action: "reportes" } },
+      "comments.done": { script: "Jugadores", params: { action: "revisado" } },
     },
   },
-  modules: ["kpis", "players"],
+  modules: ["kpis", "players", "comments"],
   roles: {
     "picarogamestudio@gmail.com": "owner",
     "andrescerdawaak@gmail.com": "owner",
