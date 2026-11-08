@@ -5,6 +5,8 @@ import { requireAccess } from "@/lib/access";
 import { backendFor } from "@/lib/backends";
 import { audit } from "@/lib/audit";
 import Icon from "@/components/Icon";
+import MarBravoPlayers from "./MarBravoPlayers";
+import type { MarBravoRow } from "../kpis/MarBravoKpis";
 
 type Row = {
   id: string; name: string; level: number; last: number; reps: number; streak: number;
@@ -45,7 +47,7 @@ export default async function Players(props: {
       </div>
 
       <form method="get" className="cluster" style={{ flexWrap: "nowrap", marginBottom: 18 }}>
-        <input className="input" name="q" defaultValue={q} placeholder="Nombre o inicio del id" maxLength={40} aria-label="Buscar jugador" />
+        <input className="input" name="q" defaultValue={q} placeholder={project.views === "marbravo" ? "Inicio del código de jugador" : "Nombre o inicio del id"} maxLength={40} aria-label="Buscar jugador" />
         <button className="btn">Buscar</button>
         {q && <Link href={`/p/${project.id}/players`} className="btn quiet">Limpiar</Link>}
       </form>
@@ -63,6 +65,9 @@ export default async function Players(props: {
             {nf.format(out.total ?? shown)} jugador{(out.total ?? shown) === 1 ? "" : "es"}
             {(out.total ?? 0) > shown ? `, mostrando ${shown}` : ""}
           </p>
+          {project.views === "marbravo" ? (
+            <MarBravoPlayers base={`/p/${project.id}/players`} rows={out.players as unknown as MarBravoRow[]} />
+          ) : (
           <div className="panel rows">
             {out.players!.map((p) => (
               <Link key={p.id} href={`/p/${project.id}/players/${p.id}`} className="row">
@@ -83,6 +88,7 @@ export default async function Players(props: {
               </Link>
             ))}
           </div>
+          )}
         </>
       )}
     </>

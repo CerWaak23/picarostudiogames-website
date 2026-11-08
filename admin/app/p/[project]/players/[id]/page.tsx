@@ -26,6 +26,23 @@ const GROUPS: [string, string[]][] = [
 ];
 const HIDDEN = new Set(["id", "name", "baseAdmin", "noProfile"]);
 
+/** Mar Bravo: el perfil que guarda Mar Bravo/Cloud/scripts/Jugadores.js. */
+const LABELS_MB: Record<string, string> = {
+  doblones: "Doblones", perlas: "Perlas", lona: "Lona", polvora: "Pólvora", hierro: "Hierro", maestranza: "Maestranza construida",
+  mejorRonda: "Mejor ronda", corridas: "Corridas", completadas: "Ruta completa", hundidas: "Hundidas", abandonadas: "Abandonadas",
+  rondasDespejadas: "Rondas despejadas", segundosDeJuego: "Segundos de juego",
+  ultimaFin: "Cómo terminó", ultimaRonda: "Ronda", ultimaRondasDespejadas: "Rondas despejadas", ultimaSegundos: "Segundos",
+  astillero: "Astillero", planos: "Planos", topes: "Topes de cartas", skins: "Skins", tutorial: "Tutorial",
+  last: "Recibido", actualizado: "Copia del aparato", versionDelJuego: "Versión del juego", plataforma: "Plataforma",
+};
+const GROUPS_MB: [string, string[]][] = [
+  ["Economía", ["doblones", "perlas", "lona", "polvora", "hierro", "maestranza"]],
+  ["Corridas", ["mejorRonda", "corridas", "completadas", "hundidas", "abandonadas", "rondasDespejadas", "segundosDeJuego"]],
+  ["Última corrida", ["ultimaFin", "ultimaRonda", "ultimaRondasDespejadas", "ultimaSegundos"]],
+  ["Aparato", ["last", "actualizado", "versionDelJuego", "plataforma"]],
+  ["Guardado", ["astillero", "planos", "topes", "skins", "tutorial"]],
+];
+
 function show(key: string, v: unknown): string {
   if (typeof v === "boolean") return v ? "Sí" : "No";
   if ((key === "passUntil" || key === "last") && typeof v === "number") return v > Date.now() / 1000 || key === "last" ? (v > 0 ? date(v) : "Nunca") : "Sin pase";
@@ -54,7 +71,11 @@ export default async function PlayerPage(props: { params: Promise<{ project: str
   const out = res.ok ? (res.data as Detail) : null;
   const p = out?.player;
 
-  const known = new Set(GROUPS.flatMap(([, keys]) => keys));
+  const mb = project.views === "marbravo";
+  const groups = mb ? GROUPS_MB : GROUPS;
+  const labels = mb ? LABELS_MB : LABELS;
+  const known = new Set(groups.flatMap(([, keys]) => keys));
+  if (mb) known.add("version");
   const others = p ? Object.keys(p).filter((k) => !known.has(k) && !HIDDEN.has(k)) : [];
 
   return (
@@ -66,7 +87,7 @@ export default async function PlayerPage(props: { params: Promise<{ project: str
         <>
           <div className="page-head">
             <h1>
-              {String(p.name || "Sin nombre")}
+              {mb ? "Capitán" : String(p.name || "Sin nombre")}
               {p.banned === true && <span className="badge danger" style={{ fontSize: "0.8rem" }}>baneado</span>}
               {p.hidden === true && <span className="badge" style={{ fontSize: "0.8rem" }}>oculto</span>}
               {p.isAdmin === true && <span className="badge gold" style={{ fontSize: "0.8rem" }}>admin</span>}
@@ -75,7 +96,7 @@ export default async function PlayerPage(props: { params: Promise<{ project: str
           </div>
 
           <div className="grid-2" style={{ alignItems: "start" }}>
-            {GROUPS.map(([title, keys]) => {
+            {groups.map(([title, keys]) => {
               const present = keys.filter((k) => k in p);
               if (present.length === 0) return null;
               return (
@@ -83,7 +104,7 @@ export default async function PlayerPage(props: { params: Promise<{ project: str
                   <div className="section-title"><h2>{title}</h2></div>
                   <dl className="panel pad kv" style={{ margin: 0 }}>
                     {present.map((k) => (
-                      <div key={k}><dt>{LABELS[k] ?? k}</dt><dd>{show(k, p[k])}</dd></div>
+                      <div key={k}><dt>{labels[k] ?? k}</dt><dd>{show(k, p[k])}</dd></div>
                     ))}
                   </dl>
                 </section>
@@ -96,13 +117,13 @@ export default async function PlayerPage(props: { params: Promise<{ project: str
               <div className="section-title"><h2>Otros datos</h2></div>
               <dl className="panel pad kv" style={{ margin: 0 }}>
                 {others.map((k) => (
-                  <div key={k}><dt>{LABELS[k] ?? k}</dt><dd>{show(k, p[k])}</dd></div>
+                  <div key={k}><dt>{labels[k] ?? k}</dt><dd>{show(k, p[k])}</dd></div>
                 ))}
               </dl>
             </section>
           )}
 
-          {role === "owner" && (
+          {role === "owner" && !mb && (
             <PlayerActions
               projectId={project.id}
               target={params.id}

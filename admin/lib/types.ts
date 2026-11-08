@@ -38,6 +38,10 @@ export interface ProjectConfig {
   name: string;
   backend: BackendConfig;
   modules: ModuleId[];
+  /**
+   * Qué pantallas usa este juego para métricas y jugadores: cada juego guarda números distintos. Sin esto, las de Fitness Era.
+   */
+  views?: "fitnessera" | "marbravo";
   /** correo → rol. Solo estos correos entran a este juego. */
   roles: Record<string, Role>;
 }

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { requireAccess } from "@/lib/access";
 import { runAdmin } from "@/lib/run";
+import MarBravoKpis, { type MarBravoSummary } from "./MarBravoKpis";
 
 type Row = { id: string; name: string; level: number; reps: number; streak: number; banned: boolean };
 type Summary = {
@@ -55,6 +56,19 @@ export default async function Kpis(props: { params: Promise<{ project: string }>
   }
   const { project } = access;
   if (!project.modules.includes("kpis")) notFound();
+
+  if (project.views === "marbravo") {
+    const mb = await runAdmin<MarBravoSummary>(project.id, "players.summary", {}, { target: "resumen" });
+    return (
+      <>
+        <div className="page-head">
+          <h1>Métricas</h1>
+          <p>Cifras del juego completo, de la copia que sube cada teléfono. Se calculan al abrir esta página.</p>
+        </div>
+        {!mb.ok || !mb.data ? <p className="notice err">No se pudo leer: {mb.message}</p> : <MarBravoKpis base={`/p/${project.id}/players`} s={mb.data} />}
+      </>
+    );
+  }
 
   const res = await runAdmin<Summary>(project.id, "players.summary", {}, { target: "resumen" });
   const s = res.ok ? res.data : undefined;
