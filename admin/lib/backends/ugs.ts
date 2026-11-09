@@ -2,8 +2,9 @@ import type { Backend, BackendCall, BackendConfig, BackendResult } from "../type
 
 const AUTH = "https://services.api.unity.com/auth/v1/token-exchange";
 const CODE = "https://cloud-code.services.api.unity.com/v1/projects";
-// Player Authentication Admin API: borrar un jugador. Pide el rol "Authentication Admin" (o Editor)
-// en el service account. https://docs.unity.com/en-us/oas-player-auth-admin/latest
+// Player Authentication Admin API: borrar un jugador. Pide el rol "Authentication Editor" en el
+// service account: el Viewer es de solo lectura y acá se hace un DELETE, así que responde 403.
+// https://docs.unity.com/en-us/oas-player-auth-admin/latest
 const IDENTITY = "https://services.api.unity.com/player-identity/v1/projects";
 
 type Cached = { token: string; exp: number };
@@ -52,7 +53,7 @@ export function ugsBackend(cfg: BackendConfig): Backend {
         });
         if (res.ok || res.status === 404) return { ok: true };   // 404: ya no existía
         if (res.status === 401 || res.status === 403)
-          return { ok: false, error: "Al service account le falta el rol Authentication Admin en Unity" };
+          return { ok: false, error: "Al service account le falta el rol Authentication Editor en Unity (el Viewer no basta: es de solo lectura)" };
         return { ok: false, error: `Borrar cuenta en Unity falló (${res.status})` };
       } catch (e) {
         return { ok: false, error: e instanceof Error ? e.message : "error" };
