@@ -10,7 +10,8 @@ import { fitnessEraUgs, runScript } from "@/lib/ugs";
  *
  * Variables de entorno (Vercel → proyecto de la web):
  *   UGS_FITNESSERA_PROJECT_ID, UGS_FITNESSERA_ENV_ID    los mismos del panel, no son secretos
- *   UGS_FITNESSERA_WEB_KEY, UGS_FITNESSERA_WEB_SECRET   service account "fitnessera-web"
+ *   UGS_WEB_KEY, UGS_WEB_SECRET                         service account "picaro-web", para todos
+ *                                                       los formularios del sitio
  *
  * La respuesta trae un `code` y no un texto: el que traduce es el formulario.
  */
@@ -79,7 +80,7 @@ export async function POST(req: Request) {
 
   const cfg = fitnessEraUgs();
   if (!cfg) {
-    console.error("playtesting: faltan las variables UGS_FITNESSERA_*");
+    console.error("playtesting: faltan las variables UGS_WEB_* o UGS_FITNESSERA_*");
     return bad("backend", 503);
   }
 

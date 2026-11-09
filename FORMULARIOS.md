@@ -45,13 +45,22 @@ anterior publicada y no avisa en ninguna otra parte.
 ## 2. Crear un service account para la web
 
 En *Unity Cloud → Administration → Service Accounts*, uno nuevo llamado
-`fitnessera-web`, con permiso **solo de ejecutar Cloud Code**.
+`picaro-web`, con permiso **solo de ejecutar Cloud Code**.
 
-Tiene que ser distinto del que usa el panel. El panel está detrás de login de
-Google y lista blanca de correos; la web es pública. Si algún día se filtra la
-llave de la web, lo peor que puede hacer es anotar gente en una lista: los
-scripts de administración (`Jugadores`, `Codigos`, `Mensajes`…) rechazan a quien
-no esté en su lista de admins, y este no está.
+Es **uno solo para todos los formularios del sitio**, no uno por juego ni uno por
+formulario. Lo único que saben hacer es anotar a alguien en una lista, así que
+separarlos no compraría nada y sí multiplicaría las llaves que mantener. Si algún
+día un formulario necesita algo más pesado, ese se lleva su propia cuenta.
+
+Lo que sí tiene que ser distinto es la llave del **panel**. El panel está detrás
+de login de Google y lista blanca de correos; la web es pública. Si algún día se
+filtra la llave de la web, lo peor que puede hacer es anotar gente en una lista:
+los scripts de administración (`Jugadores`, `Codigos`, `Mensajes`…) rechazan a
+quien no esté en su lista de admins, y este no está.
+
+Cuando un juego nuevo tenga formulario, no hace falta otra cuenta: a la misma se
+le agrega ese proyecto de Unity con los mismos roles de Cloud Code, y a Vercel
+solo sus dos ids (`UGS_<JUEGO>_PROJECT_ID` y `UGS_<JUEGO>_ENV_ID`).
 
 ## 3. Variables de entorno en Vercel
 
@@ -60,8 +69,8 @@ En el proyecto de Vercel **de la web** (no el del panel):
 ```
 UGS_FITNESSERA_PROJECT_ID=     # Unity Dashboard → Project Settings. No es secreto.
 UGS_FITNESSERA_ENV_ID=         # ídem. Es el mismo valor que usa el panel.
-UGS_FITNESSERA_WEB_KEY=        # Key ID del service account fitnessera-web
-UGS_FITNESSERA_WEB_SECRET=     # su Secret
+UGS_WEB_KEY=                   # Key ID del service account picaro-web
+UGS_WEB_SECRET=                # su Secret
 ```
 
 Están también en `.env.example`. Para probar en local, copiar ese archivo a

@@ -3,9 +3,14 @@
  *
  * Es el mismo camino que usa el panel (admin/lib/backends/ugs.ts): se cambia la llave de un
  * service account por un token corto y con ese token se ejecuta un script de Cloud Code. La
- * diferencia es la llave: la web usa `fitnessera-web`, un service account aparte que solo sabe
+ * diferencia es la llave: la web usa `picaro-web`, un service account aparte que solo sabe
  * ejecutar Cloud Code. Si alguna vez se filtra, no puede administrar nada: los scripts de
  * administración piden estar en su lista de admins y este no está.
+ *
+ * Es UNA llave para todos los formularios del sitio (`UGS_WEB_KEY` / `UGS_WEB_SECRET`), no una por
+ * juego: lo único que saben hacer es anotar a alguien en una lista, así que separarlas no compraría
+ * nada. Lo que sí es por juego es a qué proyecto de Unity se habla, porque cada juego es un
+ * proyecto distinto; para sumar uno, otra función como esta con sus dos ids.
  *
  * Las llaves se leen solo acá y solo en el servidor. Nunca llegan al navegador.
  */
@@ -25,8 +30,8 @@ export function fitnessEraUgs(): UgsConfig | null {
   const cfg = {
     projectId: process.env.UGS_FITNESSERA_PROJECT_ID ?? "",
     environmentId: process.env.UGS_FITNESSERA_ENV_ID ?? "",
-    key: process.env.UGS_FITNESSERA_WEB_KEY ?? "",
-    secret: process.env.UGS_FITNESSERA_WEB_SECRET ?? "",
+    key: process.env.UGS_WEB_KEY ?? "",
+    secret: process.env.UGS_WEB_SECRET ?? "",
   };
   return cfg.projectId && cfg.environmentId && cfg.key && cfg.secret ? cfg : null;
 }

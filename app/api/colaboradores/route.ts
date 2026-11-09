@@ -81,7 +81,7 @@ export async function POST(req: Request) {
 
   const cfg = fitnessEraUgs();
   if (!cfg) {
-    console.error("colaboradores: faltan las variables UGS_FITNESSERA_*");
+    console.error("colaboradores: faltan las variables UGS_WEB_* o UGS_FITNESSERA_*");
     return bad("backend", 503);
   }
 
