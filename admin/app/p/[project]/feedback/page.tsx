@@ -4,11 +4,12 @@ import { requireAccess } from "@/lib/access";
 import { runAdmin } from "@/lib/run";
 import ItemActions from "./ItemActions";
 
-type Fb = { id: string; p: string; n: string; cat: string; text: string; at: number; done: boolean; v: string };
+// t / tn: en un reporte de jugador, el ID (si se encontró por su foto) y el nombre del reportado.
+type Fb = { id: string; p: string; n: string; cat: string; text: string; at: number; done: boolean; v: string; t?: string; tn?: string };
 type Rep = { id: string; p: string; n: string; kind: string; cat: string; text: string; info: string; at: number; done: boolean; v: string; size: number };
 
 const when = (unix: number) => new Date(unix * 1000).toLocaleString("es-CL", { timeZone: "America/Santiago", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
-const CAT: Record<string, string> = { error: "Error", idea: "Idea", otro: "Otro", reinicio: "Empezar de cero" };
+const CAT: Record<string, string> = { error: "Error", idea: "Idea", otro: "Otro", reinicio: "Empezar de cero", jugador: "Reporte de jugador" };
 
 export default async function Feedback(props: { params: Promise<{ project: string }> }) {
   const params = await props.params;
@@ -54,11 +55,14 @@ export default async function Feedback(props: { params: Promise<{ project: strin
             {items.map((f) => (
               <div key={f.id} className="row" style={{ alignItems: "flex-start", flexDirection: "column", gap: 6, opacity: f.done ? 0.55 : 1 }}>
                 <div className="cluster" style={{ gap: 0 }}>
-                  <span className={`badge ${f.cat === "reinicio" ? "gold" : ""}`} style={{ marginLeft: 0, marginRight: 8 }}>{CAT[f.cat] ?? f.cat}</span>
+                  <span className={`badge ${f.cat === "reinicio" || f.cat === "jugador" ? "gold" : ""}`} style={{ marginLeft: 0, marginRight: 8 }}>{CAT[f.cat] ?? f.cat}</span>
                   <strong>{f.n || "Sin nombre"}</strong>
                   <span className="faint" style={{ marginLeft: 8, fontSize: "0.82rem" }}>{when(f.at)}{f.v ? ` · v${f.v}` : ""}</span>
                 </div>
                 <div style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{f.text}</div>
+                {f.cat === "jugador" && f.t && (
+                  <a href={`/p/${project.id}/players/${f.t}`} style={{ fontSize: "0.88rem" }}>Ver a {f.tn || "este jugador"} (banear, ocultar del ranking) →</a>
+                )}
                 {owner && <ItemActions projectId={project.id} id={f.id} done={f.done} kind="feedback" restartFor={f.cat === "reinicio" ? f.p : undefined} />}
               </div>
             ))}
