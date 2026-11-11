@@ -7,7 +7,7 @@ import MarBravoKpis, { type MarBravoSummary } from "./MarBravoKpis";
 
 type Row = { id: string; name: string; level: number; reps: number; streak: number; banned: boolean };
 type Summary = {
-  players: number; activeToday: number; active7: number; new7: number;
+  players: number; inactive?: number; activeToday: number; active7: number; new7: number;
   reps: number; hours: number; minPerDay: number; minPerSession: number;
   ads: number; buys: number; payers: number; passActive: number; banned: number; avgLevel: number;
   topReps?: Row[]; topLevel?: Row[]; topStreak?: Row[];
@@ -90,7 +90,7 @@ export default async function Kpis(props: { params: Promise<{ project: string }>
           </div>
           <div className="grid-2" style={{ alignItems: "start" }}>
             <Group title="Ingresos" items={[["Anuncios vistos", s.ads], ["Compras", s.buys], ["Pagadores", s.payers], ["Pase activo", s.passActive]]} />
-            <Group title="Juego" items={[["Repeticiones", s.reps], ["Nivel promedio", s.avgLevel], ["Baneados", s.banned]]} />
+            <Group title="Juego" items={[["Repeticiones", s.reps], ["Nivel promedio", s.avgLevel], ["Baneados", s.banned], ["Inactivos (7+ días)", s.inactive ?? 0]]} />
           </div>
           <div className="grid-2" style={{ alignItems: "start" }}>
             <Top title="Más repeticiones" rows={s.topReps} unit="reps" pick={(r) => r.reps} base={base} />
